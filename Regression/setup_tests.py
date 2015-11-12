@@ -21,26 +21,33 @@ class mcnp_test:
     def __init__(self, test_id):
         self.id = test_id
 
-        self.input_dir = "Inputs"
-        self.sat_dir = "Geom_sat"
-        self.h5m_dir = "Geom_h5m"
-        self.log_dir = "Logs"
-        self.result_dir = "Results/" + test_id
+        self.dirs = {}
+        self.dirs["orig"] = ""
+        self.dirs["input"] = "Inputs"
+        self.dirs["sat"] = "Geom_sat"
+        self.dirs["h5m"] = "Geom_h5m"
+        self.dirs["log"] = "Logs"
+        self.dirs["xsdir"] = "../xsec_data"
+        self.dirs["result"] = "Results/" + test_id
 
-        self.inp = "inp" + test_id
-        self.sat = "geom" + test_id + ".sat"
-        self.h5m = "geom" + test_id + ".h5m"
+        self.inputs = {}
+        self.inputs["inp"] = "inp" + test_id
+        self.inputs["gcad"] = "geom" + test_id + ".h5m"
+        self.inputs["xsdir"] = "testdir1"
 
-        self.h5mlog = "geom" + test_id + ".h5m.log"
+        self.other = {}
+        self.other["sat"] = "geom" + test_id + ".sat"
+        self.other["xslib"] = "testlib1"
 
-        #mcnp.prun = "mpiexec -np 24"
-        self.prun = ""
-        self.mcnp = "mcnp5.mpi"
+        self.logs = {}
+        self.logs["h5m"] = "geom" + test_id + ".h5m.log"
 
-        self.orig_dir = ""
-        self.xsdir_dir = ""
-        self.xsdir = ""
-        self.options = ""
+        self.cmds = {}
+        #self.cmd["pre"] = "mpiexec -np 24"
+        self.cmds["pre"] = ""
+        self.cmds["exe"] = "mcnp5.mpi"
+
+        self.flags = []
 
     def __repr__(self):
         return "mcnp_test: " + self.id
@@ -50,50 +57,47 @@ class mcnp_test:
 
     # Run dagmc_preproc on an ACIS file
     def run_dagmc_preproc(self, ftol = 1e-4):
-        call_shell("mkdir -p " + self.h5m_dir)
-        call_shell("mkdir -p " + self.log_dir)
-        call_shell("dagmc_preproc " + os.path.join(self.sat_dir, self.sat) +
-                   " -o " + os.path.join(self.h5m_dir, self.h5m) +
+        call_shell("mkdir -p " + self.dirs["h5m"])
+        call_shell("mkdir -p " + self.dirs["log"])
+        call_shell("dagmc_preproc " + os.path.join(self.dirs["sat"], self.other["sat"]) +
+                   " -o " + os.path.join(self.dirs["h5m"], self.inputs["h5m"]) +
                    " -f " + str(ftol),
-                   os.path.join(self.log_dir, self.h5mlog))
+                   os.path.join(self.dirs["log"], self.logs["h5m"]))
 
     # Setup results directory
     def setup_result_dir(self):
-        call_shell("mkdir -p " + self.result_dir)
-        call_shell("rm -rf " + self.result_dir + "/*")
-        call_shell("ln -sf " + os.path.join("../..", self.input_dir, self.inp) +
-                   " " + os.path.join(self.result_dir, self.inp))
-        call_shell("ln -sf " + os.path.join("../..", self.h5m_dir, self.h5m) +
-                   " " + os.path.join(self.result_dir, self.h5m))
-        call_shell("ln -sf " + os.path.join("../..", self.xsdir_dir, self.xsdir) +
-                   " " + os.path.join(self.result_dir, self.xsdir))
-        call_shell("ln -sf " + os.path.join("../..", self.xsdir_dir, self.xslib) +
-                   " " + os.path.join(self.result_dir, self.xslib))
+        call_shell("mkdir -p " + self.dirs["result"])
+        call_shell("rm -rf " + self.dirs["result"] + "/*")
+        call_shell("ln -sf " + os.path.join("../..", self.dirs["input"], self.inputs["inp"]) +
+                   " " + os.path.join(self.dirs["result"], self.inputs["inp"]))
+        call_shell("ln -sf " + os.path.join("../..", self.dirs["h5m"], self.inputs["h5m"]) +
+                   " " + os.path.join(self.dirs["result"], self.inputs["h5m"]))
+        call_shell("ln -sf " + os.path.join("../..", self.dirs["xsdir"], self.inputs["xsdir"]) +
+                   " " + os.path.join(self.dirs["result"], self.inputs["xsdir"]))
+        call_shell("ln -sf " + os.path.join("../..", self.dirs["xsdir"], self.inputs["xsdir"]) +
+                   " " + os.path.join(self.dirs["result"], self.other["xslib"]))
 
     # Run MCNP
     def run_mcnp(self):
-        run_mcnp_str = self.prun + " " + self.mcnp
-        if self.inp != "":
-            run_mcnp_str += " i=" + self.inp
-        if self.h5m != "":
-            run_mcnp_str += " g=" + self.h5m
-        if self.xsdir != "":
-            run_mcnp_str += " xsdir=" + self.xsdir
-        run_mcnp_str += self.options
+        run_mcnp_str = self.cmds["pre"] + " " + self.cmds["exe"]
+        for key, val in self.inputs.items():
+            run_mcnp_str += " " + key + "=" + val
+        for flag in self.flags:
+            run_mcnp_str += " " + flag
         print run_mcnp_str
-        call_shell(run_mcnp_str, "screen_out", "screen_err")
+        #call_shell(run_mcnp_str, "screen_out", "screen_err")
 
 def setup_test(test):
     # Run dagmc_preproc on an ACIS file
-    test.run_dagmc_preproc("1e-4")
+    #test.run_dagmc_preproc("1e-4")
 
     # Setup results directory
-    test.setup_result_dir()
+    #test.setup_result_dir()
     
     # Run MCNP
-    os.chdir(test.result_dir)
+    os.chdir(test.dirs["result"])
     test.run_mcnp()
-    os.chdir(test.orig_dir)
+    os.chdir(test.dirs["orig"])
 
 def main():
     parser = argparse.ArgumentParser(description = "Setup MCNP tests.")
@@ -121,13 +125,10 @@ def main():
     pool = mp.Pool(processes = jobs)
     for test_id in test_ids:
         test = mcnp_test(test_id)
-        test.orig_dir = original_dir
+        test.dirs["orig"] = original_dir
 
-        test.xsdir_dir = "../xsec_data"
-        test.xsdir = "testdir1"
-        test.xslib = "testlib1"
         if test_id in test_ids_fatal:
-            test.options += " fatal"
+            test.flags.append("fatal")
 
         pool.apply_async(setup_test, args=(test,))
 
