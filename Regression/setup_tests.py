@@ -1,9 +1,19 @@
 from subprocess import call
 import os
 
-def call_shell(string):
+def call_shell(string, stdout = "", stderr = ""):
     print string
-    call(string, shell = True)
+    if stdout == "" and stderr == "":  # neither to file
+        call(string, shell = True)
+    elif stderr == "":  # stdout to file
+        call(string + " | tee " + stdout, shell = True)
+    elif stdout == "":  # stderr to file
+        call(string + " 3>&1 1>&2 2>&3 | tee " + stderr, shell = True)
+    elif stdout == stderr:  # both to same file
+        call(string + " 2>&1 | tee " + stdout, shell = True)
+    else:  # both to different files
+        call("(" + string + " | tee " + stdout +
+             ") 3>&1 1>&2 2>&3 | tee " + stderr, shell = True)
 
 class mcnp_test:
     def __init__(self, test_id):
@@ -57,16 +67,16 @@ class mcnp_test:
         call_shell("mkdir -p " + self.log_dir)
         call_shell("mcnp2cad " + os.path.join(self.input_nat_dir, self.inp) +
                    " -o " + os.path.join(self.sat_dir, self.sat) +
-                   " --geomver=" + self.geomver +
-                   " 2>&1 | tee -a " + os.path.join(self.log_dir, self.satlog))
+                   " --geomver=" + self.geomver,
+                   os.path.join(self.log_dir, self.satlog))
 
     def run_dagmc_preproc(self):
         call_shell("mkdir -p " + self.h5m_dir)
         call_shell("mkdir -p " + self.log_dir)
         call_shell("dagmc_preproc " + os.path.join(self.sat_dir, self.sat) +
                    " -o " + os.path.join(self.h5m_dir, self.h5m) +
-                   " -f " + self.ftol +
-                   " 2>&1 | tee -a " + os.path.join(self.log_dir, self.h5mlog))
+                   " -f " + self.ftol,
+                   os.path.join(self.log_dir, self.h5mlog))
 
     def setup_result_dir(self):
         call_shell("mkdir -p " + self.result_dir)
@@ -88,7 +98,7 @@ class mcnp_test:
         if self.xsdir != "":
             call_mcnp_str += " xsdir=" + self.xsdir
         call_mcnp_str += self.options
-        call_shell(call_mcnp_str)
+        call_shell(call_mcnp_str, "screen_out", "screen_err")
 
 original_dir = os.getcwd()
 
@@ -106,7 +116,7 @@ test_ids = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
 test_ids_fatal = ["01", "02", "07", "11", "12", "18", "19", "20", "21", "23",
                   "30", "33", "77", "89"]
 
-for test_id in [test_ids[0]]:
+for test_id in test_ids[0:2]:
     test = mcnp_test(test_id)
 
     test.xsdir_dir = "../xsec_data"
@@ -119,8 +129,8 @@ for test_id in [test_ids[0]]:
 
     test.setup_result_dir()
 
-    test.run_mcnp2cad()
-    test.run_dagmc_preproc()
+    #test.run_mcnp2cad()
+    #test.run_dagmc_preproc()
 
     os.chdir(test.result_dir)
     test.call_mcnp(prun, mcnp)
