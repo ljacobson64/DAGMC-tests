@@ -1,5 +1,7 @@
+import argparse
 from subprocess import call
 import os
+import multiprocessing as mp
 
 def call_shell(string, stdout = "", stderr = ""):
     print string
@@ -17,70 +19,49 @@ def call_shell(string, stdout = "", stderr = ""):
 
 class mcnp_test:
     def __init__(self, test_id):
-        self.input_nat_dir = "Inputs_native"
-        self.input_dag_dir = "Inputs_dagmc"
+        self.id = test_id
+
+        self.input_dir = "Inputs"
         self.sat_dir = "Geom_sat"
         self.h5m_dir = "Geom_h5m"
         self.log_dir = "Logs"
         self.result_dir = "Results/" + test_id
-        
+
         self.inp = "inp" + test_id
         self.sat = "geom" + test_id + ".sat"
         self.h5m = "geom" + test_id + ".h5m"
-        
-        self.satlog = "geom" + test_id + ".sat.log"
+
         self.h5mlog = "geom" + test_id + ".h5m.log"
-        
+
+        #mcnp.prun = "mpiexec -np 24"
+        self.prun = ""
+        self.mcnp = "mcnp5.mpi"
+
+        self.orig_dir = ""
         self.xsdir_dir = ""
         self.xsdir = ""
         self.options = ""
-        
-        self.geomver = "1902"
-        self.ftol = "1e-4"
 
     def __repr__(self):
-        return "inp: " + self.inp
+        return "mcnp_test: " + self.id
 
     def __str__(self):
-        return "inp: " + self.inp
+        return "mcnp_test: " + self.id
 
-    def strip_geom_from_inp(self):
-        reader = open(os.path.join(self.input_nat_dir, self.inp), 'r')
-        lines = reader.readlines()
-        reader.close()
-
-        call_shell("mkdir -p " + self.input_dag_dir)
-        writer = open(os.path.join(self.input_dag_dir, self.inp), 'w')
-        writer.write(lines[0])
-        num_blank_lines = 0
-        for line in lines[1:]:
-            if num_blank_lines < 2:
-                writer.write("c " + line)
-            else:
-                writer.write(line)
-            if line.strip() == "":
-                num_blank_lines += 1
-        writer.close()
-
-    def run_mcnp2cad(self):
-        call_shell("mkdir -p " + self.sat_dir)
-        call_shell("mkdir -p " + self.log_dir)
-        call_shell("mcnp2cad " + os.path.join(self.input_nat_dir, self.inp) +
-                   " -o " + os.path.join(self.sat_dir, self.sat) +
-                   " --geomver=" + self.geomver,
-                   os.path.join(self.log_dir, self.satlog))
-
-    def run_dagmc_preproc(self):
+    # Run dagmc_preproc on an ACIS file
+    def run_dagmc_preproc(self, ftol = 1e-4):
         call_shell("mkdir -p " + self.h5m_dir)
         call_shell("mkdir -p " + self.log_dir)
         call_shell("dagmc_preproc " + os.path.join(self.sat_dir, self.sat) +
                    " -o " + os.path.join(self.h5m_dir, self.h5m) +
-                   " -f " + self.ftol,
+                   " -f " + str(ftol),
                    os.path.join(self.log_dir, self.h5mlog))
 
+    # Setup results directory
     def setup_result_dir(self):
         call_shell("mkdir -p " + self.result_dir)
-        call_shell("ln -sf " + os.path.join("../..", self.input_dag_dir, self.inp) +
+        call_shell("rm -rf " + self.result_dir + "/*")
+        call_shell("ln -sf " + os.path.join("../..", self.input_dir, self.inp) +
                    " " + os.path.join(self.result_dir, self.inp))
         call_shell("ln -sf " + os.path.join("../..", self.h5m_dir, self.h5m) +
                    " " + os.path.join(self.result_dir, self.h5m))
@@ -89,49 +70,68 @@ class mcnp_test:
         call_shell("ln -sf " + os.path.join("../..", self.xsdir_dir, self.xslib) +
                    " " + os.path.join(self.result_dir, self.xslib))
 
-    def call_mcnp(self, prun, mcnp):
-        call_mcnp_str = prun + " " + mcnp
+    # Run MCNP
+    def run_mcnp(self):
+        run_mcnp_str = self.prun + " " + self.mcnp
         if self.inp != "":
-            call_mcnp_str += " i=" + self.inp
+            run_mcnp_str += " i=" + self.inp
         if self.h5m != "":
-            call_mcnp_str += " g=" + self.h5m
+            run_mcnp_str += " g=" + self.h5m
         if self.xsdir != "":
-            call_mcnp_str += " xsdir=" + self.xsdir
-        call_mcnp_str += self.options
-        call_shell(call_mcnp_str, "screen_out", "screen_err")
+            run_mcnp_str += " xsdir=" + self.xsdir
+        run_mcnp_str += self.options
+        print run_mcnp_str
+        call_shell(run_mcnp_str, "screen_out", "screen_err")
 
-original_dir = os.getcwd()
+def setup_test(test):
+    # Run dagmc_preproc on an ACIS file
+    test.run_dagmc_preproc("1e-4")
 
-#prun = "mpiexec -np 24"
-prun = ""
-mcnp = "mcnp5.mpi"
-
-test_ids = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
-            "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
-            "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
-            "31", "32", "33", "34", "35", "36", "37", "38", "39", "40",
-            "41", "42", "47", "48", "77", "86", "89", "90", "93", "94",
-            "95", "98", "99", "103", "104", "111", "112", "113", "114",
-            "116", "118"]
-test_ids_fatal = ["01", "02", "07", "11", "12", "18", "19", "20", "21", "23",
-                  "30", "33", "77", "89"]
-
-for test_id in test_ids[0:2]:
-    test = mcnp_test(test_id)
-
-    test.xsdir_dir = "../xsec_data"
-    test.xsdir = "testdir1"
-    test.xslib = "testlib1"
-    if test_id in test_ids_fatal:
-        test.options += " fatal"
-
-    test.strip_geom_from_inp()
-
+    # Setup results directory
     test.setup_result_dir()
-
-    #test.run_mcnp2cad()
-    #test.run_dagmc_preproc()
-
+    
+    # Run MCNP
     os.chdir(test.result_dir)
-    test.call_mcnp(prun, mcnp)
-    os.chdir(original_dir)
+    test.run_mcnp()
+    os.chdir(test.orig_dir)
+
+def main():
+    parser = argparse.ArgumentParser(description = "Setup MCNP tests.")
+    parser.add_argument("-j", "--jobs", type = int, default = 1,
+                        help = "number of jobs")
+    args = parser.parse_args()
+    original_dir = os.getcwd()
+
+    test_ids = [ 1,  2,  3,  4,      6,  7,  8,  9, 10,
+                    12,                         19, 20,
+                21, 22, 23,         26, 27, 28, 29, 30,
+                31, 32, 33, 34, 35, 36, 37,     39,    
+                41, 42,                 47,            
+                61, 62, 63, 64, 65, 66, 67, 68,        
+                                    86,             90,
+                        93, 94, 95,         98, 99    ]
+    test_ids_fatal = [1, 2, 7, 11, 12, 18, 19, 20, 21, 22, 23, 26, 30, 77, 89]
+
+    for i, test_id in enumerate(test_ids):
+        test_ids[i] = str(test_id).zfill(2)
+    for i, test_id in enumerate(test_ids_fatal):
+        test_ids_fatal[i] = str(test_id).zfill(2)
+
+    jobs = args.jobs
+    pool = mp.Pool(processes = jobs)
+    for test_id in test_ids:
+        test = mcnp_test(test_id)
+        test.orig_dir = original_dir
+
+        test.xsdir_dir = "../xsec_data"
+        test.xsdir = "testdir1"
+        test.xslib = "testlib1"
+        if test_id in test_ids_fatal:
+            test.options += " fatal"
+
+        pool.apply_async(setup_test, args=(test,))
+
+    pool.close()
+    pool.join()
+
+main()
