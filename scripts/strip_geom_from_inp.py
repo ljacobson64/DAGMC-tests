@@ -1,15 +1,15 @@
 import sys
 
-inpfiles = sys.argv
+inp_files = sys.argv
 
-for inpfile in inpfiles:
-    orig_inpfile = "orig_" + inpfile
-    call("mv " + inpfile + " " + orig_inpfile, shell = True)
-    reader = open(orig_inpfile, 'r')
+for inp_file in inp_files:
+    orig_inp_file = "orig_" + inp_file
+    call("mv " + inp_file + " " + orig_inp_file, shell = True)
+    reader = open(orig_inp_file, 'r')
     lines = reader.readlines()
     reader.close()
 
-    writer = open(inpfile, 'w')
+    writer = open(inp_file, 'w')
     writer.write(lines[0])
     num_blank_lines = 0
     for line in lines[1:]:
