@@ -8,9 +8,11 @@ import mcnp_testing as mt
 
 args = mt.parse_args()
 
-names = ["BE08", "C29", "CCR20", "COAIR", "COTEF", "FE09", "FS1ONN", "FS3OFN",
-         "FS3ONP", "FS7OFP", "FS7ONN", "H2O19", "KERMIN", "LI616", "N31",
-         "PB14", "SKYINP", "SMAIR", "SMTEF"]
+names = ["FLAT25", "GODIVA", "ICT2C3", "JEZ233", "LST2C2", "PNL2", "PUSH2O",
+         "STACY36", "UH3C6", "ZEUS2", "BIGTEN", "FLATPU", "GODIVR", "IMF03",
+         "JEZ240", "ORNL10", "PNL33", "SB25", "THOR", "UMF5C2", "FLAT23",
+         "FLSTF1", "HISHPG", "IMF04", "JEZPU", "ORNL11", "PUBTNS", "SB5RN3",
+         "TT2C11", "ZEBR8H"]
 
 if args.tests == "all":
     names_to_run = names

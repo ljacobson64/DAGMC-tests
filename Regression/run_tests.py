@@ -18,11 +18,14 @@ names = [ 1,  2,  3,  4,      6,  7,  8,  9, 10,
                  93, 94, 95,         98, 99    ]
 for i, name in enumerate(names):
     names[i] = str(name).zfill(2)
+
 if args.tests == "all":
-    args.tests = names
+    names_to_run = names
+else:
+    names_to_run = args.tests
 
 tests = {}
-for name in args.tests:
+for name in names_to_run:
     tests[name] = mt.mcnp_test(name)
     test = tests[name]
 
@@ -38,8 +41,11 @@ for name in args.tests:
         test.flags.append("fatal")
     if test.name in ["08", "10", "93"]:
         test.inputs["wwinp"] = "wwinp" + test.name
+    if test.name == "26":
+        test.flags.append("CN")
     if test.name in ["62"]:
         test.inputs["lcad"] = "lcad" + test.name
+        test.flags.append("i")
 
     if test.name == "08":
         test.depends.append(["07", "rssa"])
@@ -48,14 +54,11 @@ for name in args.tests:
     if test.name == "26":
         test.depends.append(["09", "rssa"])
         test.depends.append(["09", "runtpe"])
-        test.flags.append("CN")
     if test.name == "27":
         test.depends.append(["09", "rssa"])
     if test.name == "29":
         test.depends.append(["07", "rssa"])
     if test.name == "34":
         test.depends.append(["33", "rssa"])
-    if test.name == "62":
-        test.flags.append("i")
 
-mt.run_multiple_tests(names, tests, args)
+mt.run_multiple_tests(names_to_run, tests, args)
