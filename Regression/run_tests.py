@@ -26,7 +26,7 @@ else:
 
 tests = {}
 for name in names_to_run:
-    tests[name] = mt.mcnp_test(name)
+    tests[name] = mt.mcnp_test(name, args)
     test = tests[name]
 
     test.dirs["orig"] = current_dir

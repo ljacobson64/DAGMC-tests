@@ -1,32 +1,33 @@
 import argparse, os, sys
-from collections import OrderedDict
 from subprocess import call
 import multiprocessing as mp
 
 class mcnp_test:
-    def __init__(self, test_id):
-        self.name = test_id
+    def __init__(self, name, args):
+        self.name = name
 
-        self.dirs = OrderedDict()
+        self.dirs = {}
         self.dirs["orig"] = ""
         self.dirs["input"] = "Inputs"
         self.dirs["sat"] = "Geom_sat"
         self.dirs["gcad"] = "Geom_h5m"
         self.dirs["log"] = "Logs"
-        self.dirs["result"] = "Results/" + test_id
+        self.dirs["result"] = "Results/" + name
 
-        self.inputs = OrderedDict()
-        self.inputs["gcad"] = "geom_" + test_id + ".h5m"
+        self.inputs = {}
+        self.inputs["gcad"] = "geom_" + name + ".h5m"
 
-        self.other = OrderedDict()
-        self.other["sat"] = "geom_" + test_id + ".sat"
+        self.other = {}
+        self.other["sat"] = "geom_" + name + ".sat"
 
-        self.logs = OrderedDict()
-        self.logs["gcad"] = "geom_" + test_id + ".h5m.log"
+        self.logs = {}
+        self.logs["gcad"] = "geom_" + name + ".h5m.log"
 
-        self.cmds = OrderedDict()
-        #self.cmd["pre"] = "mpiexec -np 24"
-        self.cmds["prefix"] = ""
+        self.cmds = {}
+        if args.mpi:
+            self.cmds["prefix"] = "mpiexec -np " + str(args.jobs)
+        else:
+            self.cmds["prefix"] = ""
         self.cmds["exe"] = "mcnp5.mpi"
 
         self.flags = []
@@ -111,27 +112,30 @@ def run_test_external(test, args):
 
 # Run all the passed tests
 def run_multiple_tests(names, tests, args):
-    jobs = args.jobs
+    if args.mpi:
+        jobs_serial = 1
+    else:
+        jobs_serial = args.jobs
 
-    if jobs > 1:
-        pool = mp.Pool(processes = jobs)
+    if jobs_serial > 1:
+        pool = mp.Pool(processes = jobs_serial)
 
     for name in names:
         test = tests[name]
         if test.depends == []:
-            if jobs > 1:
+            if jobs_serial > 1:
                 pool.apply_async(run_test_external, args = (test, args))
             else:
                 test.run_test(args)
     for name in names:
         test = tests[name]
         if test.depends != []:
-            if jobs > 1:
+            if jobs_serial > 1:
                 pool.apply_async(run_test_external, args = (test, args))
             else:
                 test.run_test(args)
 
-    if jobs > 1:
+    if jobs_serial > 1:
         pool.close()
         pool.join()
 
@@ -149,6 +153,8 @@ def parse_args():
                         help = "run MCNP")
     parser.add_argument("-j", "--jobs", type = int, default = 1,
                         help = "number of jobs")
+    parser.add_argument("--mpi", action="store_true",
+                        help = "run MCNP in MPI mode")
     args = parser.parse_args()
     if not args.dagmc_preproc and not args.setup_dirs and not args.run_mcnp:
         parser.print_help()
