@@ -18,9 +18,11 @@ names = [ 1,  2,  3,  4,      6,  7,  8,  9, 10,
                  93, 94, 95,         98, 99    ]
 for i, name in enumerate(names):
     names[i] = str(name).zfill(2)
+if args.tests == "all":
+    args.tests = names
 
 tests = {}
-for name in names:
+for name in args.tests:
     tests[name] = mt.mcnp_test(name)
     test = tests[name]
 
@@ -56,4 +58,4 @@ for name in names:
     if test.name == "62":
         test.flags.append("i")
 
-mt.run_multiple_tests(names, tests, args.jobs)
+mt.run_multiple_tests(names, tests, args)

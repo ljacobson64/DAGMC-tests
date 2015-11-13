@@ -11,9 +11,11 @@ args = mt.parse_args()
 names = ["BE08", "C29", "CCR20", "COAIR", "COTEF", "FE09", "FS1ONN", "FS3OFN",
          "FS3ONP", "FS7OFP", "FS7ONN", "H2O19", "KERMIN", "LI616", "N31",
          "PB14", "SKYINP", "SMAIR", "SMTEF"]
+if args.tests == "all":
+    args.tests = names
 
 tests = {}
-for name in names:
+for name in args.tests:
     tests[name] = mt.mcnp_test(name)
     test = tests[name]
 
@@ -21,4 +23,4 @@ for name in names:
 
     test.inputs["inp"] = test.name + "i"
 
-mt.run_multiple_tests(names, tests, args.jobs)
+mt.run_multiple_tests(names, tests, args)

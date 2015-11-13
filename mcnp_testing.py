@@ -1,4 +1,4 @@
-import argparse, os
+import argparse, os, sys
 from collections import OrderedDict
 from subprocess import call
 import multiprocessing as mp
@@ -85,29 +85,34 @@ class mcnp_test:
         for depend in self.depends:
             run_mcnp_str += " " + depend[1] + "=" + depend[1] + depend[0]
         run_mcnp_str = run_mcnp_str.strip()
-        print run_mcnp_str
-        #call_shell(run_mcnp_str, "screen_out", "screen_err")
-        #call_shell("rm -f fcad")
+        #print run_mcnp_str
+        call_shell(run_mcnp_str, "screen_out", "screen_err")
+        call_shell("rm -f fcad")
 
     # Perform all steps required for the test
-    def run_test(self):
+    def run_test(self, args):
         # Run dagmc_preproc on an ACIS file
-        self.run_dagmc_preproc("1e-4")
+        if args.dagmc_preproc:
+            self.run_dagmc_preproc("1e-4")
 
         # Setup results directory
-        #self.setup_result_dir()
+        if args.setup_dirs:
+            self.setup_result_dir()
 
         # Run MCNP
-        #os.chdir(self.dirs["result"])
-        #self.run_mcnp()
-        #os.chdir(self.dirs["orig"])
+        if args.run_mcnp:
+            os.chdir(self.dirs["result"])
+            self.run_mcnp()
+            os.chdir(self.dirs["orig"])
 
 # Needed to make pool.apply_async work
-def run_test_external(test):
-    test.run_test()
+def run_test_external(test, args):
+    test.run_test(args)
 
 # Run all the passed tests
-def run_multiple_tests(names, tests, jobs = 1):
+def run_multiple_tests(names, tests, args):
+    jobs = args.jobs
+
     if jobs > 1:
         pool = mp.Pool(processes = jobs)
 
@@ -115,28 +120,42 @@ def run_multiple_tests(names, tests, jobs = 1):
         test = tests[name]
         if test.depends == []:
             if jobs > 1:
-                pool.apply_async(run_test_external, args = (test,))
+                pool.apply_async(run_test_external, args = (test, args))
             else:
-                test.run_test()
+                test.run_test(args)
     for name in names:
         test = tests[name]
         if test.depends != []:
             if jobs > 1:
-                pool.apply_async(run_test_external, args = (test,))
+                pool.apply_async(run_test_external, args = (test, args))
             else:
-                test.run_test()
+                test.run_test(args)
 
     if jobs > 1:
         pool.close()
         pool.join()
 
+# Parse command line arguments
 def parse_args():
-    parser = argparse.ArgumentParser(description = "Setup MCNP tests.")
+    parser = argparse.ArgumentParser(description =
+                                     "Setup and/or run MCNP tests.")
+    parser.add_argument("tests", nargs = "*", default = "all",
+                        help = "tests to process (default: all)")
+    parser.add_argument("-d", "--dagmc_preproc", action="store_true",
+                        help = "run dagmc_preproc")
+    parser.add_argument("-s", "--setup_dirs", action="store_true",
+                        help = "setup result directories")
+    parser.add_argument("-r", "--run_mcnp", action="store_true",
+                        help = "run MCNP")
     parser.add_argument("-j", "--jobs", type = int, default = 1,
                         help = "number of jobs")
     args = parser.parse_args()
+    if not args.dagmc_preproc and not args.setup_dirs and not args.run_mcnp:
+        parser.print_help()
+        sys.exit(1)
     return args
 
+# Call a shell command
 def call_shell(string, stdout = "", stderr = ""):
     print string
     if stdout == "" and stderr == "":  # neither to file
