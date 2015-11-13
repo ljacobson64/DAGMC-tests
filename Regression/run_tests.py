@@ -3,7 +3,7 @@ import os, sys, inspect
 current_dir = \
     os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
-sys.path.insert(0,parent_dir)
+sys.path.insert(0, parent_dir)
 import mcnp_testing as mt
 
 args = mt.parse_args()
@@ -26,6 +26,7 @@ for name in names:
 
     test.dirs["orig"] = current_dir
 
+    test.inputs["inp"] = "inp" + test.name
     test.dirs["xsdir"] = "../xsec_data"
     test.inputs["xsdir"] = "testdir1"
     test.other["xslib"] = "testlib1"

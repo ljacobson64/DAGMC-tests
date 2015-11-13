@@ -6,6 +6,7 @@ import multiprocessing as mp
 def rewrite_sat(sat_file):
     orig_sat_file = "orig_" + sat_file
     call("mv " + sat_file + " " + orig_sat_file, shell = True)
+    #sat_file = sat_file[:-5] + sat_file[-4:]
     writer = open("rewrite_" + sat_file + ".jou",'w')
     writer.write("import acis \"" + orig_sat_file + "\"\n")
     writer.write("set attribute on\n")

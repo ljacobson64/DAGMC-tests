@@ -16,14 +16,13 @@ class mcnp_test:
         self.dirs["result"] = "Results/" + test_id
 
         self.inputs = OrderedDict()
-        self.inputs["inp"] = "inp" + test_id
-        self.inputs["gcad"] = "geom" + test_id + ".h5m"
+        self.inputs["gcad"] = "geom_" + test_id + ".h5m"
 
         self.other = OrderedDict()
-        self.other["sat"] = "geom" + test_id + ".sat"
+        self.other["sat"] = "geom_" + test_id + ".sat"
 
         self.logs = OrderedDict()
-        self.logs["gcad"] = "geom" + test_id + ".h5m.log"
+        self.logs["gcad"] = "geom_" + test_id + ".h5m.log"
 
         self.cmds = OrderedDict()
         #self.cmd["pre"] = "mpiexec -np 24"
@@ -93,16 +92,21 @@ class mcnp_test:
     # Perform all steps required for the test
     def run_test(self):
         # Run dagmc_preproc on an ACIS file
-        #test.run_dagmc_preproc("1e-4")
+        self.run_dagmc_preproc("1e-4")
 
         # Setup results directory
-        #test.setup_result_dir()
+        #self.setup_result_dir()
 
         # Run MCNP
-        os.chdir(self.dirs["result"])
-        self.run_mcnp()
-        os.chdir(self.dirs["orig"])
+        #os.chdir(self.dirs["result"])
+        #self.run_mcnp()
+        #os.chdir(self.dirs["orig"])
 
+# Needed to make pool.apply_async work
+def run_test_external(test):
+    test.run_test()
+
+# Run all the passed tests
 def run_multiple_tests(names, tests, jobs = 1):
     if jobs > 1:
         pool = mp.Pool(processes = jobs)
@@ -111,14 +115,14 @@ def run_multiple_tests(names, tests, jobs = 1):
         test = tests[name]
         if test.depends == []:
             if jobs > 1:
-                pool.apply_async(test.run_test)
+                pool.apply_async(run_test_external, args = (test,))
             else:
                 test.run_test()
     for name in names:
         test = tests[name]
         if test.depends != []:
             if jobs > 1:
-                pool.apply_async(test.run_test)
+                pool.apply_async(run_test_external, args = (test,))
             else:
                 test.run_test()
 
