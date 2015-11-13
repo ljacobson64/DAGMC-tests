@@ -1,4 +1,5 @@
 import argparse
+from collections import OrderedDict
 from subprocess import call
 import os
 import multiprocessing as mp
@@ -19,80 +20,100 @@ def call_shell(string, stdout = "", stderr = ""):
 
 class mcnp_test:
     def __init__(self, test_id):
-        self.id = test_id
+        self.name = test_id
 
-        self.dirs = {}
+        self.dirs = OrderedDict()
         self.dirs["orig"] = ""
         self.dirs["input"] = "Inputs"
         self.dirs["sat"] = "Geom_sat"
-        self.dirs["h5m"] = "Geom_h5m"
+        self.dirs["gcad"] = "Geom_h5m"
         self.dirs["log"] = "Logs"
-        self.dirs["xsdir"] = "../xsec_data"
         self.dirs["result"] = "Results/" + test_id
+        self.dirs["xsdir"] = "../xsec_data"
 
-        self.inputs = {}
+        self.inputs = OrderedDict()
         self.inputs["inp"] = "inp" + test_id
         self.inputs["gcad"] = "geom" + test_id + ".h5m"
         self.inputs["xsdir"] = "testdir1"
 
-        self.other = {}
+        self.other = OrderedDict()
         self.other["sat"] = "geom" + test_id + ".sat"
         self.other["xslib"] = "testlib1"
 
-        self.logs = {}
-        self.logs["h5m"] = "geom" + test_id + ".h5m.log"
+        self.logs = OrderedDict()
+        self.logs["gcad"] = "geom" + test_id + ".h5m.log"
 
-        self.cmds = {}
+        self.cmds = OrderedDict()
         #self.cmd["pre"] = "mpiexec -np 24"
-        self.cmds["pre"] = ""
+        self.cmds["prefix"] = ""
         self.cmds["exe"] = "mcnp5.mpi"
+        self.cmds["suffix"] = ""
 
         self.flags = []
+        self.depends = []
 
     def __repr__(self):
-        return "mcnp_test: " + self.id
+        return ("Name: " + str(self.name))
 
     def __str__(self):
-        return "mcnp_test: " + self.id
+        return str(self.__dict__) + "\n"
 
     # Run dagmc_preproc on an ACIS file
     def run_dagmc_preproc(self, ftol = 1e-4):
-        call_shell("mkdir -p " + self.dirs["h5m"])
+        satfile = os.path.join(self.dirs["sat"], self.other["sat"])
+        gcadfile = os.path.join(self.dirs["gcad"], self.inputs["gcad"])
+        logfile = os.path.join(self.dirs["log"], self.logs["gcad"])
+
+        call_shell("mkdir -p " + self.dirs["gcad"])
         call_shell("mkdir -p " + self.dirs["log"])
-        call_shell("dagmc_preproc " + os.path.join(self.dirs["sat"], self.other["sat"]) +
-                   " -o " + os.path.join(self.dirs["h5m"], self.inputs["h5m"]) +
-                   " -f " + str(ftol),
-                   os.path.join(self.dirs["log"], self.logs["h5m"]))
+        call_shell("dagmc_preproc " + satfile + " -o " + gcadfile +
+                   " -f " + str(ftol), logfile)
 
     # Setup results directory
     def setup_result_dir(self):
         call_shell("mkdir -p " + self.dirs["result"])
-        call_shell("rm -rf " + self.dirs["result"] + "/*")
-        call_shell("ln -sf " + os.path.join("../..", self.dirs["input"], self.inputs["inp"]) +
-                   " " + os.path.join(self.dirs["result"], self.inputs["inp"]))
-        call_shell("ln -sf " + os.path.join("../..", self.dirs["h5m"], self.inputs["h5m"]) +
-                   " " + os.path.join(self.dirs["result"], self.inputs["h5m"]))
-        call_shell("ln -sf " + os.path.join("../..", self.dirs["xsdir"], self.inputs["xsdir"]) +
-                   " " + os.path.join(self.dirs["result"], self.inputs["xsdir"]))
-        call_shell("ln -sf " + os.path.join("../..", self.dirs["xsdir"], self.inputs["xsdir"]) +
-                   " " + os.path.join(self.dirs["result"], self.other["xslib"]))
+        call_shell("rm -f " + self.dirs["result"] + "/*")
+        for key, val in self.inputs.items():
+            if key in self.dirs:
+                dir = os.path.join("../..", self.dirs[key])
+            else:
+                dir = os.path.join("../..", self.dirs["input"])
+            call_shell("ln -sf " + os.path.join(dir, val) +
+                       " " + os.path.join(self.dirs["result"], val))
+        for depend in self.depends:
+            if depend[1] == "rssa":
+                depend_inp = "wssa"
+            else:
+                depend_inp = depend[1]
+            dep_name = depend[1] + depend[0]
+            dir = os.path.join("..", depend[0])
+            call_shell("ln -sf " + os.path.join(dir, depend_inp) +
+                       " " + os.path.join(self.dirs["result"], dep_name))
+        if "xslib" in self.other:
+            dir = os.path.join("../..", self.dirs["xsdir"])
+            call_shell("ln -sf " + os.path.join(dir, self.other["xslib"]) +
+                       " " + os.path.join(self.dirs["result"],
+                       self.other["xslib"]))
 
     # Run MCNP
     def run_mcnp(self):
-        run_mcnp_str = self.cmds["pre"] + " " + self.cmds["exe"]
+        run_mcnp_str = (self.cmds["prefix"] + " " + self.cmds["exe"] + " " +
+                        self.cmds["suffix"])
         for key, val in self.inputs.items():
             run_mcnp_str += " " + key + "=" + val
+        for depend in self.depends:
+            run_mcnp_str += " " + depend[1] + "=" + depend[1] + depend[0]
         for flag in self.flags:
             run_mcnp_str += " " + flag
-        print run_mcnp_str
-        #call_shell(run_mcnp_str, "screen_out", "screen_err")
+        #print run_mcnp_str
+        call_shell(run_mcnp_str, "screen_out", "screen_err")
 
 def setup_test(test):
     # Run dagmc_preproc on an ACIS file
     #test.run_dagmc_preproc("1e-4")
 
     # Setup results directory
-    #test.setup_result_dir()
+    test.setup_result_dir()
     
     # Run MCNP
     os.chdir(test.dirs["result"])
@@ -106,33 +127,74 @@ def main():
     args = parser.parse_args()
     original_dir = os.getcwd()
 
-    test_ids = [ 1,  2,  3,  4,      6,  7,  8,  9, 10,
-                    12,                         19, 20,
-                21, 22, 23,         26, 27, 28, 29, 30,
-                31, 32, 33, 34, 35, 36, 37,     39,    
-                41, 42,                 47,            
-                61, 62, 63, 64, 65, 66, 67, 68,        
-                                    86,             90,
-                        93, 94, 95,         98, 99    ]
-    test_ids_fatal = [1, 2, 7, 11, 12, 18, 19, 20, 21, 22, 23, 26, 30, 77, 89]
-
-    for i, test_id in enumerate(test_ids):
-        test_ids[i] = str(test_id).zfill(2)
-    for i, test_id in enumerate(test_ids_fatal):
-        test_ids_fatal[i] = str(test_id).zfill(2)
+    names = [ 1,  2,  3,  4,      6,  7,  8,  9, 10,
+                 12,                         19, 20,
+             21, 22, 23,         26, 27, 28, 29, 30,
+             31, 32, 33, 34, 35, 36, 37,     39,    
+             41, 42,                 47,            
+             61, 62, 63, 64, 65, 66, 67, 68,        
+                                 86,             90,
+                     93, 94, 95,         98, 99    ]
+    for i, name in enumerate(names):
+        names[i] = str(name).zfill(2)
 
     jobs = args.jobs
-    pool = mp.Pool(processes = jobs)
-    for test_id in test_ids:
-        test = mcnp_test(test_id)
+    if jobs > 1:
+        pool = mp.Pool(processes = jobs)
+
+    tests = {}
+    for name in names:
+        tests[name] = mcnp_test(name)
+
+    for name in names:
+        test = tests[name]
+
         test.dirs["orig"] = original_dir
 
-        if test_id in test_ids_fatal:
+        if test.name in ["01", "02", "07", "11", "12", "18", "19", "20", "21",
+                         "22", "23", "26", "30", "77", "89"]:
             test.flags.append("fatal")
+        if test.name in ["08", "10", "93"]:
+            test.inputs["wwinp"] = "wwinp" + test.name
+        if test.name in ["62"]:
+            test.inputs["lcad"] = "lcad" + test.name
 
-        pool.apply_async(setup_test, args=(test,))
+        if test.name == "08":
+            test.depends.append(["07", "rssa"])
+        if test.name == "22":
+            test.depends.append(["21", "rssa"])
+        if test.name == "26":
+            test.depends.append(["09", "rssa"])
+            test.depends.append(["09", "runtpe"])
+            test.flags.append("CN")
+        if test.name == "27":
+            test.depends.append(["09", "rssa"])
+        if test.name == "29":
+            test.depends.append(["07", "rssa"])
+        if test.name == "34":
+            test.depends.append(["33", "rssa"])
+        if test.name == "62":
+            test.flags.append("i")
 
-    pool.close()
-    pool.join()
+    #for name in names:
+    #    test = tests[name]
+    #    if test.depends != []:
+    #        continue
+    #    if jobs > 1:
+    #        pool.apply_async(setup_test, args=(test,))
+    #    else:
+    #        setup_test(test)
+    for name in names:
+        test = tests[name]
+        if test.depends == []:
+            continue
+        if jobs > 1:
+            pool.apply_async(setup_test, args=(test,))
+        else:
+            setup_test(test)
+
+    if jobs > 1:
+        pool.close()
+        pool.join()
 
 main()
