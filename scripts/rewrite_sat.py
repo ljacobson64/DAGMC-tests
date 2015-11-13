@@ -1,11 +1,7 @@
+import sys
 from subprocess import call
-import os
 
-satfiles = []
-
-for fname in os.listdir("."):
-    if fname.endswith(".sat"):
-        satfiles.append(fname)
+satfiles = sys.argv
 
 for satfile in satfiles:
     orig_satfile = "orig_" + satfile

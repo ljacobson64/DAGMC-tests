@@ -1,11 +1,6 @@
-from subprocess import call
-import os
+import sys
 
-inpfiles = []
-
-for fname in os.listdir("."):
-    if fname.startswith("inp"):
-        inpfiles.append(fname)
+inpfiles = sys.argv
 
 for inpfile in inpfiles:
     orig_inpfile = "orig_" + inpfile
