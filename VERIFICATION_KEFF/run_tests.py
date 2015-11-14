@@ -25,5 +25,8 @@ for name in names_to_run:
     test.dirs["orig"] = current_dir
 
     test.inputs["inp"] = "prob" + test.name + "i"
+    test.dirs["xsdir"] = "../xsec_data"
+    test.inputs["xsdir"] = "keffdir1"
+    test.other["xslib"] = "kefflib1"
 
 mt.run_multiple_tests(names_to_run, tests, args)
