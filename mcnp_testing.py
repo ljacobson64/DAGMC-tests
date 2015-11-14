@@ -15,7 +15,8 @@ class mcnp_test:
         self.dirs["result"] = "Results/" + name
 
         self.inputs = {}
-        self.inputs["gcad"] = "geom_" + name + ".h5m"
+
+        self.outputs = {}
 
         self.other = {}
         self.other["sat"] = "geom_" + name + ".sat"

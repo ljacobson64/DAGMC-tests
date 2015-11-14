@@ -25,5 +25,11 @@ for name in names_to_run:
     test.dirs["orig"] = current_dir
 
     test.inputs["inp"] = test.name + "i"
+    test.inputs["gcad"] = "geom_" + test.name + ".h5m"
+
+    test.outputs["outp"] = "outp"
+    test.outputs["mctal"] = "mctal"
+    if name in ["FS3OFN", "FS3ONP", "FS7OFP", "FS7ONN"]:
+        test.outputs["wwout"] = "wwout"
 
 mt.run_multiple_tests(names_to_run, tests, args)
