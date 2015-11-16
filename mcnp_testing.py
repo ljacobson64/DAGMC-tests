@@ -13,6 +13,7 @@ class mcnp_test:
         self.dirs["gcad"] = "Geom_h5m"
         self.dirs["log"] = "Logs"
         self.dirs["result"] = "Results/" + name
+        self.dirs["temp"] = "Templates/" + name
 
         self.inputs = {}
 
@@ -57,10 +58,10 @@ class mcnp_test:
         call_shell("rm -f " + self.dirs["result"] + "/*")
         for key, val in self.inputs.items():
             if key in self.dirs:
-                dir = os.path.join("../..", self.dirs[key])
+                input_dir = os.path.join("../..", self.dirs[key])
             else:
-                dir = os.path.join("../..", self.dirs["input"])
-            call_shell("ln -sf " + os.path.join(dir, val) +
+                input_dir = os.path.join("../..", self.dirs["input"])
+            call_shell("ln -sf " + os.path.join(input_dir, val) +
                        " " + os.path.join(self.dirs["result"], val))
         for depend in self.depends:
             if depend[1] == "rssa":
@@ -68,12 +69,13 @@ class mcnp_test:
             else:
                 depend_inp = depend[1]
             dep_name = depend[1] + depend[0]
-            dir = os.path.join("..", depend[0])
-            call_shell("ln -sf " + os.path.join(dir, depend_inp) +
+            depend_dir = os.path.join("..", depend[0])
+            call_shell("ln -sf " + os.path.join(depend_dir, depend_inp) +
                        " " + os.path.join(self.dirs["result"], dep_name))
         if "xslib" in self.other:
-            dir = os.path.join("../..", self.dirs["xsdir"])
-            call_shell("ln -sf " + os.path.join(dir, self.other["xslib"]) +
+            xsdir_dir = os.path.join("../..", self.dirs["xsdir"])
+            call_shell("ln -sf " +
+                       os.path.join(xsdir_dir, self.other["xslib"]) +
                        " " + os.path.join(self.dirs["result"],
                        self.other["xslib"]))
 
@@ -91,6 +93,14 @@ class mcnp_test:
         call_shell(run_mcnp_str, "screen_out", "screen_err")
         call_shell("rm -f fcad")
 
+    # Copy results to template directory
+    def copy_results(self):
+        call_shell("mkdir -p " + self.dirs["temp"])
+        for key, val in self.outputs.items():
+            result = os.path.join(self.dirs["result"], val)
+            template = os.path.join(self.dirs["temp"], val)
+            call_shell("cp -f " + result + " " + template)
+
     # Perform all steps required for the test
     def run_test(self, args):
         # Run dagmc_preproc on an ACIS file
@@ -106,6 +116,10 @@ class mcnp_test:
             os.chdir(self.dirs["result"])
             self.run_mcnp()
             os.chdir(self.dirs["orig"])
+
+        # Copy results to template directory
+        if args.copy_results:
+            self.copy_results()
 
 # Needed to make pool.apply_async work
 def run_test_external(test, args):
@@ -146,18 +160,21 @@ def parse_args():
                                      "Setup and/or run MCNP tests.")
     parser.add_argument("tests", nargs = "*", default = "all",
                         help = "tests to process (default: all)")
-    parser.add_argument("-d", "--dagmc_preproc", action="store_true",
+    parser.add_argument("-d", "--dagmc_preproc", action = "store_true",
                         help = "run dagmc_preproc")
-    parser.add_argument("-s", "--setup_dirs", action="store_true",
+    parser.add_argument("-s", "--setup_dirs", action = "store_true",
                         help = "setup result directories")
-    parser.add_argument("-r", "--run_mcnp", action="store_true",
+    parser.add_argument("-r", "--run_mcnp", action = "store_true",
                         help = "run MCNP")
+    parser.add_argument("-c", "--copy_results", action = "store_true",
+                        help = "copy results to template directory")
     parser.add_argument("-j", "--jobs", type = int, default = 1,
                         help = "number of jobs")
-    parser.add_argument("--mpi", action="store_true",
+    parser.add_argument("--mpi", action = "store_true",
                         help = "run MCNP in MPI mode")
     args = parser.parse_args()
-    if not args.dagmc_preproc and not args.setup_dirs and not args.run_mcnp:
+    if (not args.dagmc_preproc and not args.setup_dirs and not args.run_mcnp
+        and not args.copy_results):
         parser.print_help()
         sys.exit(1)
     return args
