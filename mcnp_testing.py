@@ -56,31 +56,36 @@ class mcnp_test:
     def setup_result_dir(self):
         call_shell("mkdir -p " + self.dirs["result"])
         call_shell("rm -f " + self.dirs["result"] + "/*")
+
+        # Inputs
         for key, val in self.inputs.items():
             if key in self.dirs:
-                input_dir = os.path.join("../..", self.dirs[key])
+                link_orig = os.path.join("../..", self.dirs[key], val)
             else:
-                input_dir = os.path.join("../..", self.dirs["input"])
-            call_shell("ln -sf " + os.path.join(input_dir, val) +
-                       " " + os.path.join(self.dirs["result"], val))
+                link_orig = os.path.join("../..", self.dirs["input"], val)
+            link_new = os.path.join(self.dirs["result"], val)
+            call_shell("ln -sf " + link_orig + " " + link_new)
+
+        # Dependencies on results of other tests
         for depend in self.depends:
             if depend[1] == "rssa":
                 depend_inp = "wssa"
             else:
                 depend_inp = depend[1]
-            dep_name = depend[1] + depend[0]
-            depend_dir = os.path.join("..", depend[0])
-            call_shell("ln -sf " + os.path.join(depend_dir, depend_inp) +
-                       " " + os.path.join(self.dirs["result"], dep_name))
+            link_orig = os.path.join("..", depend[0], depend_inp)
+            link_new = os.path.join(self.dirs["result"], depend[1] + depend[0])
+            call_shell("ln -sf " + link_orig + " " + link_new)
+
+        # xslib
         if "xslib" in self.other:
-            xsdir_dir = os.path.join("../..", self.dirs["xsdir"])
-            call_shell("ln -sf " +
-                       os.path.join(xsdir_dir, self.other["xslib"]) +
-                       " " + os.path.join(self.dirs["result"],
-                       self.other["xslib"]))
+            link_orig = os.path.join("../..", self.dirs["xsdir"],
+                                     self.other["xslib"])
+            link_new = os.path.join(self.dirs["result"], self.other["xslib"])
+            call_shell("ln -sf " + link_orig + " " + link_new)
 
     # Run MCNP
     def run_mcnp(self):
+        # MCNP execution string
         run_mcnp_str = (self.cmds["prefix"] + " " + self.cmds["exe"])
         for flag in self.flags:
             run_mcnp_str += " " + flag
@@ -89,9 +94,19 @@ class mcnp_test:
         for depend in self.depends:
             run_mcnp_str += " " + depend[1] + "=" + depend[1] + depend[0]
         run_mcnp_str = run_mcnp_str.strip()
-        #print run_mcnp_str
+        
+        # Run MCNP
+        os.chdir(self.dirs["result"])
         call_shell(run_mcnp_str, "screen_out", "screen_err")
         call_shell("rm -f fcad")
+        os.chdir(self.dirs["orig"])
+
+        # Diff against the template
+        for key, val in self.outputs.items():
+            result = os.path.join(self.dirs["result"], val)
+            template = os.path.join(self.dirs["temp"], val)
+            diff = os.path.join(self.dirs["result"], "diff_" + key)
+            call_shell("diff " + result + " " + template, diff)
 
     # Copy results to template directory
     def copy_results(self):
@@ -105,7 +120,7 @@ class mcnp_test:
     def run_test(self, args):
         # Run dagmc_preproc on an ACIS file
         if args.dagmc_preproc:
-            self.run_dagmc_preproc("1e-4")
+            self.run_dagmc_preproc()
 
         # Setup results directory
         if args.setup_dirs:
@@ -113,9 +128,7 @@ class mcnp_test:
 
         # Run MCNP
         if args.run_mcnp:
-            os.chdir(self.dirs["result"])
             self.run_mcnp()
-            os.chdir(self.dirs["orig"])
 
         # Copy results to template directory
         if args.copy_results:
