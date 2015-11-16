@@ -30,40 +30,60 @@ for name in names_to_run:
     test = tests[name]
 
     test.dirs["orig"] = current_dir
-    test.dirs["xsdir"] = "../xsec_data"
 
+    # xsdir setup
+    test.dirs["xsdir"] = "../xsec_data"
+    test.inputs["xsdir"] = "testdir1"
+    test.other["xslib"] = "testlib1"
+
+    # Common input
     test.inputs["inp"] = "inp" + test.name
     test.inputs["gcad"] = "geom_" + test.name + ".h5m"
-    test.inputs["xsdir"] = "testdir1"
 
+    # Common output
     test.outputs["outp"] = "outp"
     test.outputs["mctal"] = "mctal"
 
-    test.other["xslib"] = "testlib1"
-
+    # Flags
     if test.name in ["01", "02", "07", "11", "12", "18", "19", "20", "21",
                      "22", "23", "26", "30", "77", "89"]:
         test.flags.append("fatal")
-    if test.name in ["08", "10", "93"]:
-        test.inputs["wwinp"] = "wwinp" + test.name
     if test.name == "26":
         test.flags.append("CN")
     if test.name in ["62"]:
-        test.inputs["lcad"] = "lcad" + test.name
         test.flags.append("i")
 
-    if test.name == "08":
+    # Special input
+    if test.name in ["08", "10", "93"]:
+        test.inputs["wwinp"] = "wwinp" + test.name
+    if test.name in ["62"]:
+        test.inputs["lcad"] = "lcad" + test.name
+
+    # Dependencies
+    if test.name in ["08"]:
         test.depends.append(["07", "rssa"])
-    if test.name == "22":
+    if test.name in ["22"]:
         test.depends.append(["21", "rssa"])
-    if test.name == "26":
+    if test.name in ["27"]:
         test.depends.append(["09", "rssa"])
-        test.depends.append(["09", "runtpe"])
-    if test.name == "27":
-        test.depends.append(["09", "rssa"])
-    if test.name == "29":
+    if test.name in ["29"]:
         test.depends.append(["07", "rssa"])
-    if test.name == "34":
+    if test.name in ["34"]:
         test.depends.append(["33", "rssa"])
+    if test.name in ["26"]:
+        test.depends.append(["09", "wssa"])
+        test.depends.append(["09", "runtpe"])
+
+    # Special output
+    if test.name in ["62"]:
+        del test.outputs["mctal"]
+    if test.name in ["39"]:
+        test.outputs["meshtal"] = "meshtal"
+    if test.name in ["08", "10", "12"]:
+        test.outputs["wwout"] = "wwout"
+    if test.name in ["08", "12"]:
+        test.outputs["wwone"] = "wwone"
+    if test.name in ["02", "03", "08", "23"]:
+        test.outputs["ptrac"] = "ptrac"
 
 mt.run_multiple_tests(names_to_run, tests, args)

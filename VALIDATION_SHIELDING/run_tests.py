@@ -24,11 +24,15 @@ for name in names_to_run:
 
     test.dirs["orig"] = current_dir
 
+    # Common input
     test.inputs["inp"] = test.name + "i"
     test.inputs["gcad"] = "geom_" + test.name + ".h5m"
 
+    # Common output
     test.outputs["outp"] = "outp"
     test.outputs["mctal"] = "mctal"
+
+    # Special output
     if name in ["FS3OFN", "FS3ONP", "FS7OFP", "FS7ONN"]:
         test.outputs["wwout"] = "wwout"
 
