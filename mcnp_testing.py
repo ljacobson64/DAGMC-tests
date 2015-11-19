@@ -25,7 +25,7 @@ class mcnp_test:
             self.cmds["prefix"] = ""
         self.cmds["exe"] = "mcnp5.mpi"
 
-        self.meshtals = []
+        self.meshes = []
         self.depends = []
         self.flags = []
 
@@ -65,10 +65,10 @@ class mcnp_test:
             link_new = os.path.join(self.dirs["result"], val)
             call_shell("ln -sf " + link_orig + " " + link_new)
 
-        # Mesh tallies
-        for meshtal in self.meshtals:
-            link_orig = os.path.join("../..", self.dirs["input"], meshtal)
-            link_new = os.path.join(self.dirs["result"], meshtal)
+        # Meshes
+        for mesh in self.meshes:
+            link_orig = os.path.join("../..", self.dirs["input"], mesh)
+            link_new = os.path.join(self.dirs["result"], mesh)
             call_shell("ln -sf " + link_orig + " " + link_new)
 
         # Dependencies on results of other tests
