@@ -25,8 +25,9 @@ class mcnp_test:
             self.cmds["prefix"] = ""
         self.cmds["exe"] = "mcnp5.mpi"
 
-        self.flags = []
+        self.meshtals = []
         self.depends = []
+        self.flags = []
 
     def __repr__(self):
         return ("Name: " + str(self.name))
@@ -64,6 +65,12 @@ class mcnp_test:
             link_new = os.path.join(self.dirs["result"], val)
             call_shell("ln -sf " + link_orig + " " + link_new)
 
+        # Mesh tallies
+        for meshtal in self.meshtals:
+            link_orig = os.path.join("../..", self.dirs["input"], meshtal)
+            link_new = os.path.join(self.dirs["result"], meshtal)
+            call_shell("ln -sf " + link_orig + " " + link_new)
+
         # Dependencies on results of other tests
         for depend in self.depends:
             if depend[1] == "rssa":
@@ -76,6 +83,8 @@ class mcnp_test:
 
         # Other files
         for key, val in self.other.items():
+            if key == "sat":
+                return
             if key == "xslib":
                 link_orig = os.path.join("../..", self.dirs["xsdir"], val)
                 link_new = os.path.join(self.dirs["result"], val)
@@ -95,7 +104,7 @@ class mcnp_test:
         for depend in self.depends:
             run_mcnp_str += " " + depend[1] + "=" + depend[1] + depend[0]
         run_mcnp_str = run_mcnp_str.strip()
-        
+
         # Run MCNP
         os.chdir(self.dirs["result"])
         call_shell(run_mcnp_str, "screen_out", "screen_err")
