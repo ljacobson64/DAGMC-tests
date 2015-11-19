@@ -7,20 +7,13 @@ class mcnp_test:
         self.name = name
 
         self.dirs = {}
-        self.dirs["orig"] = ""
-        self.dirs["input"] = "Inputs"
-        self.dirs["sat"] = "Geom_sat"
-        self.dirs["gcad"] = "Geom_h5m"
         self.dirs["log"] = "Logs"
         self.dirs["result"] = "Results/" + name
         self.dirs["temp"] = "Templates/" + name
 
         self.inputs = {}
-
         self.outputs = {}
-
         self.other = {}
-        self.other["sat"] = "geom_" + name + ".sat"
 
         self.logs = {}
         self.logs["gcad"] = "geom_" + name + ".h5m.log"
@@ -43,6 +36,11 @@ class mcnp_test:
 
     # Run dagmc_preproc on an ACIS file
     def run_dagmc_preproc(self, ftol = "1e-4"):
+        if (("sat" not in self.dirs) or ("sat" not in self.other) or
+            ("gcad" not in self.dirs) or ("gcad" not in self.inputs) or
+            ("log" not in self.dirs) or ("gcad" not in self.logs)):
+            return
+
         satfile = os.path.join(self.dirs["sat"], self.other["sat"])
         gcadfile = os.path.join(self.dirs["gcad"], self.inputs["gcad"])
         logfile = os.path.join(self.dirs["log"], self.logs["gcad"])
@@ -76,11 +74,14 @@ class mcnp_test:
             link_new = os.path.join(self.dirs["result"], depend[1] + depend[0])
             call_shell("ln -sf " + link_orig + " " + link_new)
 
-        # xslib
-        if "xslib" in self.other:
-            link_orig = os.path.join("../..", self.dirs["xsdir"],
-                                     self.other["xslib"])
-            link_new = os.path.join(self.dirs["result"], self.other["xslib"])
+        # Other files
+        for key, val in self.other.items():
+            if key == "xslib":
+                link_orig = os.path.join("../..", self.dirs["xsdir"], val)
+                link_new = os.path.join(self.dirs["result"], val)
+            else:
+                link_orig = os.path.join("../..", self.dirs["input"], val)
+                link_new = os.path.join(self.dirs["result"], val)
             call_shell("ln -sf " + link_orig + " " + link_new)
 
     # Run MCNP

@@ -22,7 +22,11 @@ for name in names_to_run:
     tests[name] = mt.mcnp_test(name, args)
     test = tests[name]
 
+    # Directories
     test.dirs["orig"] = current_dir
+    test.dirs["input"] = "Inputs"
+    test.dirs["sat"] = "Geom_sat"
+    test.dirs["gcad"] = "Geom_h5m"
 
     # xsdir setup
     test.dirs["xsdir"] = "../xsec_data"
@@ -32,6 +36,7 @@ for name in names_to_run:
     # Common input
     test.inputs["inp"] = "prob" + test.name + "i"
     test.inputs["gcad"] = "geom_" + test.name + ".h5m"
+    test.other["sat"] = "geom_" + test.name + ".sat"
 
     # Common output
     test.outputs["outp"] = "outp"
