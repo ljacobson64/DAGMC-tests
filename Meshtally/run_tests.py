@@ -88,31 +88,31 @@ for name in names_to_run:
 
     # Special output
     if name in ["mode_np", "stu_cyl2"]:
-        test.outputs["meshtal4"] = "meshtal4.vtk"
+        test.outputs["meshtal4"] = "test_meshtal4.vtk"
     if name in ["energy_groups", "material_discontinuity", "metroid",
                 "mode_np", "tally_multipliers"]:
-        test.outputs["meshtal14"] = "meshtal14.vtk"
+        test.outputs["meshtal14"] = "test_meshtal14.vtk"
     if name in ["conformal_cyl1", "conformal_cyl2", "energy_groups",
                 "gradient_flux", "material_discontinuity", "mode_np",
                 "reflecting_boundaries", "stu_cyl", "tally_multipliers",
                 "uniform_flux", "uniform_vol_source"]:
-        test.outputs["meshtal24"] = "meshtal24.vtk"
+        test.outputs["meshtal24"] = "test_meshtal24.vtk"
     if name in ["conformal_cyl1", "conformal_cyl2", "energy_groups",
                 "gradient_flux", "material_discontinuity", "mode_np",
                 "reflecting_boundaries", "squares", "stu_cyl",
                 "tally_multipliers", "uniform_flux", "uniform_vol_source"]:
-        test.outputs["meshtal34"] = "meshtal34.vtk"
+        test.outputs["meshtal34"] = "test_meshtal34.vtk"
     if name in ["conformal_cyl1", "conformal_cyl2", "energy_groups",
                 "gradient_flux", "material_discontinuity", "mode_np",
                 "reflecting_boundaries", "squares", "stu_cyl",
                 "tally_multipliers", "uniform_flux", "uniform_vol_source"]:
-        test.outputs["meshtal44"] = "meshtal44.vtk"
+        test.outputs["meshtal44"] = "test_meshtal44.vtk"
     if name in ["conformal_cyl1", "conformal_cyl2", "energy_groups",
                 "gradient_flux", "material_discontinuity", "mode_np",
                 "reflecting_boundaries", "squares", "stu_cyl",
                 "tally_multipliers", "uniform_vol_source"]:
-        test.outputs["meshtal54"] = "meshtal54.vtk"
+        test.outputs["meshtal54"] = "test_meshtal54.vtk"
     if name in ["stu_cyl", "stu_cyl2"]:
-        test.outputs["meshtal64"] = "meshtal64.vtk"
+        test.outputs["meshtal64"] = "test_meshtal64.vtk"
 
 mt.run_multiple_tests(names_to_run, tests, args)
