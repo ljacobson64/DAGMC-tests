@@ -1,6 +1,11 @@
 #!/bin/bash
 
-declare -a tarballs=(All_Meshtally.tar.gz \
+declare -a tarballs=(Geom_all_Meshtally.tar.gz \
+                     Geom_h5m_DAGMC.tar.gz \
+                     Geom_h5m_Regression.tar.gz \
+                     Geom_h5m_VALIDATION_CRITICALITY.tar.gz \
+                     Geom_h5m_VALIDATION_SHIELDING.tar.gz \
+                     Geom_h5m_VERIFICATION_KEFF.tar.gz \
                      Geom_sat_DAGMC.tar.gz \
                      Geom_sat_Regression.tar.gz \
                      Geom_sat_VALIDATION_CRITICALITY.tar.gz \
