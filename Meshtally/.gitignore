@@ -1,3 +1,5 @@
+Inputs/*/*.sat
+Inputs/*/*.h5m
 Geom_h5m
 Logs
 Results
