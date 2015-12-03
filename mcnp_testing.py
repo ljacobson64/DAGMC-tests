@@ -160,18 +160,10 @@ def run_multiple_tests(names, tests, args):
 
     for name in names:
         test = tests[name]
-        if test.depends == []:
-            if jobs_serial > 1:
-                pool.apply_async(run_test_external, args = (test, args))
-            else:
-                test.run_test(args)
-    for name in names:
-        test = tests[name]
-        if test.depends != []:
-            if jobs_serial > 1:
-                pool.apply_async(run_test_external, args = (test, args))
-            else:
-                test.run_test(args)
+        if jobs_serial > 1:
+            pool.apply_async(run_test_external, args = (test, args))
+        else:
+            test.run_test(args)
 
     if jobs_serial > 1:
         pool.close()
