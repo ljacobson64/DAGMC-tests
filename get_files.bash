@@ -14,7 +14,7 @@ declare -a tarballs=(Geom_all_Meshtally.tar.gz \
                      xsec_data.tar.gz)
 
 for tarball in ${tarballs[@]}; do
-  wget cnergdata.engr.wisc.edu/DAGMC-tests/$tarball
+  wget cnergdata.engr.wisc.edu/DAGMC-tests/tarballs/$tarball
   tar -xzvf $tarball
   rm -f $tarball
 done
