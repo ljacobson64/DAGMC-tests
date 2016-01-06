@@ -169,6 +169,33 @@ def run_multiple_tests(names, tests, args):
         pool.close()
         pool.join()
 
+# Produce diff summary
+def produce_summary(names, tests, args):
+    writer = open("diff_summary", 'w')
+    keys = []
+    for name in names:
+        test = tests[name]
+        for key, val in test.outputs.items():
+            if key not in keys:
+                keys.append(key)
+    for key in keys:
+        writer.write("%10s" % key)
+    writer.write("\n")
+    for name in names:
+        test = tests[name]
+        for key in keys:
+            if key in test.outputs:
+                diff = os.path.join(test.dirs["result"], "diff_" + key)
+                ndiffs = 0
+                for line in open(diff, 'r'):
+                    if line[0] == ">":
+                        ndiffs += 1
+                writer.write("%10s" % ndiffs)
+            else:
+                writer.write("%10s" % "-")
+        writer.write("\n")
+    writer.close()
+
 # Parse command line arguments
 def parse_args():
     parser = argparse.ArgumentParser(description =
@@ -181,6 +208,8 @@ def parse_args():
                         help = "setup result directories")
     parser.add_argument("-r", "--run_mcnp", action = "store_true",
                         help = "run MCNP")
+    parser.add_argument("--summary", action = "store_true",
+                        help = "produce diff summary")
     parser.add_argument("-c", "--copy_results", action = "store_true",
                         help = "copy results to template directory")
     parser.add_argument("-j", "--jobs", type = int, default = 1,
@@ -189,7 +218,7 @@ def parse_args():
                         help = "run MCNP in MPI mode")
     args = parser.parse_args()
     if (not args.dagmc_preproc and not args.setup_dirs and not args.run_mcnp
-        and not args.copy_results):
+        and not args.summary and not args.copy_results):
         parser.print_help()
         sys.exit(1)
     return args

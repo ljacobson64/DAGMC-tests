@@ -42,3 +42,5 @@ for name in names_to_run:
         test.outputs["wwout"] = "wwout"
 
 mt.run_multiple_tests(names_to_run, tests, args)
+if args.summary:
+    mt.produce_summary(names_to_run, tests, args)

@@ -116,3 +116,5 @@ for name in names_to_run:
         test.outputs["meshtal64"] = "test_meshtal64.vtk"
 
 mt.run_multiple_tests(names_to_run, tests, args)
+if args.summary:
+    mt.produce_summary(names_to_run, tests, args)
