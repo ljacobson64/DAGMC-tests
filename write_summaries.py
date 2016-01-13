@@ -1,4 +1,5 @@
 import os
+import time
 
 def write_line(writer, level, text):
     writer.write("  "*level + text + "\n")
@@ -7,10 +8,11 @@ def write_html_head(writer):
     write_line(writer, 0, "<!DOCTYPE HTML PUBLIC>")
     write_line(writer, 0, "<html>")
     write_line(writer, 1, "<head>")
-    write_line(writer, 2, "<title>Insert title here</title>")
+    write_line(writer, 2, "<title>DAG-MCNP testing diff summary</title>")
     write_line(writer, 1, "</head>")
     write_line(writer, 1, "<body>")
-    write_line(writer, 2, "<h1>Insert title here</h1>")
+    write_line(writer, 2, "<h1>DAG-MCNP testing diff summary</h1>")
+    write_line(writer, 2, "<h3>" + datetime_1 + "</h3>")
 
 def write_html_data(writer, suite, ftypes, tests, ndiffs):
     write_line(writer, 2, "<h2>" + suite + "</h2>")
@@ -35,6 +37,10 @@ def write_html_tail(writer):
     write_line(writer, 1, "</body>")
     write_line(writer, 0, "</html>")
 
+def write_text_head(writer):
+    writer.write("DAG-MCNP testing diff summary\n\n")
+    writer.write("%s\n\n" % datetime_1)
+
 def write_text_data(writer, suite, ftypes, tests, ndiffs):
     writer.write("%s\n" % suite)
     writer.write("%-24s" % "Name")
@@ -51,14 +57,22 @@ def write_text_data(writer, suite, ftypes, tests, ndiffs):
         writer.write("\n")
     writer.write("\n")
 
+global datetime_1
+datetime_1 = time.strftime("%Y/%m/%d  %H:%M:%S")
+datetime_2 = datetime_1.replace("/", "-").replace(":", "-").replace(" ", "_")
+print datetime_1
+print datetime_2
+
 suites = ["DAGMC", "Meshtally", "Regression", "VALIDATION_CRITICALITY",
           "VALIDATION_SHIELDING", "VERIFICATION_KEFF"]
 
-summary_text = os.path.join("summaries", "summary.txt")
-summary_html = os.path.join("summaries", "summary.html")
+summary_text = os.path.join("summaries", "summary_" + datetime_2 + ".txt")
+summary_html = os.path.join("summaries", "summary_" + datetime_2 + ".html")
 
 with open(summary_html, 'wb') as writer:
     write_html_head(writer)
+with open(summary_text, 'wb') as writer:
+    write_text_head(writer)
 
 for suite in suites:
     results_dir = os.path.join(suite, "Results")
@@ -98,11 +112,10 @@ for suite in suites:
                 if line[0] == ">" or line[0] == "<":
                     ndiffs[test][ftype] += 1
 
-    with open(summary_text, 'wb') as writer:
-        write_text_data(writer, suite, ftypes, tests, ndiffs)
-
     with open(summary_html, 'ab') as writer:
         write_html_data(writer, suite, ftypes, tests, ndiffs)
+    with open(summary_text, 'wb') as writer:
+        write_text_data(writer, suite, ftypes, tests, ndiffs)
 
 with open(summary_html, 'ab') as writer:
     write_html_tail(writer)
