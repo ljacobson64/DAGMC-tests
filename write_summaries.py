@@ -60,8 +60,6 @@ def write_text_data(writer, suite, ftypes, tests, ndiffs):
 global datetime_1
 datetime_1 = time.strftime("%Y/%m/%d  %H:%M:%S")
 datetime_2 = datetime_1.replace("/", "-").replace(":", "-").replace(" ", "_")
-print datetime_1
-print datetime_2
 
 suites = ["DAGMC", "Meshtally", "Regression", "VALIDATION_CRITICALITY",
           "VALIDATION_SHIELDING", "VERIFICATION_KEFF"]
