@@ -64,8 +64,12 @@ datetime_2 = datetime_1.replace("/", "-").replace(":", "-").replace(" ", "_")
 suites = ["DAGMC", "Meshtally", "Regression", "VALIDATION_CRITICALITY",
           "VALIDATION_SHIELDING", "VERIFICATION_KEFF"]
 
-summary_text = os.path.join("summaries", "summary_" + datetime_2 + ".txt")
-summary_html = os.path.join("summaries", "summary_" + datetime_2 + ".html")
+folder = "summaries"
+summary_text = os.path.join(folder, "summary_" + datetime_2 + ".txt")
+summary_html = os.path.join(folder, "summary_" + datetime_2 + ".html")
+
+if not os.path.isdir(folder):
+    os.mkdir(folder)
 
 with open(summary_html, 'wb') as writer:
     write_html_head(writer)
