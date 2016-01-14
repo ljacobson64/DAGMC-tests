@@ -189,7 +189,7 @@ def parse_args():
                         help = "run MCNP in MPI mode")
     args = parser.parse_args()
     if (not args.dagmc_preproc and not args.setup_dirs and not args.run_mcnp
-        and not args.summary and not args.copy_results):
+        and not args.copy_results):
         parser.print_help()
         sys.exit(1)
     return args
