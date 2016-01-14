@@ -14,17 +14,19 @@ def write_html_head(writer):
     write_line(writer, 2, "<h1>DAG-MCNP testing diff summary</h1>")
     write_line(writer, 2, "<h3>" + datetime_1 + "</h3>")
 
-def write_html_data(writer, suite, ftypes, tests, ndiffs):
+def write_html_data(writer, suite, ftypes, tests, ndiffs, ctms):
     write_line(writer, 2, "<h2>" + suite + "</h2>")
     write_line(writer, 2, "<table border=\"1\" cellpadding=\"4\" cellspacing=\"0\">")
     write_line(writer, 3, "<tr>")
     write_line(writer, 4, "<th>Name</th>")
+    write_line(writer, 4, "<th align=\"right\">ctm</th>")
     for ftype in ftypes:
         write_line(writer, 4, "<th align=\"right\">" + ftype + "</th>")
     write_line(writer, 3, "</tr>")
     for test in tests:
         write_line(writer, 3, "<tr>")
         write_line(writer, 4, "<td>" + test + "</td>")
+        write_line(writer, 4, "<td align=\"right\">" + ctms[test] + "</td>")
         for ftype in ftypes:
             if ftype in ndiffs[test]:
                 write_line(writer, 4, "<td align=\"right\">" + str(ndiffs[test][ftype]) + "</td>")
@@ -41,14 +43,15 @@ def write_text_head(writer):
     writer.write("DAG-MCNP testing diff summary\n\n")
     writer.write("%s\n\n" % datetime_1)
 
-def write_text_data(writer, suite, ftypes, tests, ndiffs):
+def write_text_data(writer, suite, ftypes, tests, ndiffs, ctms):
     writer.write("%s\n" % suite)
-    writer.write("%-24s" % "Name")
+    writer.write("%-24s%12s" % ("Name", "ctm"))
     for ftype in ftypes:
         writer.write("%12s" % ftype)
     writer.write("\n")
     for test in tests:
         writer.write("%-24s" % test)
+        writer.write("%12s" % ctms[test])
         for ftype in ftypes:
             if ftype in ndiffs[test]:
                 writer.write("%12s" % ndiffs[test][ftype])
@@ -81,6 +84,7 @@ for suite in suites:
     if not os.path.isdir(results_dir):
         continue
 
+    # Get all test names
     tests = [x[0] for x in os.walk(results_dir)]
     for i, test in enumerate(tests):
         if test == suite + "/Results":
@@ -89,6 +93,7 @@ for suite in suites:
         tests[i] = tests[i].replace(suite + "/" + "Results/", "")
     tests = sorted(tests)
 
+    # Get all diff file types
     ftypes = []
     for test in tests:
         test_dir = os.path.join(results_dir, test)
@@ -100,6 +105,7 @@ for suite in suites:
                     ftypes.append(ftype)
     ftypes = sorted(ftypes)
 
+    # Count the number of diffs for each diff file in each test
     ndiffs = {}
     for test in tests:
         test_dir = os.path.join(results_dir, test)
@@ -114,10 +120,18 @@ for suite in suites:
                 if line[0] == ">" or line[0] == "<":
                     ndiffs[test][ftype] += 1
 
+    # Get the computer time for each test
+    ctms = {}
+    for test in tests:
+        ctms[test] = "-"
+        for line in open(os.path.join(suite, "Results", test, "screen_out"), 'r'):
+            if "ctm =" in line:
+                ctms[test] = line.split()[2]
+
     with open(summary_html, 'ab') as writer:
-        write_html_data(writer, suite, ftypes, tests, ndiffs)
+        write_html_data(writer, suite, ftypes, tests, ndiffs, ctms)
     with open(summary_text, 'wb') as writer:
-        write_text_data(writer, suite, ftypes, tests, ndiffs)
+        write_text_data(writer, suite, ftypes, tests, ndiffs, ctms)
 
 with open(summary_html, 'ab') as writer:
     write_html_tail(writer)
