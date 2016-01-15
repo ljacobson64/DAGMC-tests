@@ -32,7 +32,10 @@ def write_html_data(writer, suite, ftypes, tests, ndiffs, ctms):
             write_line(writer, 4, "<td>" + ctms[test] + "</td>")
         for ftype in ftypes:
             if ftype in ndiffs[test]:
-                write_line(writer, 4, "<td align=\"right\">" + str(ndiffs[test][ftype]) + "</td>")
+                if ndiffs[test][ftype] > 0:
+                    write_line(writer, 4, '<td align="right"><b><font color="red">' + str(ndiffs[test][ftype]) + '</font></b></td>')
+                else:
+                    write_line(writer, 4, '<td align="right">' + str(ndiffs[test][ftype]) + '</td>')
             else:
                 write_line(writer, 4, "<td>-</td>")
         write_line(writer, 3, "</tr>")
