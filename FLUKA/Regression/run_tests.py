@@ -10,9 +10,12 @@ import fluka_testing as ft
 
 args = ft.parse_args()
 
-names = [1, 2, 3, 11, 12, 13, 21, 22, 41, 42, 51, 52, 61, 62]
-for i, name in enumerate(names):
-    names[i] = 'test' + str(name).zfill(2)
+temp = [1, 2, 3, 11, 12, 13, 21, 22, 41, 42, 51, 52, 61, 62]
+names = [''] * len(temp) * 2
+for i, name in enumerate(temp):
+    names[i] = str(name).zfill(2) + '_nat'
+for i, name in enumerate(temp):
+    names[i + len(temp)] = str(name).zfill(2) + '_dag'
 
 if args.tests == 'all':
     names_to_run = names
@@ -25,55 +28,42 @@ for name in names_to_run:
     test = tests[name]
 
     # Run types
-    test.runtypes = ['', '']
-    test.runtypes[0] = 'native'
-    if test.name in ['test41', 'test42']:
-        test.runtypes[1] = 'usrbdx'
-    elif test.name in ['test61', 'test62']:
-        test.runtypes[1] = 'code'
+    if test.name.split('_')[1] == 'nat':
+        test.geom_type = 'native'
+    elif test.name.split('_')[1] == 'dag':
+        test.geom_type = 'dagmc'
+    if test.name.split('_')[0] in ['41', '42']:
+        test.run_type = 'usrbdx'
+    elif test.name.split('_')[0] in ['61', '62']:
+        test.run_type = 'code'
     else:
-        test.runtypes[1] = 'usrtrack'
+        test.run_type = 'usrtrack'
 
     # Number of runs
-    if test.name in ['test01', 'test61', 'test62']:
-        test.numruns = 1
+    if test.name.split('_')[0] in ['01', '61', '62']:
+        test.num_runs = 1
     else:
-        test.numruns = 5
+        test.num_runs = 5
 
     # Directories
     test.dirs['orig'] = current_dir
-    test.dirs['input'] = 'Inputs_native'
-    test.dirs['result'] = os.path.join('Results_native', test.name)
-    test.dirs['temp'] = os.path.join('Templates_native', test.name)
+    test.dirs['input'] = 'Inputs'
+    test.dirs['result'] = os.path.join('Results', test.name)
+    test.dirs['temp'] = os.path.join('Templates', test.name)
+    if test.geom_type == 'dagmc':
+        test.dirs['gcad'] = 'Geom_h5m'
 
     # Inputs
     test.inputs['inp'] = test.name + '.inp'
+    if test.geom_type == 'dagmc':
+        test.inputs['gcad'] = 'geom_' + test.name + '.h5m'
 
     # Outputs
-    if test.runtypes[1] != 'code':
-        for i in range(test.numruns):
-            istr = str(i).zfill(3)
-            test.outputs['out' + istr] = test.name + istr + '.out'
+    if test.run_type != 'code':
+        #for i in range(test.numruns):
+        #    istr = str(i).zfill(3)
+        #    test.outputs['out' + istr] = test.name + istr + '.out'
         test.outputs['sum'] = test.name + '_sum.lis'
         test.outputs['tab'] = test.name + '_tab.lis'
 
-# Native runs
-ft.run_multiple_tests(names_to_run, tests, args)
-
-for name in names_to_run:
-    test = tests[name]
-
-    # Run types
-    test.runtypes[0] = 'dagmc'
-
-    # Directories
-    test.dirs['input'] = 'Inputs_dagmc'
-    test.dirs['gcad'] = 'Geom_h5m'
-    test.dirs['result'] = os.path.join('Results_dagmc', test.name)
-    test.dirs['temp'] = os.path.join('Templates_dagmc', test.name)
-
-    # Inputs
-    test.inputs['gcad'] = 'geom_' + test.name + '.h5m'
-
-# DAGMC runs
 ft.run_multiple_tests(names_to_run, tests, args)

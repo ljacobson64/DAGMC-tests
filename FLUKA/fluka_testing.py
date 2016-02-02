@@ -13,8 +13,9 @@ class fluka_test:
         self.outputs = {}
         self.other = {}
         self.logs = {}
-        self.runtypes = []
-        self.numruns = None
+        self.geom_type = ''
+        self.run_type = ''
+        self.num_runs = None
 
     def __repr__(self):
         return ('Name: ' + str(self.name))
@@ -54,7 +55,7 @@ class fluka_test:
 
         # Write FLUKA process file
         writer = open(os.path.join(self.dirs['result'], 'process'), 'w')
-        for i in range(1, self.numruns + 1):
+        for i in range(1, self.num_runs + 1):
             writer.write(self.name + str(i).zfill(3) + '_fort.21\n')
         writer.write('\n' + self.name + '\n')
         writer.close()
@@ -62,21 +63,21 @@ class fluka_test:
     # Run FLUKA
     def run_fluka(self):
         # FLUKA execution string
-        if self.runtypes[1] == 'code':
+        if self.run_type == 'code':
             run_fluka_str = ''
         else:
             run_fluka_str = ('$FLUPRO/flutil/rfluka -N0 -M' +
-                             str(self.numruns))
-            if self.runtypes[0] == 'native':
+                             str(self.num_runs))
+            if self.geom_type == 'native':
                 pass
-            elif self.runtypes[0] == 'dagmc':
+            elif self.geom_type == 'dagmc':
                 run_fluka_str += (' -e $FLUDAG/mainfludag -d ' +
                                   os.path.join('../..', self.dirs['gcad'],
                                                self.inputs['gcad']))
             run_fluka_str += ' ' + self.inputs['inp']
-        if self.runtypes[1] == 'usrtrack':
+        if self.run_type == 'usrtrack':
             process_fluka_str = '$FLUPRO/flutil/ustsuw < process'
-        elif self.runtypes[1] == 'usrbdx':
+        elif self.run_type == 'usrbdx':
             process_fluka_str = '$FLUPRO/flutil/usxsuw < process'
         else:
             process_fluka_str = ''
@@ -168,7 +169,6 @@ def parse_args():
 # Call a shell command
 def call_shell(string, stdout = '', stderr = ''):
     print string
-    #'''
     if stdout == '' and stderr == '':  # neither to file
         call(string, shell = True)
     elif stderr == '':  # stdout to file
@@ -180,4 +180,3 @@ def call_shell(string, stdout = '', stderr = ''):
     else:  # both to different files
         call('(' + string + ' | tee ' + stdout +
              ') 3>&1 1>&2 2>&3 | tee ' + stderr, shell = True)
-    #'''
