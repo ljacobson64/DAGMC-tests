@@ -9,26 +9,11 @@ class fluka_test:
         self.name = name
 
         self.dirs = {}
-        self.dirs['input'] = 'Inputs_native'
-        #self.dirs['input'] = 'Inputs_dagmc'
-        #self.dirs['sat'] = 'Geom_sat'
-        #self.dirs['gcad'] = 'Geom_h5m'
-        self.dirs['result'] = os.path.join('Results', self.name)
-        self.dirs['temp'] = os.path.join('Templates', self.name)
-
         self.inputs = {}
-        self.inputs['inp'] = self.name + '.inp'
-        #self.inputs['gcad'] = 'geom_' + self.name + '.h5m'
-
         self.outputs = {}
-        self.outputs['sum'] = self.name + '_sum.lis'
-        self.outputs['tab'] = self.name + '_tab.lis'
-
         self.other = {}
         self.logs = {}
-
-        self.runtype = ''
-
+        self.runtypes = []
         self.numruns = None
 
     def __repr__(self):
@@ -50,8 +35,8 @@ class fluka_test:
 
         call_shell('mkdir -p ' + self.dirs['gcad'])
         call_shell('mkdir -p ' + self.dirs['log'])
-        call_shell('dagmc_preproc ' + satfile + ' -o ' + gcadfile +
-                   ' -f ' + str(ftol), logfile)
+        call_shell('dagmc_preproc ' + satfile + ' -o ' + gcadfile + ' -f ' +
+                   str(ftol), logfile)
 
     # Setup results directory
     def setup_result_dir(self):
@@ -77,14 +62,21 @@ class fluka_test:
     # Run FLUKA
     def run_fluka(self):
         # FLUKA execution string
-        if self.runtype == 'code':
+        if self.runtypes[1] == 'code':
             run_fluka_str = ''
         else:
             run_fluka_str = ('$FLUPRO/flutil/rfluka -N0 -M' +
-                             str(self.numruns) + ' ' + self.inputs['inp'])
-        if self.runtype == 'usrtrack':
+                             str(self.numruns))
+            if self.runtypes[0] == 'native':
+                pass
+            elif self.runtypes[0] == 'dagmc':
+                run_fluka_str += (' -e $FLUDAG/mainfludag -d ' +
+                                  os.path.join('../..', self.dirs['gcad'],
+                                               self.inputs['gcad']))
+            run_fluka_str += ' ' + self.inputs['inp']
+        if self.runtypes[1] == 'usrtrack':
             process_fluka_str = '$FLUPRO/flutil/ustsuw < process'
-        elif self.runtype == 'usrbdx':
+        elif self.runtypes[1] == 'usrbdx':
             process_fluka_str = '$FLUPRO/flutil/usxsuw < process'
         else:
             process_fluka_str = ''
@@ -176,6 +168,7 @@ def parse_args():
 # Call a shell command
 def call_shell(string, stdout = '', stderr = ''):
     print string
+    #'''
     if stdout == '' and stderr == '':  # neither to file
         call(string, shell = True)
     elif stderr == '':  # stdout to file
@@ -187,3 +180,4 @@ def call_shell(string, stdout = '', stderr = ''):
     else:  # both to different files
         call('(' + string + ' | tee ' + stdout +
              ') 3>&1 1>&2 2>&3 | tee ' + stderr, shell = True)
+    #'''

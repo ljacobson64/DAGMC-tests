@@ -25,12 +25,14 @@ for name in names_to_run:
     test = tests[name]
 
     # Run types
+    test.runtypes = ['', '']
+    test.runtypes[0] = 'native'
     if test.name in ['test41', 'test42']:
-        test.runtype = 'usrbdx'
+        test.runtypes[1] = 'usrbdx'
     elif test.name in ['test61', 'test62']:
-        test.runtype = 'code'
+        test.runtypes[1] = 'code'
     else:
-        test.runtype = 'usrtrack'
+        test.runtypes[1] = 'usrtrack'
 
     # Number of runs
     if test.name in ['test01', 'test61', 'test62']:
@@ -40,11 +42,38 @@ for name in names_to_run:
 
     # Directories
     test.dirs['orig'] = current_dir
+    test.dirs['input'] = 'Inputs_native'
+    test.dirs['result'] = os.path.join('Results_native', test.name)
+    test.dirs['temp'] = os.path.join('Templates_native', test.name)
+
+    # Inputs
+    test.inputs['inp'] = test.name + '.inp'
 
     # Outputs
-    if test.runtype != 'code':
+    if test.runtypes[1] != 'code':
         for i in range(test.numruns):
             istr = str(i).zfill(3)
             test.outputs['out' + istr] = test.name + istr + '.out'
+        test.outputs['sum'] = test.name + '_sum.lis'
+        test.outputs['tab'] = test.name + '_tab.lis'
 
+# Native runs
+ft.run_multiple_tests(names_to_run, tests, args)
+
+for name in names_to_run:
+    test = tests[name]
+
+    # Run types
+    test.runtypes[0] = 'dagmc'
+
+    # Directories
+    test.dirs['input'] = 'Inputs_dagmc'
+    test.dirs['gcad'] = 'Geom_h5m'
+    test.dirs['result'] = os.path.join('Results_dagmc', test.name)
+    test.dirs['temp'] = os.path.join('Templates_dagmc', test.name)
+
+    # Inputs
+    test.inputs['gcad'] = 'geom_' + test.name + '.h5m'
+
+# DAGMC runs
 ft.run_multiple_tests(names_to_run, tests, args)
