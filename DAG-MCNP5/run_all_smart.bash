@@ -41,4 +41,5 @@ python run_tests.py $mpi_runs -s -r -j $jobs --mpi
 python run_tests.py $ser_runs -s -r -j $jobs
 cd ..
 
+cd ..
 python write_summaries.py
