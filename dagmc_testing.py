@@ -4,7 +4,7 @@ import sys
 from subprocess import call
 import multiprocessing as mp
 
-class fluka_test:
+class dagmc_test:
     def __init__(self, name, args):
         self.name = name
 
@@ -13,8 +13,18 @@ class fluka_test:
         self.outputs = {}
         self.other = {}
         self.logs = {}
-        self.geom_type = ''
-        self.run_type = ''
+
+        self.physics = None    # mcnp5 or fluka
+        self.run_type = None   # native or dagmc
+
+        # DAG-MCNP5 only
+        self.flags = []
+        self.meshes = []
+        self.depends = []
+        self.mpi_jobs = None
+
+        # FluDag only
+        self.geom_type = None  # usrtrack, usrbdx, or code
         self.num_runs = None
 
     def __repr__(self):
@@ -53,39 +63,81 @@ class fluka_test:
             link_new = os.path.join(self.dirs['result'], val)
             call_shell('ln -snf ' + link_orig + ' ' + link_new)
 
-        # Write FLUKA process file
-        writer = open(os.path.join(self.dirs['result'], 'process'), 'w')
-        for i in range(1, self.num_runs + 1):
-            writer.write(self.name + str(i).zfill(3) + '_fort.21\n')
-        writer.write('\n' + self.name + '\n')
-        writer.close()
-    
-    # Run FLUKA
-    def run_fluka(self):
-        # FLUKA execution string
-        if self.run_type == 'code':
-            run_fluka_str = ''
-        else:
-            run_fluka_str = ('$FLUPRO/flutil/rfluka -N0 -M' +
-                             str(self.num_runs))
-            if self.geom_type == 'native':
-                pass
-            elif self.geom_type == 'dagmc':
-                run_fluka_str += (' -e $FLUDAG/mainfludag -d ' +
-                                  os.path.join('../..', self.dirs['gcad'],
-                                               self.inputs['gcad']))
-            run_fluka_str += ' ' + self.inputs['inp']
-        if self.run_type == 'usrtrack':
-            process_fluka_str = '$FLUPRO/flutil/ustsuw < process'
-        elif self.run_type == 'usrbdx':
-            process_fluka_str = '$FLUPRO/flutil/usxsuw < process'
-        else:
-            process_fluka_str = ''
+        # Meshes (DAG-MCNP5 only)
+        for mesh in self.meshes:
+            link_orig = os.path.join('../..', self.dirs['input'], mesh)
+            link_new = os.path.join(self.dirs['result'], mesh)
+            call_shell('ln -snf ' + link_orig + ' ' + link_new)
 
-        # Run FLUKA
+        # Dependencies on results of other tests (DAG-MCNP5 only)
+        for depend in self.depends:
+            if depend[1] == 'rssa':
+                depend_inp = 'wssa'
+            else:
+                depend_inp = depend[1]
+            link_orig = os.path.join('..', depend[0], depend_inp)
+            link_new = os.path.join(self.dirs['result'], depend[1] + depend[0])
+            call_shell('ln -snf ' + link_orig + ' ' + link_new)
+
+        # Other files (DAG-MCNP5 only)
+        for key, val in self.other.items():
+            if key == 'sat':
+                return
+            if key == 'xslib':
+                link_orig = os.path.join('../..', self.dirs['xsdir'], val)
+                link_new = os.path.join(self.dirs['result'], val)
+            else:
+                link_orig = os.path.join('../..', self.dirs['input'], val)
+                link_new = os.path.join(self.dirs['result'], val)
+            call_shell('ln -snf ' + link_orig + ' ' + link_new)
+
+        # Write FLUKA process file (FluDAG only)
+        if self.physics == 'fluka':
+            writer = open(os.path.join(self.dirs['result'], 'process'), 'w')
+            for i in range(1, self.num_runs + 1):
+                writer.write(self.name + str(i).zfill(3) + '_fort.21\n')
+            writer.write('\n' + self.name + '\n')
+            writer.close()
+
+    # Run the physics code
+    def run_physics(self):
+        # Execution string
+        exe_str = ''
+        process_str = ''
+        if self.physics == 'mcnp5':
+            if self.mpi_jobs > 1:
+                exe_str += ' ' + 'mpiexec -np ' + str(self.mpi_jobs)
+            exe_str += ' ' + 'mcnp5.mpi'
+            for flag in self.flags:
+                exe_str += ' ' + flag
+            for key, val in self.inputs.items():
+                exe_str += ' ' + key + '=' + val
+            for depend in self.depends:
+                exe_str += ' ' + depend[1] + '=' + depend[1] + depend[0]
+        elif self.physics == 'fluka':
+            if self.run_type != 'code':
+                exe_str += (' ' + '$FLUPRO/flutil/rfluka -N0 -M' +
+                            str(self.num_runs))
+                if self.geom_type == 'dagmc':
+                    exe_str += (' -e $FLUDAG/mainfludag -d ' +
+                                      os.path.join('../..', self.dirs['gcad'],
+                                                   self.inputs['gcad']))
+                exe_str += ' ' + self.inputs['inp']
+            if self.run_type == 'usrtrack':
+                process_str = '$FLUPRO/flutil/ustsuw < process'
+            elif self.run_type == 'usrbdx':
+                process_str = '$FLUPRO/flutil/usxsuw < process'
+            else:
+                process_str = ''
+        exe_str = exe_str.strip()
+        process_str = process_str.strip()
+
+        # Run the code
         os.chdir(self.dirs['result'])
-        call_shell(run_fluka_str, 'screen_out', 'screen_err')
-        call_shell(process_fluka_str, 'screen_out_p', 'screen_err_p')
+        if exe_str:
+            call_shell(exe_str, 'screen_out', 'screen_err')
+        if process_str:
+            call_shell(process_str, 'screen_out_p', 'screen_err_p')
         os.chdir(self.dirs['orig'])
 
         # Diff against the template
@@ -113,21 +165,27 @@ class fluka_test:
         if args.setup_dirs:
             self.setup_result_dir()
 
-        # Run FLUKA
-        if args.run_fluka:
-            self.run_fluka()
+        # Run physics
+        if args.run_physics:
+            self.run_physics()
 
         # Copy results to template directory
         if args.copy_results:
             self.copy_results()
 
-# Needed to make pool.apply_async work
+# Needed to make pool.apply_async() work
 def run_test_external(test, args):
     test.run_test(args)
 
-# Run all the passed tests
+# Run all the tests
 def run_multiple_tests(names, tests, args):
-    jobs_serial = args.jobs
+    if args.mpi:
+        for name in names:
+            test = tests[name]
+            test.mpi_jobs = args.jobs
+        jobs_serial = 1
+    else:
+        jobs_serial = args.jobs
 
     if jobs_serial > 1:
         pool = mp.Pool(processes = jobs_serial)
@@ -153,14 +211,16 @@ def parse_args():
                         help = 'run dagmc_preproc')
     parser.add_argument('-s', '--setup_dirs', action = 'store_true',
                         help = 'setup result directories')
-    parser.add_argument('-r', '--run_fluka', action = 'store_true',
-                        help = 'run FLUKA')
+    parser.add_argument('-r', '--run_physics', action = 'store_true',
+                        help = 'run physics code')
     parser.add_argument('-c', '--copy_results', action = 'store_true',
                         help = 'copy results to template directory')
     parser.add_argument('-j', '--jobs', type = int, default = 1,
                         help = 'number of jobs')
+    parser.add_argument('--mpi', action = 'store_true',
+                        help = 'run DAG-MCNP in MPI mode')
     args = parser.parse_args()
-    if (not args.dagmc_preproc and not args.setup_dirs and not args.run_fluka
+    if (not args.dagmc_preproc and not args.setup_dirs and not args.run_physics
         and not args.copy_results):
         parser.print_help()
         sys.exit(1)
@@ -177,6 +237,6 @@ def call_shell(string, stdout = '', stderr = ''):
         call(string + ' 3>&1 1>&2 2>&3 | tee ' + stderr, shell = True)
     elif stdout == stderr:  # both to same file
         call(string + ' 2>&1 | tee ' + stdout, shell = True)
-    else:  # both to different files
+    else:  # each to different files
         call('(' + string + ' | tee ' + stdout +
              ') 3>&1 1>&2 2>&3 | tee ' + stderr, shell = True)
