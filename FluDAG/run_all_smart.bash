@@ -8,6 +8,3 @@ runs="42_dag 03_dag 02_dag 13_dag 12_dag 03_nat 02_nat 41_dag 51_dag 52_dag
       22_nat 21_nat 01_nat 11_nat"
 python run_tests.py $runs -s -r -j $jobs
 cd ..
-
-cd ..
-python write_summaries.py
