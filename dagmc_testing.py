@@ -106,17 +106,18 @@ class dagmc_test:
         process_str = ''
         if self.physics == 'mcnp5':
             if self.mpi_jobs > 1:
-                exe_str += ' ' + 'mpiexec -np ' + str(self.mpi_jobs)
-            exe_str += ' ' + 'mcnp5.mpi'
+                exe_str += ' mpiexec -np' + str(self.mpi_jobs)
+            exe_str += ' mcnp5.mpi'
             for flag in self.flags:
                 exe_str += ' ' + flag
             for key, val in self.inputs.items():
                 exe_str += ' ' + key + '=' + val
             for depend in self.depends:
                 exe_str += ' ' + depend[1] + '=' + depend[1] + depend[0]
+            exe_str += '; rm -f fcad'
         elif self.physics == 'fluka':
             if self.run_type != 'code':
-                exe_str += (' ' + '$FLUPRO/flutil/rfluka -N0 -M' +
+                exe_str += (' $FLUPRO/flutil/rfluka -N0 -M' +
                             str(self.num_runs))
                 if self.geom_type == 'dagmc':
                     exe_str += (' -e $FLUDAG/mainfludag -d ' +
