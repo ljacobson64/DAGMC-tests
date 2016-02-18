@@ -105,7 +105,7 @@ class dagmc_test:
         exe_strs = ['']*2
         if self.physics == 'mcnp5':
             if self.mpi_jobs > 1:
-                exe_strs[0] += ' mpiexec -np' + str(self.mpi_jobs)
+                exe_strs[0] += ' mpiexec -np ' + str(self.mpi_jobs)
             exe_strs[0] += ' mcnp5.mpi'
             for flag in self.flags:
                 exe_strs[0] += ' ' + flag
