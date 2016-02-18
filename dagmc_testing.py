@@ -47,7 +47,7 @@ class dagmc_test:
         call_shell('mkdir -p ' + self.dirs['gcad'])
         call_shell('mkdir -p ' + self.dirs['log'])
         call_shell('dagmc_preproc ' + satfile + ' -o ' + gcadfile + ' -f ' +
-                   str(ftol), logfile)
+                   str(ftol), logfile, logfile)
 
     # Setup results directory
     def setup_result_dir(self):
@@ -102,43 +102,38 @@ class dagmc_test:
     # Run the physics code
     def run_physics(self):
         # Execution string
-        exe_str = ''
-        process_str = ''
+        exe_strs = ['']*2
         if self.physics == 'mcnp5':
             if self.mpi_jobs > 1:
-                exe_str += ' mpiexec -np' + str(self.mpi_jobs)
-            exe_str += ' mcnp5.mpi'
+                exe_strs[0] += ' mpiexec -np' + str(self.mpi_jobs)
+            exe_strs[0] += ' mcnp5.mpi'
             for flag in self.flags:
-                exe_str += ' ' + flag
+                exe_strs[0] += ' ' + flag
             for key, val in self.inputs.items():
-                exe_str += ' ' + key + '=' + val
+                exe_strs[0] += ' ' + key + '=' + val
             for depend in self.depends:
-                exe_str += ' ' + depend[1] + '=' + depend[1] + depend[0]
-            exe_str += '; rm -f fcad'
+                exe_strs[0] += ' ' + depend[1] + '=' + depend[1] + depend[0]
+            exe_strs[1] += 'rm -f fcad'
         elif self.physics == 'fluka':
             if self.run_type != 'code':
-                exe_str += (' $FLUPRO/flutil/rfluka -N0 -M' +
-                            str(self.num_runs))
+                exe_strs[0] += (' $FLUPRO/flutil/rfluka -N0 -M' +
+                                str(self.num_runs))
                 if self.geom_type == 'dagmc':
-                    exe_str += (' -e $FLUDAG/mainfludag -d ' +
-                                      os.path.join('../..', self.dirs['gcad'],
-                                                   self.inputs['gcad']))
-                exe_str += ' ' + self.inputs['inp']
+                    exe_strs[0] += (' -e $FLUDAG/mainfludag -d ' +
+                                    os.path.join('../..', self.dirs['gcad'],
+                                                 self.inputs['gcad']))
+                exe_strs[0] += ' ' + self.inputs['inp']
             if self.run_type == 'usrtrack':
-                process_str = '$FLUPRO/flutil/ustsuw < process'
+                exe_strs[1] += '$FLUPRO/flutil/ustsuw < process'
             elif self.run_type == 'usrbdx':
-                process_str = '$FLUPRO/flutil/usxsuw < process'
-            else:
-                process_str = ''
-        exe_str = exe_str.strip()
-        process_str = process_str.strip()
+                exe_strs[1] += '$FLUPRO/flutil/usxsuw < process'
+        exe_strs[0] = exe_strs[0].strip()
+        exe_strs[1] = exe_strs[1].strip()
 
         # Run the code
         os.chdir(self.dirs['result'])
-        if exe_str:
-            call_shell(exe_str, 'screen_out', 'screen_err')
-        if process_str:
-            call_shell(process_str, 'screen_out_p', 'screen_err_p')
+        call_shell(exe_strs[0], 'screen_out', 'screen_err', False)
+        call_shell(exe_strs[1], 'screen_out', 'screen_err', True)
         os.chdir(self.dirs['orig'])
 
         # Diff against the template
@@ -228,16 +223,21 @@ def parse_args():
     return args
 
 # Call a shell command
-def call_shell(string, stdout = '', stderr = ''):
+def call_shell(string, stdout = '', stderr = '', append = False):
     print string
+    if append:
+        astr = '-a '
+    else:
+        astr = ''
     if stdout == '' and stderr == '':  # neither to file
-        call(string, shell = True)
+        call_string = string
     elif stderr == '':  # stdout to file
-        call(string + ' | tee ' + stdout, shell = True)
+        call_string = string + ' | tee ' + astr + stdout
     elif stdout == '':  # stderr to file
-        call(string + ' 3>&1 1>&2 2>&3 | tee ' + stderr, shell = True)
+        call_string = string + ' 3>&1 1>&2 2>&3 | tee ' + astr + stderr
     elif stdout == stderr:  # both to same file
-        call(string + ' 2>&1 | tee ' + stdout, shell = True)
+        call_string = string + ' 2>&1 | tee ' + astr + stdout
     else:  # each to different files
-        call('(' + string + ' | tee ' + stdout +
-             ') 3>&1 1>&2 2>&3 | tee ' + stderr, shell = True)
+        call_string = ('(' + string + ' | tee ' + astr + stdout +
+                       ') 3>&1 1>&2 2>&3 | tee ' + astr + stderr)
+    call(call_string, shell = True)
