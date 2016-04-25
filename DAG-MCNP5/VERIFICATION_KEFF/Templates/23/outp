@@ -12356,8 +12356,6 @@
  rem life(abs)   2.4485E-01     2.4809E-01 0.0002     life(col/abs/tl)  2.4806E-01 0.0002   2.4809E-01 0.0002
  source points generated  19493                source_entropy  7.7694E+00
 
- source distribution written to file srctp        cycle=  1595
-
   estimator     cycle  1596   ave of  1496 cycles      combination         simple average    combined average     corr
  k(collision)      0.997543       0.999875 0.0002     k(col/abs)          0.999995 0.0001     1.000091 0.0001   0.1797
  k(absorption)     1.000831       1.000115 0.0001     k(abs/tk ln)        0.999935 0.0001     1.000073 0.0001   0.0849

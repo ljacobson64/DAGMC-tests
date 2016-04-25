@@ -106,7 +106,7 @@
  computer time so far in this run     0.00 minutes            maximum number ever in bank         0
  computer time in mcrun               0.00 minutes            bank overflows to backup file       0
  source particles per minute            0.0000E+00
- random numbers generated                   200000            most random numbers used was           2 in history           1
+ random numbers generated                   200000            most random numbers used was           2 in history          19
 
  range of sampled source weights = 1.0000E+00 to 1.0000E+00
 1neutron  activity in each cell                                                                         print table 126
