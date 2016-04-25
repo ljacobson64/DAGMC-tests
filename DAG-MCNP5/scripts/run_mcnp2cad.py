@@ -1,18 +1,19 @@
 import argparse
+import os
 import sys
 from subprocess import call
 import multiprocessing as mp
 
 def run_mcnp2cad(inp_file):
-    sat_file = "geom_" + inp_file + ".sat"
-    call("mcnp2cad " + inp_file + " -o " + sat_file, shell = True)
+    sat_file = os.path.dirname(inp_file) + '/geom_' + os.path.basename(inp_file) + '.sat'
+    call('mcnp2cad ' + inp_file + ' -o ' + sat_file, shell = True)
 
 def parse_args():
-    parser = argparse.ArgumentParser(description = "Run mcnp2cad.")
-    parser.add_argument("files", nargs = "*",
-                        help = "files on which to run mcnp2cad")
-    parser.add_argument("-j", "--jobs", type = int, default = 1,
-                        help = "number of jobs")
+    parser = argparse.ArgumentParser(description = 'Run mcnp2cad.')
+    parser.add_argument('files', nargs = '*',
+                        help = 'files on which to run mcnp2cad')
+    parser.add_argument('-j', '--jobs', type = int, default = 1,
+                        help = 'number of jobs')
     args = parser.parse_args()
     return args
 
