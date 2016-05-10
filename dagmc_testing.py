@@ -14,10 +14,10 @@ class dagmc_test:
         self.other = {}
         self.logs = {}
 
-        self.physics = None    # mcnp5 or fluka
+        self.physics = None    # mcnp5, mcnp6, or fluka
         self.run_type = None   # native or dagmc
 
-        # DAG-MCNP5 only
+        # DAG-MCNP only
         self.flags = []
         self.meshes = []
         self.depends = []
@@ -63,13 +63,13 @@ class dagmc_test:
             link_new = os.path.join(self.dirs['result'], val)
             call_shell('ln -snf ' + link_orig + ' ' + link_new)
 
-        # Meshes (DAG-MCNP5 only)
+        # Meshes (DAG-MCNP only)
         for mesh in self.meshes:
             link_orig = os.path.join('../..', self.dirs['input'], mesh)
             link_new = os.path.join(self.dirs['result'], mesh)
             call_shell('ln -snf ' + link_orig + ' ' + link_new)
 
-        # Dependencies on results of other tests (DAG-MCNP5 only)
+        # Dependencies on results of other tests (DAG-MCNP only)
         for depend in self.depends:
             if depend[1] == 'rssa':
                 depend_inp = 'wssa'
@@ -79,7 +79,7 @@ class dagmc_test:
             link_new = os.path.join(self.dirs['result'], depend[1] + depend[0])
             call_shell('ln -snf ' + link_orig + ' ' + link_new)
 
-        # Other files (DAG-MCNP5 only)
+        # Other files (DAG-MCNP only)
         for key, val in self.other.items():
             if key == 'sat':
                 return
@@ -103,10 +103,10 @@ class dagmc_test:
     def run_physics(self):
         # Execution string
         exe_strs = ['']*2
-        if self.physics == 'mcnp5':
+        if self.physics == 'mcnp5' or self.physics == 'mcnp6':
             if self.mpi_jobs > 1:
                 exe_strs[0] += ' mpiexec -np ' + str(self.mpi_jobs)
-            exe_strs[0] += ' mcnp5.mpi'
+            exe_strs[0] += ' ' + self.physics + '.mpi'
             for flag in self.flags:
                 exe_strs[0] += ' ' + flag
             for key, val in self.inputs.items():
