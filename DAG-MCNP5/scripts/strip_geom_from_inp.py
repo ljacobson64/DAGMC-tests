@@ -1,6 +1,7 @@
 import sys
+from subprocess import call
 
-inp_files = sys.argv
+inp_files = sys.argv[1:]
 
 for inp_file in inp_files:
     orig_inp_file = "orig_" + inp_file
