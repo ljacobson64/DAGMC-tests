@@ -1,12 +1,14 @@
+import os
 import sys
 from subprocess import call
 
 inp_files = sys.argv[1:]
 
+os.makedirs('orig')
+
 for inp_file in inp_files:
-    orig_inp_file = 'orig_' + inp_file
-    call('mv ' + inp_file + ' ' + orig_inp_file, shell = True)
-    reader = open(orig_inp_file, 'r')
+    call('cp ' + inp_file + ' ' + 'orig', shell = True)
+    reader = open(inp_file, 'r')
     lines = reader.readlines()
     reader.close()
 
