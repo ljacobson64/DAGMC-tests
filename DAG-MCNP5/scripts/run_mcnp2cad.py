@@ -11,7 +11,7 @@ def run_mcnp2cad(inp_file):
     sat_file = os.path.join(dirname, 'Geom_sat', name + '.sat')
     if not os.path.exists(os.path.join(dirname, 'Geom_sat')):
         os.makedirs(os.path.join(dirname, 'Geom_sat'))
-    call('mcnp2cad ' + inp_file + ' -o ' + sat_file, shell = True)
+    call('mcnp2cad ' + inp_file + ' -o ' + sat_file + ' --geomver 1902', shell = True)
 
 def parse_args():
     parser = argparse.ArgumentParser(description = 'Run mcnp2cad.')
