@@ -23,7 +23,7 @@ def parse_args():
 args = parse_args()
 jobs = args.jobs
 
-inp_files = commands.getstatusoutput('find MCNP6 -type f')[1].split()
+inp_files = commands.getstatusoutput('find . -type f')[1].split()
 
 if jobs > 1:
     pool = mp.Pool(processes = jobs)

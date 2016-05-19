@@ -4,8 +4,8 @@ from subprocess import call
 inp_files = sys.argv[1:]
 
 for inp_file in inp_files:
-    orig_inp_file = "orig_" + inp_file
-    call("mv " + inp_file + " " + orig_inp_file, shell = True)
+    orig_inp_file = 'orig_' + inp_file
+    call('mv ' + inp_file + ' ' + orig_inp_file, shell = True)
     reader = open(orig_inp_file, 'r')
     lines = reader.readlines()
     reader.close()
@@ -15,9 +15,11 @@ for inp_file in inp_files:
     num_blank_lines = 0
     for line in lines[1:]:
         if num_blank_lines < 2:
-            writer.write("c " + line)
+            writer.write('c ' + line)
+        elif line.strip().lower().startswith('imp'):
+            writer.write('c ' + line)
         else:
             writer.write(line)
-        if line.strip() == "":
+        if line.strip() == '':
             num_blank_lines += 1
     writer.close()
