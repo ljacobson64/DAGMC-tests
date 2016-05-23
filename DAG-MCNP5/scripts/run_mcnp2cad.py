@@ -1,17 +1,14 @@
 import argparse
 import commands
 import os
-import sys
 from subprocess import call
 import multiprocessing as mp
 
 def run_mcnp2cad(inp_file):
-    dirname = os.path.dirname(os.path.dirname(inp_file))
-    name = os.path.basename(inp_file)
-    sat_file = os.path.join(dirname, 'Geom_sat', name + '.sat')
-    if not os.path.exists(os.path.join(dirname, 'Geom_sat')):
-        os.makedirs(os.path.join(dirname, 'Geom_sat'))
-    call('mcnp2cad ' + inp_file + ' -o ' + sat_file + ' --geomver 1902', shell = True)
+    sat_file = os.path.join('Geom_sat', os.path.basename(inp_file) + '.sat')
+    run_string = 'mcnp2cad ' + inp_file + ' -o ' + sat_file + ' --geomver 1902'
+    print run_string
+    call(run_string, shell = True)
 
 def parse_args():
     parser = argparse.ArgumentParser(description = 'Run mcnp2cad.')
@@ -23,7 +20,11 @@ def parse_args():
 args = parse_args()
 jobs = args.jobs
 
-inp_files = commands.getstatusoutput('find . -type f')[1].split()
+# Find all the files in the "Inputs" directory
+inp_files = commands.getstatusoutput('find Inputs_orig -type f')[1].split()
+
+if not os.path.exists('Geom_sat'):
+    os.makedirs('Geom_sat')
 
 if jobs > 1:
     pool = mp.Pool(processes = jobs)
