@@ -25,10 +25,10 @@ for inp_orig in inp_files:
 
     # Loop over all the lines in the original input file
     for line in lines_in[1:]:
-        line = line.strip()
+        line = line.rstrip()
 
         # Blank line found
-        if line == '':
+        if line.strip() == '':
             num_blank_lines += 1
             # MCNP does not read lines after the third blank line
             if num_blank_lines >= 3:
