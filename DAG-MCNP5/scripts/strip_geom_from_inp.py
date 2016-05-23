@@ -30,18 +30,18 @@ for inp_orig in inp_files:
         # Blank line found
         if line == '':
             num_blank_lines += 1
-
-        # MCNP does not read lines after the third blank line
-        if num_blank_lines >= 3:
-            break
+            # MCNP does not read lines after the third blank line
+            if num_blank_lines >= 3:
+                break
+            lines_out.append('c ' + line + '\n')
 
         # Comment out cell and surface cards
-        if num_blank_lines < 2:
-            lines_out.append('c %s\n' % line)
+        elif num_blank_lines < 2:
+            lines_out.append('c ' + line + '\n')
 
         # Comment out importance card if it's found in the data card block
         elif line.strip().lower().startswith('imp'):
-            lines_out.append('c %s\n' % line)
+            lines_out.append('c ' + line + '\n')
 
         # Make sure the third entry on the PRDMP card is -2
         elif line.strip().lower().startswith('prdmp'):
@@ -61,11 +61,11 @@ for inp_orig in inp_files:
             if len(prdmp_in) > 5 - j2:
                 prdmp_out[5] = prdmp_in[5 - j2]
             prdmp_out = ' '.join([x for x in prdmp_out if x])
-            lines_out.append('%s\n' % prdmp_out)
+            lines_out.append(prdmp_out + '\n')
 
         # Write line as normal
         else:
-            lines_out.append('%s\n' % line)
+            lines_out.append(line + '\n')
 
     # Write the PRDMP card if it wasn't already written
     if not prdmp_found:
