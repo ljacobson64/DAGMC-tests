@@ -35,7 +35,7 @@ class dagmc_test:
     # Run dagmc_preproc on an ACIS file
     def run_dagmc_preproc(self, ftol = '1e-4'):
         if (('sat' not in self.dirs) or ('sat' not in self.other) or
-            ('gcad' not in self.dirs) or ('gcad' not in self.inputs):
+            ('gcad' not in self.dirs) or ('gcad' not in self.inputs)):
             return
 
         satfile = os.path.join(self.dirs['sat'], self.other['sat'])
