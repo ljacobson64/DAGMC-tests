@@ -13,7 +13,7 @@ args = dagtest.parse_args()
 names = ['Au10600MeVperA_Cu', 'Au559MeVperA_Cu', 'bg4.5C_pi_Laq', 'C290C',
          'C800C_REP', 'Ca140MeVperA_Be', 'inp71corREP', 'inp75cor_bREP',
          'inpl05REP', 'Ne2.1GeVPb', 'Ne241U_REP', 'Ne393U_REP', 'Ne800Cu_REP',
-         'p23000Te_Laq', 'p300000Ag_REP', 'p400GeVTa_REP', 'p800000Au_REP',
+         'p23000Te_Laq', 'p300000Ag_REP', 'p400GeVTa_GENXSREP', 'p800000Au_REP',
          'p800Au_CEM', 'p800Au_Laq', 'Pb1000LbREP', 'Pb32706000Cu',
          'Si600CuREP', 'Sn112_1AGeV_Sn112', 'Sn124_1AGeV_Sn124']
 
@@ -56,7 +56,7 @@ for name in names_to_run:
         test.other['genxs'] = 'inxc97'
     if test.name in ['p300000Ag_REP']:
         test.other['genxs'] = 'inxc98'
-    if test.name in ['p400GeVTa_REP']:
+    if test.name in ['p400GeVTa_GENXSREP']:
         test.other['genxs'] = 'inxc38'
     if test.name in ['p800Au_CEM']:
         test.other['genxs'] = 'inxc96'
