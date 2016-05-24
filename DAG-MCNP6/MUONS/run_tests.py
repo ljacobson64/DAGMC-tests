@@ -46,6 +46,7 @@ for name in names_to_run:
         test.inputs['xsdir'] = 'xsdirph'
     if test.name in ['inp13', 'inp19']:
         test.inputs['xsdir'] = 'testdir1'
+        test.other['xslib'] = 'testlib1'
     if test.name in ['inp14', 'inp15', 'inp16', 'inp17', 'inp18', 'inp20',
                      'inp21', 'inp22']:
         test.inputs['xsdir'] = 'xsdir'
