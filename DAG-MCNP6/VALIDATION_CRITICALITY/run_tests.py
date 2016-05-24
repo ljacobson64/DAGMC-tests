@@ -36,14 +36,14 @@ for name in names_to_run:
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-
-    # Common input
     test.inputs['inp'] = test.name
     test.inputs['gcad'] = test.name + '.h5m'
     test.other['sat'] = test.name + '.sat'
-
-    # Common output
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
+
+    # Cross section data
+    test.dirs['xsdir'] = 'Inputs'
+    test.inputs['xsdir'] = 'xsdir_endf71'
 
 dagtest.run_multiple_tests(names_to_run, tests, args)
