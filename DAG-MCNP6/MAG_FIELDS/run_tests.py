@@ -40,4 +40,9 @@ for name in names_to_run:
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 
+    # MESHTAL output
+    if test.name in ['01', '02', '05', '06', '08', '09', '10', '11', '13',
+                     '14']:
+        test.outputs['meshtal'] = 'meshtal'
+
 dagtest.run_multiple_tests(names_to_run, tests, args)
