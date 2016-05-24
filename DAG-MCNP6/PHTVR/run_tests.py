@@ -10,49 +10,37 @@ import dagmc_testing as dagtest
 
 args = dagtest.parse_args()
 
-names = ['inp_av01', 'inp_av01_noRR', 'inp_av02', 'inp_av03', 'inp_av03_noRR',
-         'inp_av04', 'inp_av05', 'inp_av05_noRR', 'inp_av06', 'inp_av07',
-         'inp_av08', 'inp_av08_noRR', 'inp_av09', 'inp_av10', 'inp_av11_noRR',
-         'inp_av12', 'inp_av12_noRR', 'inp_av13', 'inp_av13_noRR', 'inp_av14',
-         'inp_av14_noRR', 'inp_av17', 'inp_av17_noRR', 'inp_av18',
-         'inp_av18_noRR', 'inp_av19', 'inp_av20', 'inp_av20_noRR', 'inp_av21',
-         'inp_av21_noRR', 'inp_av22', 'inp_av22_noRR', 'inp_av23',
-         'inp_av23_noRR', 'inp_cy01', 'inp_cy02', 'inp_cy03', 'inp_cy04',
-         'inp_cy04_noRR', 'inp_cy05', 'inp_cy06', 'inp_cy06_noRR', 'inp_cy07',
-         'inp_cy07_noRR', 'inp_cy08', 'inp_cy09', 'inp_cy10', 'inp_cy10_noRR',
-         'inp_cy11', 'inp_cy12', 'inp_cy12_noRR', 'inp_cy13', 'inp_cy13_noRR',
-         'inp_cy14', 'inp_cy14_noRR', 'inp_cy15', 'inp_cy15_noRR', 'inp_cy16',
-         'inp_cy16_noRR', 'inp_cy17', 'inp_cy18', 'inp_cy18_noRR', 'inp_cy19',
-         'inp_cy19_noRR', 'inp_cy20', 'inp_cy20_noRR', 'inp_cy21',
-         'inp_cy21_noRR', 'inp_cy22', 'inp_cy22_noRR', 'inp_cy23',
-         'inp_cy23_noRR', 'inp_cy24', 'inp_cy25', 'inp_cy26', 'inp_cy27',
-         'inp_cy28', 'inp_cy28_noRR', 'inp_cy29', 'inp_cy30', 'inp_cy31',
-         'inp_cy32', 'inp_cy33', 'inp_cy33_noRR', 'inp_cy34', 'inp_cy35',
-         'inp_cy36', 'inp_cy36_noRR', 'inp_cy37', 'inp_cy38', 'inp_cy38_noRR',
-         'inp_cy39', 'inp_cy39_noRR', 'inp_df01', 'inp_df02', 'inp_df03',
-         'inp_lat01', 'inp_line01', 'inp_line02', 'inp_line03', 'inp_line04',
-         'inp_line05', 'inp_line06', 'inp_line07', 'inp_rg01', 'inp_rg02',
-         'inp_rg03', 'inp_rg03_noRR', 'inp_rg04', 'inp_rg04_noRR', 'inp_rg05',
-         'inp_rg05_noRR', 'inp_rg06', 'inp_rg06_noRR', 'inp_rg07',
-         'inp_rg07_noRR', 'inp_rg08', 'inp_rg09', 'inp_rg10', 'inp_rg11',
-         'inp_rg11_noRR', 'inp_rg12', 'inp_rg12_noRR', 'inp_x01a', 'inp_x01v',
-         'inp_x01v_noRR', 'inp_x01w', 'inp_x02a', 'inp_x02b', 'inp_x02i',
-         'inp_x02i_noRR', 'inp_x02v', 'inp_x02v_noRR', 'inp_x02w_noRR',
-         'inp_x03a', 'inp_x03i', 'inp_x03i_noRR', 'inp_x03v', 'inp_x03v_noRR',
-         'inp_x03w', 'inp_x03w_noRR', 'inp_x04a', 'inp_x04b', 'inp_x04e',
-         'inp_x04e_noRR', 'inp_x04w', 'inp_x04w_noRR', 'inp_x05a', 'inp_x05e',
-         'inp_x05e_noRR', 'inp_x05w', 'inp_x05w_noRR', 'inp_x11a', 'inp_x11v',
-         'inp_x11v_noRR', 'inp_x11w', 'inp_x12a', 'inp_x12b', 'inp_x12i',
-         'inp_x12i_noRR', 'inp_x12v', 'inp_x12v_noRR', 'inp_x12w', 'inp_x13a',
-         'inp_x13i', 'inp_x13i_noRR', 'inp_x13v', 'inp_x13v_noRR', 'inp_x13w',
-         'inp_x13w_noRR', 'inp_x14a', 'inp_x14b', 'inp_x14e', 'inp_x14e_noRR',
-         'inp_x14w', 'inp_x14w_noRR', 'inp_x15a', 'inp_x15e', 'inp_x15e_noRR',
-         'inp_x15w', 'inp_x15w_noRR', 'inp_x21a', 'inp_x21v', 'inp_x21v_noRR',
-         'inp_x21w', 'inp_x22a', 'inp_x22b', 'inp_x22v', 'inp_x22v_noRR',
-         'inp_x22w', 'inp_x23a', 'inp_x23v', 'inp_x23v_noRR', 'inp_x23w',
-         'inp_x23w_noRR', 'inp_x24a', 'inp_x24b', 'inp_x24w', 'inp_x24w_noRR',
-         'inp_x25a', 'inp_x25e', 'inp_x25e_noRR', 'inp_x25w', 'inp_x25w_noRR',
-         'inp_x31a', 'inp_x31p', 'inp_x31w', 'inp_x81h', 'inp_x81h_noRR']
+names = ['av01', 'av01_noRR', 'av02', 'av03', 'av03_noRR', 'av04', 'av05',
+         'av05_noRR', 'av06', 'av07', 'av08', 'av08_noRR', 'av09', 'av10',
+         'av11_noRR', 'av12', 'av12_noRR', 'av13', 'av13_noRR', 'av14',
+         'av14_noRR', 'av17', 'av17_noRR', 'av18', 'av18_noRR', 'av19', 'av20',
+         'av20_noRR', 'av21', 'av21_noRR', 'av22', 'av22_noRR', 'av23',
+         'av23_noRR', 'cy01', 'cy02', 'cy03', 'cy04', 'cy04_noRR', 'cy05',
+         'cy06', 'cy06_noRR', 'cy07', 'cy07_noRR', 'cy08', 'cy09', 'cy10',
+         'cy10_noRR', 'cy11', 'cy12', 'cy12_noRR', 'cy13', 'cy13_noRR', 'cy14',
+         'cy14_noRR', 'cy15', 'cy15_noRR', 'cy16', 'cy16_noRR', 'cy17', 'cy18',
+         'cy18_noRR', 'cy19', 'cy19_noRR', 'cy20', 'cy20_noRR', 'cy21',
+         'cy21_noRR', 'cy22', 'cy22_noRR', 'cy23', 'cy23_noRR', 'cy24', 'cy25',
+         'cy26', 'cy27', 'cy28', 'cy28_noRR', 'cy29', 'cy30', 'cy31', 'cy32',
+         'cy33', 'cy33_noRR', 'cy34', 'cy35', 'cy36', 'cy36_noRR', 'cy37',
+         'cy38', 'cy38_noRR', 'cy39', 'cy39_noRR', 'df01', 'df02', 'df03',
+         'lat01', 'line01', 'line02', 'line03', 'line04', 'line05', 'line06',
+         'line07', 'rg01', 'rg02', 'rg03', 'rg03_noRR', 'rg04', 'rg04_noRR',
+         'rg05', 'rg05_noRR', 'rg06', 'rg06_noRR', 'rg07', 'rg07_noRR', 'rg08',
+         'rg09', 'rg10', 'rg11', 'rg11_noRR', 'rg12', 'rg12_noRR', 'x01a',
+         'x01v', 'x01v_noRR', 'x01w', 'x02a', 'x02b', 'x02i', 'x02i_noRR',
+         'x02v', 'x02v_noRR', 'x02w_noRR', 'x03a', 'x03i', 'x03i_noRR', 'x03v',
+         'x03v_noRR', 'x03w', 'x03w_noRR', 'x04a', 'x04b', 'x04e', 'x04e_noRR',
+         'x04w', 'x04w_noRR', 'x05a', 'x05e', 'x05e_noRR', 'x05w', 'x05w_noRR',
+         'x11a', 'x11v', 'x11v_noRR', 'x11w', 'x12a', 'x12b', 'x12i',
+         'x12i_noRR', 'x12v', 'x12v_noRR', 'x12w', 'x13a', 'x13i', 'x13i_noRR',
+         'x13v', 'x13v_noRR', 'x13w', 'x13w_noRR', 'x14a', 'x14b', 'x14e',
+         'x14e_noRR', 'x14w', 'x14w_noRR', 'x15a', 'x15e', 'x15e_noRR', 'x15w',
+         'x15w_noRR', 'x21a', 'x21v', 'x21v_noRR', 'x21w', 'x22a', 'x22b',
+         'x22v', 'x22v_noRR', 'x22w', 'x23a', 'x23v', 'x23v_noRR', 'x23w',
+         'x23w_noRR', 'x24a', 'x24b', 'x24w', 'x24w_noRR', 'x25a', 'x25e',
+         'x25e_noRR', 'x25w', 'x25w_noRR', 'x31a', 'x31p', 'x31w', 'x81h',
+         'x81h_noRR']
 
 if args.tests == 'all':
     names_to_run = names
@@ -66,21 +54,44 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
-    # Directories
+    # Input file name format
+    test.inputs['inp'] = 'inp_' + test.name
+
+    # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
     test.dirs['sat'] = 'Geom_sat'
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-
-    # Common input
-    test.inputs['inp'] = test.name
-    test.inputs['gcad'] = test.name + '.h5m'
-    test.other['sat'] = test.name + '.sat'
-
-    # Common output
+    test.inputs['gcad'] = test.inputs['inp'] + '.h5m'
+    test.other['sat'] = test.inputs['inp'] + '.sat'
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
+
+    # WWINP input
+    if test.name in ['cy02', 'cy04', 'cy05', 'cy12', 'cy13', 'cy14', 'cy18',
+                     'cy19', 'cy23', 'cy33', 'cy36', 'cy38', 'cy39',
+                     'cy04_noRR', 'cy12_noRR', 'cy13_noRR', 'cy14_noRR',
+                     'cy18_noRR', 'cy19_noRR', 'cy23_noRR', 'cy33_noRR',
+                     'cy36_noRR', 'cy38_noRR', 'cy39_noRR']:
+        test.inputs['wwinp'] = 'phtww'
+    if test.name in ['x04w', 'x04w_noRR', 'x04e', 'x04e_noRR']:
+        test.inputs['wwinp'] = 'wwinp4'
+    if test.name in ['x05w', 'x05w_noRR', 'x05e', 'x05e_noRR']:
+        test.inputs['wwinp'] = 'wwinp5'
+    if test.name in ['x14w', 'x14w_noRR', 'x14e', 'x14e_noRR']:
+        test.inputs['wwinp'] = 'wwinp14'
+    if test.name in ['x15w', 'x15w_noRR', 'x15e', 'x15e_noRR']:
+        test.inputs['wwinp'] = 'wwinp15'
+    if test.name in ['x24w', 'x24w_noRR']:
+        test.inputs['wwinp'] = 'wwinp24'
+    if test.name in ['x25w', 'x25e', 'x25e_noRR', 'x25w_noRR']:
+        test.inputs['wwinp'] = 'wwinp25'
+
+    # FATAL option
+    if test.name in ['rg03', 'rg03_noRR', 'rg11', 'rg11_noRR', 'x25w', 'x25e',
+                     'x25e_noRR', 'x25w_noRR']:
+        test.flags.append('fatal')
 
 dagtest.run_multiple_tests(names_to_run, tests, args)
