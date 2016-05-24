@@ -13,7 +13,7 @@ args = dagtest.parse_args()
 names = ['Au10600MeVperA_Cu', 'Au559MeVperA_Cu', 'bg4.5C_pi_Laq', 'C290C',
          'C800C_REP', 'Ca140MeVperA_Be', 'inp71corREP', 'inp75cor_bREP',
          'inpl05REP', 'Ne2.1GeVPb', 'Ne241U_REP', 'Ne393U_REP', 'Ne800Cu_REP',
-         'p23000Te_Laq', 'p300000Ag_REP', 'p400GeVTa_GENXSREP', 'p800000Au_REP',
+         'p23000Te_Laq', 'p300000Ag_REP', 'p400GeVTa_REP', 'p800000Au_REP',
          'p800Au_CEM', 'p800Au_Laq', 'Pb1000LbREP', 'Pb32706000Cu',
          'Si600CuREP', 'Sn112_1AGeV_Sn112', 'Sn124_1AGeV_Sn124']
 
@@ -29,21 +29,38 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
-    # Directories
+    # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
     test.dirs['sat'] = 'Geom_sat'
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-
-    # Common input
     test.inputs['inp'] = test.name
     test.inputs['gcad'] = test.name + '.h5m'
     test.other['sat'] = test.name + '.sat'
-
-    # Common output
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
+
+    # GENXS files
+    if test.name in ['Au10600MeVperA_Cu', 'Ca140MeVperA_Be',
+                     'Sn112_1AGeV_Sn112', 'Sn124_1AGeV_Sn124']:
+        test.other['genxs'] = 'inxc69'
+    if test.name in ['Au559MeVperA_Cu']:
+        test.other['genxs'] = 'inxc68'
+    if test.name in ['bg4.5C_pi_Laq']:
+        test.other['genxs'] = 'inxs025'
+    if test.name in ['Ne2.1GeVPb']:
+        test.other['genxs'] = 'inxc88'
+    if test.name in ['p23000Te_Laq', 'p800000Au_REP', 'p800Au_Laq']:
+        test.other['genxs'] = 'inxc97'
+    if test.name in ['p300000Ag_REP']:
+        test.other['genxs'] = 'inxc98'
+    if test.name in ['p400GeVTa_REP']:
+        test.other['genxs'] = 'inxc38'
+    if test.name in ['p800Au_CEM']:
+        test.other['genxs'] = 'inxc96'
+    if test.name in ['Pb32706000Cu']:
+        test.other['genxs'] = 'inxc70'
 
 dagtest.run_multiple_tests(names_to_run, tests, args)
