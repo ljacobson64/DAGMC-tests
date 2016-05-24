@@ -29,7 +29,7 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
-    # Directories
+    # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
     test.dirs['sat'] = 'Geom_sat'
