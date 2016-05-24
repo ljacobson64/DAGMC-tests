@@ -32,6 +32,9 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
+    # Input file name format
+    test.inputs['inp'] = test.name
+
     # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
@@ -39,9 +42,8 @@ for name in names_to_run:
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-    test.inputs['inp'] = test.name
-    test.inputs['gcad'] = test.name + '.h5m'
-    test.other['sat'] = test.name + '.sat'
+    test.inputs['gcad'] = test.inputs['inp'] + '.h5m'
+    test.other['sat'] = test.inputs['inp'] + '.sat'
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 

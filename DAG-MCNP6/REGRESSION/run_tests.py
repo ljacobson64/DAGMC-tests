@@ -10,26 +10,22 @@ import dagmc_testing as dagtest
 
 args = dagtest.parse_args()
 
-names = ['inp01', 'inp02', 'inp03', 'inp04', 'inp05', 'inp06', 'inp07', 'inp08',
-         'inp09', 'inp10', 'inp11', 'inp12', 'inp13', 'inp14', 'inp15', 'inp16',
-         'inp17', 'inp18', 'inp19', 'inp20', 'inp21', 'inp22', 'inp23', 'inp24',
-         'inp25', 'inp26', 'inp27', 'inp28', 'inp29', 'inp30', 'inp31', 'inp32',
-         'inp33', 'inp34', 'inp35', 'inp36', 'inp37', 'inp38', 'inp39', 'inp40',
-         'inp41', 'inp42', 'inp43', 'inp44', 'inp45', 'inp46', 'inp47', 'inp48',
-         'inp49', 'inp50', 'inp51', 'inp52', 'inp53', 'inp54', 'inp55', 'inp56',
-         'inp57', 'inp58', 'inp59', 'inp60', 'inp61', 'inp62', 'inp63', 'inp64',
-         'inp65', 'inp66', 'inp67', 'inp68', 'inp69', 'inp70', 'inp71', 'inp72',
-         'inp73', 'inp74', 'inp75', 'inp76', 'inp77', 'inp78', 'inp79', 'inp80',
-         'inp81', 'inp82', 'inp83', 'inp84', 'inp85', 'inp86', 'inp87', 'inp88',
-         'inp89', 'inp90', 'inp91', 'inp92', 'inp93', 'inp94', 'inp95', 'inp96',
-         'inp97', 'inp98', 'inp99', 'inp100', 'inp101', 'inp102', 'inp103',
-         'inp104', 'inp105', 'inp106', 'inp107', 'inp108', 'inp109', 'inp110',
-         'inp111', 'inp112', 'inp113', 'inp114', 'inp115', 'inp116', 'inp117',
-         'inp118', 'inp119', 'inp120', 'inp121', 'inp122', 'inp123', 'inp124',
-         'inp125', 'inp128', 'inp129', 'inp130', 'inp131', 'inp132', 'inp133',
-         'inp1001', 'inp1002', 'inp1003', 'inp1004', 'inp1005', 'inp1006',
-         'inp1007', 'inp1008', 'inp1009', 'inp1010', 'inp1011', 'inp1012',
-         'inp1013', 'inp1014', 'inp1015', 'inp1016']
+names = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+         '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+         '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+         '31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
+         '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
+         '51', '52', '53', '54', '55', '56', '57', '58', '59', '60',
+         '61', '62', '63', '64', '65', '66', '67', '68', '69', '70',
+         '71', '72', '73', '74', '75', '76', '77', '78', '79', '80',
+         '81', '82', '83', '84', '85', '86', '87', '88', '89', '90',
+         '91', '92', '93', '94', '95', '96', '97', '98', '99', '100',
+         '101', '102', '103', '104', '105', '106', '107', '108', '109', '110',
+         '111', '112', '113', '114', '115', '116', '117', '118', '119', '120',
+         '121', '122', '123', '124', '125',               '128', '129', '130',
+         '131', '132', '133',
+         '1001', '1002', '1003', '1004', '1005', '1006', '1007', '1008', '1009',
+         '1010', '1011', '1012', '1013', '1014', '1015', '1016']
 
 if args.tests == 'all':
     names_to_run = names
@@ -43,20 +39,18 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
-    # Directories
+    # Input file name format
+    test.inputs['inp'] = 'inp' + test.name
+
+    # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
     test.dirs['sat'] = 'Geom_sat'
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-
-    # Common input
-    test.inputs['inp'] = test.name
-    test.inputs['gcad'] = test.name + '.h5m'
-    test.other['sat'] = test.name + '.sat'
-
-    # Common output
+    test.inputs['gcad'] = test.inputs['inp'] + '.h5m'
+    test.other['sat'] = test.inputs['inp'] + '.sat'
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 

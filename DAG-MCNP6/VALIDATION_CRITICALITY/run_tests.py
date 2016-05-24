@@ -10,12 +10,11 @@ import dagmc_testing as dagtest
 
 args = dagtest.parse_args()
 
-names = ['BAWXI2i', 'BIGTENi', 'FLAT23i', 'FLAT25i', 'FLATPUi', 'FLSTF1i',
-         'GODIVAi', 'GODIVRi', 'HISHPGi', 'ICT2C3i', 'IMF03i', 'IMF04i',
-         'JEZ233i', 'JEZ240i', 'JEZPUi', 'LST2C2i', 'ORNL10i', 'ORNL11i',
-         'PNL2i', 'PNL33i', 'PUBTNSi', 'PUSH2Oi', 'SB25i', 'SB5RN3i',
-         'STACY36i', 'THORi', 'TT2C11i', 'UH3C6i', 'UMF5C2i', 'ZEBR8Hi',
-         'ZEUS2i']
+names = ['BAWXI2', 'BIGTEN', 'FLAT23', 'FLAT25', 'FLATPU', 'FLSTF1', 'GODIVA',
+         'GODIVR', 'HISHPG', 'ICT2C3', 'IMF03', 'IMF04', 'JEZ233', 'JEZ240',
+         'JEZPU', 'LST2C2', 'ORNL10', 'ORNL11', 'PNL2', 'PNL33', 'PUBTNS',
+         'PUSH2O', 'SB25', 'SB5RN3', 'STACY36', 'THOR', 'TT2C11', 'UH3C6',
+         'UMF5C2', 'ZEBR8H', 'ZEUS2']
 
 if args.tests == 'all':
     names_to_run = names
@@ -29,6 +28,9 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
+    # Input file name format
+    test.inputs['inp'] = test.name + 'i'
+
     # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
@@ -36,9 +38,8 @@ for name in names_to_run:
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-    test.inputs['inp'] = test.name
-    test.inputs['gcad'] = test.name + '.h5m'
-    test.other['sat'] = test.name + '.sat'
+    test.inputs['gcad'] = test.inputs['inp'] + '.h5m'
+    test.other['sat'] = test.inputs['inp'] + '.sat'
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 

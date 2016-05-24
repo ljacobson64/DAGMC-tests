@@ -10,15 +10,14 @@ import dagmc_testing as dagtest
 
 args = dagtest.parse_args()
 
-names = ['inp001', 'inp004', 'inp006', 'inp009', 'inp010', 'inp011', 'inp012',
-         'inp013', 'inp014', 'inp015', 'inp016', 'inp017', 'inp018', 'inp019',
-         'inp020', 'inp021', 'inp022', 'inp023', 'inp024', 'inp025', 'inp026',
-         'inp027', 'inp028', 'inp029', 'inp030', 'inp031', 'inp032', 'inp033',
-         'inp034', 'inp035', 'inp036', 'inp037', 'inp038', 'inp039', 'inp040',
-         'inp042', 'inp043', 'inp044', 'inp045', 'inp051', 'inp052', 'inp053',
-         'inp054', 'inp055', 'inp056', 'inp057', 'inp058', 'inp059', 'inp062',
-         'inp063', 'inp064', 'inp065', 'inp066', 'inp067', 'inp068', 'inp069',
-         'inp070', 'inp071', 'inp072', 'inp073', 'inp074', 'inp075', 'inp076']
+names = ['001',               '004',        '006',               '009', '010',
+         '011', '012', '013', '014', '015', '016', '017', '018', '019', '020',
+         '021', '022', '023', '024', '025', '026', '027', '028', '029', '030',
+         '031', '032', '033', '034', '035', '036', '037', '038', '039', '040',
+                '042', '043', '044', '045',
+         '051', '052', '053', '054', '055', '056', '057', '058', '059',
+                '062', '063', '064', '065', '066', '067', '068', '069', '070',
+         '071', '072', '073', '074', '075', '076']
 
 if args.tests == 'all':
     names_to_run = names
@@ -32,6 +31,9 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
+    # Input file name format
+    test.inputs['inp'] = 'inp' + test.name
+
     # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
@@ -39,9 +41,8 @@ for name in names_to_run:
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-    test.inputs['inp'] = test.name
-    test.inputs['gcad'] = test.name + '.h5m'
-    test.other['sat'] = test.name + '.sat'
+    test.inputs['gcad'] = test.inputs['inp'] + '.h5m'
+    test.other['sat'] = test.inputs['inp'] + '.sat'
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 

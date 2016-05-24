@@ -10,21 +10,18 @@ import dagmc_testing as dagtest
 
 args = dagtest.parse_args()
 
-names = ['BE08i', 'C29i', 'CCR20i', 'COAIRi', 'COTEFi', 'FE09i', 'FS1ONNi',
-         'FS3OFNi', 'FS3ONPi', 'FS7OFPi', 'FS7ONNi', 'H2O19i', 'KERMINi',
-         'LI616i', 'N31i', 'PB14i', 'SKYINPi', 'SMAIRi', 'SMTEFi',
-         'duct_therm_neutron_oneleg_conc.inp',
-         'duct_therm_neutron_oneleg_reinf.inp',
-         'duct_therm_neutron_threeleg_conc.inp',
-         'duct_therm_neutron_threeleg_reinf.inp',
-         'duct_therm_neutron_twoleg_conc.inp',
-         'duct_therm_neutron_twoleg_reinf.inp',
-         'fns_config1_neutron_onaxis.inp', 'fns_config3_neutron_offaxis.inp',
-         'fns_config3_photon_onaxis.inp', 'fns_config7_neutron_onaxis.inp',
-         'fns_config7_photon_offaxis.inp', 'lps_berl.inp', 'lps_carbon.inp',
-         'lps_conc.inp', 'lps_iron.inp', 'lps_lead.inp', 'lps_lith.inp',
-         'lps_nitro.inp', 'lps_pu239.inp', 'lps_u235.inp', 'lps_u238.inp',
-         'lps_water.inp', 'photon_kerma.inp', 'photon_skyshine.inp']
+names = ['BE08', 'C29', 'CCR20', 'COAIR', 'COTEF', 'FE09', 'FS1ONN', 'FS3OFN',
+         'FS3ONP', 'FS7OFP', 'FS7ONN', 'H2O19', 'KERMIN', 'LI616', 'N31',
+         'PB14', 'SKYINP', 'SMAIR', 'SMTEF',
+         'duct_therm_neutron_oneleg_conc', 'duct_therm_neutron_oneleg_reinf',
+         'duct_therm_neutron_threeleg_conc',
+         'duct_therm_neutron_threeleg_reinf', 'duct_therm_neutron_twoleg_conc',
+         'duct_therm_neutron_twoleg_reinf', 'fns_config1_neutron_onaxis',
+         'fns_config3_neutron_offaxis', 'fns_config3_photon_onaxis',
+         'fns_config7_neutron_onaxis', 'fns_config7_photon_offaxis', 'lps_berl',
+         'lps_carbon', 'lps_conc', 'lps_iron', 'lps_lead', 'lps_lith',
+         'lps_nitro', 'lps_pu239', 'lps_u235', 'lps_u238', 'lps_water',
+         'photon_kerma', 'photon_skyshine']
 
 if args.tests == 'all':
     names_to_run = names
@@ -38,6 +35,12 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
+    # Input file name format
+    if name[0].isupper():
+        test.inputs['inp'] = test.name + 'i'
+    else:
+        test.inputs['inp'] = test.name + '.inp'
+
     # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
@@ -45,9 +48,8 @@ for name in names_to_run:
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-    test.inputs['inp'] = test.name
-    test.inputs['gcad'] = test.name + '.h5m'
-    test.other['sat'] = test.name + '.sat'
+    test.inputs['gcad'] = test.inputs['inp'] + '.h5m'
+    test.other['sat'] = test.inputs['inp'] + '.sat'
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 

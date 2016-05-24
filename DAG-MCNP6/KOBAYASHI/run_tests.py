@@ -10,8 +10,8 @@ import dagmc_testing as dagtest
 
 args = dagtest.parse_args()
 
-names = ['prob1_abs.txt', 'prob1_sct.txt', 'prob2_abs.txt', 'prob2_sct.txt',
-         'prob3_abs.txt', 'prob3_sct.txt']
+names = ['prob1_abs', 'prob1_sct', 'prob2_abs', 'prob2_sct', 'prob3_abs',
+         'prob3_sct']
 
 if args.tests == 'all':
     names_to_run = names
@@ -25,20 +25,18 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
-    # Directories
+    # Input file name format
+    test.inputs['inp'] = test.name + '.txt'
+
+    # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
     test.dirs['sat'] = 'Geom_sat'
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-
-    # Common input
-    test.inputs['inp'] = test.name
-    test.inputs['gcad'] = test.name + '.h5m'
-    test.other['sat'] = test.name + '.sat'
-
-    # Common output
+    test.inputs['gcad'] = test.inputs['inp'] + '.h5m'
+    test.other['sat'] = test.inputs['inp'] + '.sat'
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 

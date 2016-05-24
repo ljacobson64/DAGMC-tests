@@ -10,20 +10,18 @@ import dagmc_testing as dagtest
 
 args = dagtest.parse_args()
 
-names = ['inp001', 'inp002', 'inp003', 'inp004', 'inp005', 'inp006', 'inp007',
-         'inp008', 'inp009', 'inp010', 'inp011', 'inp012', 'inp013', 'inp014',
-         'inp015', 'inp016', 'inp017', 'inp018', 'inp019', 'inp020', 'inp021',
-         'inp022', 'inp023', 'inp024', 'inp025', 'inp026', 'inp027', 'inp028',
-         'inp029', 'inp030', 'inp031', 'inp032', 'inp033', 'inp034', 'inp035',
-         'inp036', 'inp037', 'inp038', 'inp039', 'inp051', 'inp052', 'inp053',
-         'inp054', 'inp055', 'inp056', 'inp057', 'inp058', 'inp059', 'inp061',
-         'inp062', 'inp063', 'inp064', 'inp065', 'inp066', 'inp067', 'inp068',
-         'inp069', 'inp071', 'inp072', 'inp073', 'inp074', 'inp075', 'inp076',
-         'inp077', 'inp078', 'inp079', 'inp124', 'inp125', 'inp126', 'inp127',
-         'inp128', 'inp129', 'inp130', 'inp131', 'inp132', 'inp133', 'inp134',
-         'inp135', 'inp136', 'inp137', 'inp138', 'inp139', 'inp140', 'inp141',
-         'inp142', 'inp143', 'inp153', 'inp171', 'inp172', 'inp173', 'inp174',
-         'inp175', 'inp176', 'inp177']
+names = ['001', '002', '003', '004', '005', '006', '007', '008', '009', '010',
+         '011', '012', '013', '014', '015', '016', '017', '018', '019', '020',
+         '021', '022', '023', '024', '025', '026', '027', '028', '029', '030',
+         '031', '032', '033', '034', '035', '036', '037', '038', '039',
+         '051', '052', '053', '054', '055', '056', '057', '058', '059',
+         '061', '062', '063', '064', '065', '066', '067', '068', '069',
+         '071', '072', '073', '074', '075', '076', '077', '078', '079',
+                              '124', '125', '126', '127', '128', '129', '130',
+         '131', '132', '133', '134', '135', '136', '137', '138', '139', '140',
+         '141', '142', '143',
+                       '153',
+         '171', '172', '173', '174', '175', '176', '177']
 
 if args.tests == 'all':
     names_to_run = names
@@ -37,20 +35,18 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
-    # Directories
+    # Input file name format
+    test.inputs['inp'] = 'inp' + test.name
+
+    # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
     test.dirs['sat'] = 'Geom_sat'
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-
-    # Common input
-    test.inputs['inp'] = test.name
-    test.inputs['gcad'] = test.name + '.h5m'
-    test.other['sat'] = test.name + '.sat'
-
-    # Common output
+    test.inputs['gcad'] = test.inputs['inp'] + '.h5m'
+    test.other['sat'] = test.inputs['inp'] + '.sat'
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 

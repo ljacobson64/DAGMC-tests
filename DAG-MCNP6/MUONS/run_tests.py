@@ -10,9 +10,9 @@ import dagmc_testing as dagtest
 
 args = dagtest.parse_args()
 
-names = ['inp01', 'inp02', 'inp03', 'inp04', 'inp05', 'inp06', 'inp07', 'inp08',
-         'inp09', 'inp10', 'inp11', 'inp12', 'inp13', 'inp14', 'inp15', 'inp16',
-         'inp17', 'inp18', 'inp19', 'inp20', 'inp21', 'inp22']
+names = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+         '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+         '21', '22']
 
 if args.tests == 'all':
     names_to_run = names
@@ -26,6 +26,9 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
+    # Input file name format
+    test.inputs['inp'] = 'inp' + test.name
+
     # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
@@ -33,9 +36,8 @@ for name in names_to_run:
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-    test.inputs['inp'] = test.name
-    test.inputs['gcad'] = test.name + '.h5m'
-    test.other['sat'] = test.name + '.sat'
+    test.inputs['gcad'] = test.inputs['inp'] + '.h5m'
+    test.other['sat'] = test.inputs['inp'] + '.sat'
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 

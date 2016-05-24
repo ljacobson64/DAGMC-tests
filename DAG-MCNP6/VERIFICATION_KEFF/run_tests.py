@@ -10,19 +10,14 @@ import dagmc_testing as dagtest
 
 args = dagtest.parse_args()
 
-names = ['prob01i', 'prob02i', 'prob03i', 'prob04i', 'prob05i', 'prob06i',
-         'prob07i', 'prob08i', 'prob09i', 'prob10i', 'prob11i', 'prob12i',
-         'prob13i', 'prob14i', 'prob15i', 'prob16i', 'prob17i', 'prob18i',
-         'prob19i', 'prob20i', 'prob21i', 'prob22i', 'prob23i', 'prob24i',
-         'prob25i', 'prob26i', 'prob27i', 'prob28i', 'prob29i', 'prob30i',
-         'prob31i', 'prob32i', 'prob33i', 'prob34i', 'prob35i', 'prob36i',
-         'prob37i', 'prob38i', 'prob39i', 'prob40i', 'prob41i', 'prob42i',
-         'prob43i', 'prob44i', 'prob45i', 'prob46i', 'prob47i', 'prob48i',
-         'prob49i', 'prob50i', 'prob51i', 'prob52i', 'prob53i', 'prob54i',
-         'prob55i', 'prob56i', 'prob57i', 'prob58i', 'prob59i', 'prob60i',
-         'prob61i', 'prob62i', 'prob63i', 'prob64i', 'prob65i', 'prob66i',
-         'prob67i', 'prob68i', 'prob69i', 'prob70i', 'prob71i', 'prob72i',
-         'prob73i', 'prob74i', 'prob75i']
+names = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+         '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+         '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+         '31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
+         '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
+         '51', '52', '53', '54', '55', '56', '57', '58', '59', '60',
+         '61', '62', '63', '64', '65', '66', '67', '68', '69', '70',
+         '71', '72', '73', '74', '75']
 
 if args.tests == 'all':
     names_to_run = names
@@ -36,6 +31,9 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
+    # Input file name format
+    test.inputs['inp'] = 'prob' + test.name + 'i'
+
     # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
@@ -43,9 +41,8 @@ for name in names_to_run:
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-    test.inputs['inp'] = test.name
-    test.inputs['gcad'] = test.name + '.h5m'
-    test.other['sat'] = test.name + '.sat'
+    test.inputs['gcad'] = test.inputs['inp'] + '.h5m'
+    test.other['sat'] = test.inputs['inp'] + '.sat'
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 
