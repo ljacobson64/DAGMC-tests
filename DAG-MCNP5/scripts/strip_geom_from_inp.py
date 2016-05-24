@@ -33,7 +33,7 @@ for inp_orig in inp_files:
             # MCNP does not read lines after the third blank line
             if num_blank_lines >= 3:
                 break
-            lines_out.append('c ' + line + '\n')
+            lines_out.append('c\n')
 
         # Comment out cell and surface cards
         elif num_blank_lines < 2:
