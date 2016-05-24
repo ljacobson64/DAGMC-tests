@@ -43,22 +43,21 @@ for name in names_to_run:
 
     # Cross section data
     test.dirs['xsdir'] = '../xsec_data'
-    if test.name in ['inp01', 'inp02', 'inp03', 'inp04', 'inp05', 'inp06',
-                     'inp07', 'inp08', 'inp09', 'inp10', 'inp11', 'inp12']:
+    if test.name in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+                     '11', '12']:
         test.inputs['xsdir'] = 'xsdirph'
-    if test.name in ['inp13', 'inp19']:
+    if test.name in ['13', '19']:
         test.inputs['xsdir'] = 'testdir1'
         test.other['xslib'] = 'testlib1'
-    if test.name in ['inp14', 'inp15', 'inp16', 'inp17', 'inp18', 'inp20',
-                     'inp21', 'inp22']:
+    if test.name in ['14', '15', '16', '17', '18', '20', '21', '22']:
         test.inputs['xsdir'] = 'xsdir'
 
     # MDATA output
-    if test.name in ['inp17', 'inp20', 'inp21', 'inp22']:
+    if test.name in ['17', '20', '21', '22']:
         test.outputs['mdata'] = 'mdata'
 
     # FATAL option
-    if test.name in ['inp17']:
+    if test.name in ['17']:
         test.flags.append('fatal')
 
 dagtest.run_multiple_tests(names_to_run, tests, args)
