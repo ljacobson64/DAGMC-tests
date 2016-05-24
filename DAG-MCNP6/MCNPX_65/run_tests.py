@@ -52,4 +52,71 @@ for name in names_to_run:
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 
+    # Cross section data
+    if test.name in ['003', '004', '005', '006', '007', '013', '015', '016',
+                     '019', '021', '024', '030', '031', '032', '033', '035',
+                     '036', '037', '038', '040', '041', '042', '043', '102',
+                     '103', '104', '105', '106', '107', '108', '109', '110',
+                     '118', '119', '120', '121', '122', '129', '303', '304',
+                     '306', '309', '329', '205', '206', '208', '209', '250']:
+        test.dirs['xsdir'] = '../xsec_data'
+        test.inputs['xsdir'] = 'testdir1'
+        test.other['xslib'] = 'testlib1'
+    if test.name in ['']:
+        test.dirs['xsdir'] = '../xsec_data'
+        test.inputs['xsdir'] = 'xsdir27d'
+
+    # WWINP input
+    if test.name in ['008']:
+        test.inputs['wwinp'] = 'wwinp008'
+    if test.name in ['010', '301']:
+        test.inputs['wwinp'] = 'wwinp010'
+    if test.name in ['014']:
+        test.inputs['wwinp'] = 'wwinp014'
+
+    # MDATA output
+    if test.name in ['039', '201', '202', '203', '204', '207', '302']:
+        test.outputs['mdata'] = 'mdata'
+
+    # PTRAC output
+    if test.name in ['001', '002', '008', '018', '023', '117']:
+        test.outputs['ptrac'] = 'ptrac'
+
+    # WWOUT output
+    if test.name in ['010', '012', '014', '301']:
+        test.outputs['ptrac'] = 'wwout'
+
+    # SRCTP dependencies
+    if test.name in ['017']:
+        test.depends.append(['009', 'srctp'])
+
+    # RSSA dependencies
+    if test.name in ['008', '029']:
+        test.depends.append(['007', 'rssa'])
+    if test.name in ['022']:
+        test.depends.append(['021', 'rssa'])
+    if test.name in ['026', '027']:
+        test.depends.append(['009', 'rssa'])
+    if test.name in ['034']:
+        test.depends.append(['033', 'rssa'])
+
+    # RUNTPE dependencies
+    if test.name in ['025']:
+        test.depends.append(['024', 'runtpe'])
+    if test.name in ['026']:
+        test.depends.append(['009', 'runtpe'])
+
+    # GENXS files
+    if test.name in ['115', '116', '215', '216']:
+        test.other['genxs'] = 'inxs' + test.name
+
+    # CN option
+    if test.name in ['025', '026']:
+        test.flags.append('CN')
+
+    # FATAL option
+    if test.name in ['001', '002', '008', '009', '011', '014', '018', '017',
+                     '020', '022', '023', '025', '026', '029', '117', '150']:
+        test.flags.append('fatal')
+
 dagtest.run_multiple_tests(names_to_run, tests, args)
