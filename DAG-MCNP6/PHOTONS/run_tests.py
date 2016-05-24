@@ -37,7 +37,6 @@ for name in names_to_run:
     test.dirs['input'] = 'Inputs'
     test.dirs['sat'] = 'Geom_sat'
     test.dirs['gcad'] = 'Geom_h5m'
-    test.dirs['log'] = 'Logs'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
 
@@ -45,9 +44,6 @@ for name in names_to_run:
     test.inputs['inp'] = test.name
     test.inputs['gcad'] = test.name + '.h5m'
     test.other['sat'] = test.name + '.sat'
-
-    # Logs
-    test.logs['gcad'] = test.name + '.h5m.log'
 
     # Common output
     test.outputs['outp'] = 'outp'

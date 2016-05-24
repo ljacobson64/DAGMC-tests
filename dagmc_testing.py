@@ -12,7 +12,6 @@ class dagmc_test:
         self.inputs = {}
         self.outputs = {}
         self.other = {}
-        self.logs = {}
 
         self.physics = None    # mcnp5, mcnp6, or fluka
         self.run_type = None   # native or dagmc
@@ -36,18 +35,15 @@ class dagmc_test:
     # Run dagmc_preproc on an ACIS file
     def run_dagmc_preproc(self, ftol = '1e-4'):
         if (('sat' not in self.dirs) or ('sat' not in self.other) or
-            ('gcad' not in self.dirs) or ('gcad' not in self.inputs) or
-            ('log' not in self.dirs) or ('gcad' not in self.logs)):
+            ('gcad' not in self.dirs) or ('gcad' not in self.inputs):
             return
 
         satfile = os.path.join(self.dirs['sat'], self.other['sat'])
         gcadfile = os.path.join(self.dirs['gcad'], self.inputs['gcad'])
-        logfile = os.path.join(self.dirs['log'], self.logs['gcad'])
 
         call_shell('mkdir -p ' + self.dirs['gcad'])
-        call_shell('mkdir -p ' + self.dirs['log'])
         call_shell('dagmc_preproc ' + satfile + ' -o ' + gcadfile + ' -f ' +
-                   str(ftol), logfile, logfile)
+                   str(ftol))
 
     # Setup results directory
     def setup_result_dir(self):
