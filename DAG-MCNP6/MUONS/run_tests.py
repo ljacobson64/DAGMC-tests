@@ -26,21 +26,36 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
-    # Directories
+    # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
     test.dirs['sat'] = 'Geom_sat'
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-
-    # Common input
     test.inputs['inp'] = test.name
     test.inputs['gcad'] = test.name + '.h5m'
     test.other['sat'] = test.name + '.sat'
-
-    # Common output
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
+
+    # Cross section data
+    test.dirs['xsdir'] = '../xsec_data'
+    if test.name in ['inp01', 'inp02', 'inp03', 'inp04', 'inp05', 'inp06',
+                     'inp07', 'inp08', 'inp09', 'inp10', 'inp11', 'inp12']:
+        test.inputs['xsdir'] = 'xsdirph'
+    if test.name in ['inp13', 'inp19']:
+        test.inputs['xsdir'] = 'testdir1'
+    if test.name in ['inp14', 'inp15', 'inp16', 'inp17', 'inp18', 'inp20',
+                     'inp21', 'inp22']:
+        test.inputs['xsdir'] = 'xsdir'
+
+    # MDATA output
+    if test.name in ['inp17', 'inp20', 'inp21', 'inp22']:
+        test.outputs['mdata'] = 'mdata'
+
+    # FATAL option
+    if test.name in ['inp17']:
+        test.flags.append('fatal')
 
 dagtest.run_multiple_tests(names_to_run, tests, args)
