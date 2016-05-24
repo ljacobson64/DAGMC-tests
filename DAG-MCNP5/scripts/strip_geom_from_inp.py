@@ -1,20 +1,12 @@
-import commands
 import os
-from subprocess import call
 
-# Find all the files in the "Inputs_orig" directory
-inp_files = commands.getstatusoutput('find Inputs_orig -type f')[1].split()
-
-if not os.path.exists('Inputs'):
-    os.makedirs('Inputs')
-
-for inp_orig in inp_files:
-    reader = open(inp_orig, 'r')
+def strip_geom_from_inp(inp_orig_file):
+    reader = open(inp_orig_file, 'r')
     lines_in = reader.readlines()
     reader.close()
 
     # Put the DAG-MCNP input file in the "Inputs" directory
-    inp_file = os.path.join('Inputs', os.path.basename(inp_orig))
+    inp_file = os.path.join('Inputs', os.path.basename(inp_orig_file))
 
     num_blank_lines = 0
     prdmp_found = False
@@ -84,3 +76,21 @@ for inp_orig in inp_files:
             writer.write(line)
 
     writer.close()
+
+# Find all the files in directories called "Inputs_orig"
+inp_orig_dirs = []
+inp_orig_files = []
+for root, dirnames, filenames in os.walk('.'):
+    if os.path.basename(root) == 'Inputs_orig':
+        inp_orig_dirs.append(root)
+        for f in filenames:
+            inp_orig_files.append(os.path.join(root, f))
+
+# Create the "Inputs" directories where the new input files will be placed
+for inp_orig_dir in inp_orig_dirs:
+    inp_dir = os.path.join(os.path.dirname(inp_orig_dir), 'Inputs')
+    if not os.path.exists(inp_dir):
+        os.makedirs(inp_dir)
+
+for inp_orig_file in inp_orig_files:
+    strip_geom_from_inp(inp_orig_file)

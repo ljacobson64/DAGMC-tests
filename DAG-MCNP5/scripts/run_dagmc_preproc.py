@@ -1,11 +1,11 @@
 import argparse
-import commands
 import os
 from subprocess import call
 import multiprocessing as mp
 
 def run_dagmc_preproc(sat_file):
-    h5m_file = os.path.join('Geom_h5m', os.path.basename(sat_file)[:-4] + '.h5m')
+    h5m_file = os.path.join(os.path.dirname(os.path.dirname(sat_file)),
+                            'Geom_h5m', os.path.basename(sat_file)[:-4] + '.h5m')
     run_string = 'dagmc_preproc ' + sat_file + ' -o ' + h5m_file
     print run_string
     call(run_string, shell = True)
@@ -20,11 +20,20 @@ def parse_args():
 args = parse_args()
 jobs = args.jobs
 
-# Find all the .sat files in the "Geom_sat" directory
-sat_files = commands.getstatusoutput('find Geom_sat -type f -name *.sat')[1].split()
+# Find all the files in directories called "Geom_sat"
+sat_dirs = []
+sat_files = []
+for root, dirnames, filenames in os.walk('.'):
+    if os.path.basename(root) == 'Geom_sat':
+        sat_dirs.append(root)
+        for f in filenames:
+            sat_files.append(os.path.join(root, f))
 
-if not os.path.exists('Geom_h5m'):
-    os.makedirs('Geom_h5m')
+# Create the "Geom_h5m" directories where the .h5m files will be placed
+for sat_dir in sat_dirs:
+    h5m_dir = os.path.join(os.path.dirname(sat_dir), 'Geom_h5m')
+    if not os.path.exists(h5m_dir):
+        os.makedirs(h5m_dir)
 
 if jobs > 1:
     pool = mp.Pool(processes = jobs)
