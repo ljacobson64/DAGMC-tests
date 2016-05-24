@@ -10,21 +10,21 @@ import dagmc_testing as dagtest
 
 args = dagtest.parse_args()
 
-names = ['BE08i', 'C29i', 'CCR20i', 'COAIRi', 'COTEFi',
+names = ['BE08i', 'C29i', 'CCR20i', 'COAIRi', 'COTEFi', 'FE09i', 'FS1ONNi',
+         'FS3OFNi', 'FS3ONPi', 'FS7OFPi', 'FS7ONNi', 'H2O19i', 'KERMINi',
+         'LI616i', 'N31i', 'PB14i', 'SKYINPi', 'SMAIRi', 'SMTEFi',
          'duct_therm_neutron_oneleg_conc.inp',
          'duct_therm_neutron_oneleg_reinf.inp',
          'duct_therm_neutron_threeleg_conc.inp',
          'duct_therm_neutron_threeleg_reinf.inp',
          'duct_therm_neutron_twoleg_conc.inp',
-         'duct_therm_neutron_twoleg_reinf.inp', 'FE09i',
+         'duct_therm_neutron_twoleg_reinf.inp',
          'fns_config1_neutron_onaxis.inp', 'fns_config3_neutron_offaxis.inp',
          'fns_config3_photon_onaxis.inp', 'fns_config7_neutron_onaxis.inp',
-         'fns_config7_photon_offaxis.inp', 'FS1ONNi', 'FS3OFNi', 'FS3ONPi',
-         'FS7OFPi', 'FS7ONNi', 'H2O19i', 'KERMINi', 'LI616i', 'lps_berl.inp',
-         'lps_carbon.inp', 'lps_conc.inp', 'lps_iron.inp', 'lps_lead.inp',
-         'lps_lith.inp', 'lps_nitro.inp', 'lps_pu239.inp', 'lps_u235.inp',
-         'lps_u238.inp', 'lps_water.inp', 'N31i', 'PB14i', 'photon_kerma.inp',
-         'photon_skyshine.inp', 'SKYINPi', 'SMAIRi', 'SMTEFi']
+         'fns_config7_photon_offaxis.inp', 'lps_berl.inp', 'lps_carbon.inp',
+         'lps_conc.inp', 'lps_iron.inp', 'lps_lead.inp', 'lps_lith.inp',
+         'lps_nitro.inp', 'lps_pu239.inp', 'lps_u235.inp', 'lps_u238.inp',
+         'lps_water.inp', 'photon_kerma.inp', 'photon_skyshine.inp']
 
 if args.tests == 'all':
     names_to_run = names
@@ -38,20 +38,16 @@ for name in names_to_run:
 
     test.physics = 'mcnp6'
 
-    # Directories
+    # Common
     test.dirs['orig'] = current_dir
     test.dirs['input'] = 'Inputs'
     test.dirs['sat'] = 'Geom_sat'
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
     test.dirs['temp'] = 'Templates/' + test.name
-
-    # Common input
     test.inputs['inp'] = test.name
     test.inputs['gcad'] = test.name + '.h5m'
     test.other['sat'] = test.name + '.sat'
-
-    # Common output
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 
