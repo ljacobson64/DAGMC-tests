@@ -50,4 +50,41 @@ for name in names_to_run:
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 
+    # Cross section data
+    test.dirs['xsdir'] = '../xsec_data'
+    if test.name in ['010', '011', '012', '013', '014', '015', '016', '017',
+                     '018', '019', '020', '021', '022', '023', '024', '025',
+                     '026', '027', '028', '029', '030', '031', '032', '033',
+                     '034', '035', '036', '037', '038', '039', '041', '042',
+                     '043', '044', '045', '046', '047', '048', '049', '051',
+                     '052', '053', '054', '055', '056', '057', '058', '059',
+                     '061', '062', '063', '064', '065', '066', '067', '068',
+                     '069', '071', '072', '073', '074', '075', '076', '077',
+                     '078', '079', '100', '153', '155', '156', '171', '172',
+                     '173', '174', '175', '176', '177']:
+        test.inputs['xsdir'] = 'xsdirph'
+    if test.name in ['001', '002', '003', '004', '009', '139']:
+        test.inputs['xsdir'] = 'testdir1'
+        test.other['xslib'] = 'testlib1'
+
+    # FATAL option
+    if test.name in ['001', '002', '003', '139']:
+        test.flags.append('fatal')
+
+    # RSSA dependencies
+    if test.name in ['004']:
+        test.depends.append(['001', 'rssa'])
+
+    # MESHTAL output
+    if test.name in ['009']:
+        test.outputs['meshtal'] = 'meshtal'
+
+    # PTRAC output
+    if test.name in ['003']:
+        test.outputs['ptrac'] = 'ptrac'
+
+    # WWOUT output
+    if test.name in ['139']:
+        test.outputs['wwout'] = 'wwout'
+
 dagtest.run_multiple_tests(names_to_run, tests, args)
