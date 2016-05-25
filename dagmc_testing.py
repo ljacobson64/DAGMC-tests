@@ -72,7 +72,7 @@ class dagmc_test:
             else:
                 depend_inp = depend[1]
             link_orig = os.path.join('..', depend[0], depend_inp)
-            link_new = os.path.join(self.dirs['result'], depend[1] + depend[0])
+            link_new = os.path.join(self.dirs['result'], depend[1] + '_' + depend[0])
             call_shell('ln -snf ' + link_orig + ' ' + link_new)
 
         # Other files (DAG-MCNP only)
@@ -104,7 +104,7 @@ class dagmc_test:
             for key, val in self.inputs.items():
                 exe_strs[0] += ' ' + key + '=' + val
             for depend in self.depends:
-                exe_strs[0] += ' ' + depend[1] + '=' + depend[1] + depend[0]
+                exe_strs[0] += ' ' + depend[1] + '=' + depend[1] + '_' + depend[0]
             exe_strs[1] += 'rm -f fcad'
         elif self.physics == 'fluka':
             if self.run_type != 'code':
