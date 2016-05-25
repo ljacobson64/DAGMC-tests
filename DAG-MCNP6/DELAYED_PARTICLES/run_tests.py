@@ -40,4 +40,8 @@ for name in names_to_run:
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 
+    # Tally card files
+    if test.name in ['heu_point']:
+        test.other['tally_cards'] = 'tally_u.dat'
+
 dagtest.run_multiple_tests(names_to_run, tests, args)
