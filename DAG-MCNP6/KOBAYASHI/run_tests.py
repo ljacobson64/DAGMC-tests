@@ -40,4 +40,10 @@ for name in names_to_run:
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 
+    # Cross section data
+    if test.name in ['prob1_abs', 'prob2_abs', 'prob3_abs']:
+        test.other['xs'] = 'xs1.txt'
+    if test.name in ['prob1_sct', 'prob2_sct', 'prob3_sct']:
+        test.other['xs'] = 'xs2.txt'
+
 dagtest.run_multiple_tests(names_to_run, tests, args)
