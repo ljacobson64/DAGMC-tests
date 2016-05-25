@@ -41,6 +41,10 @@ for name in names_to_run:
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 
+    # FATAL option
+    if test.name in ['17']:
+        test.flags.append('fatal')
+
     # Cross section data
     test.dirs['xsdir'] = '../xsec_data'
     if test.name in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
@@ -55,9 +59,5 @@ for name in names_to_run:
     # MDATA output
     if test.name in ['17', '20', '21', '22']:
         test.outputs['mdata'] = 'mdata'
-
-    # FATAL option
-    if test.name in ['17']:
-        test.flags.append('fatal')
 
 dagtest.run_multiple_tests(names_to_run, tests, args)

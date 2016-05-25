@@ -69,6 +69,11 @@ for name in names_to_run:
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 
+    # FATAL option
+    if test.name in ['rg03', 'rg03_noRR', 'rg11', 'rg11_noRR', 'x25w', 'x25e',
+                     'x25e_noRR', 'x25w_noRR']:
+        test.flags.append('fatal')
+
     # WWINP input
     if test.name in ['cy02', 'cy04', 'cy05', 'cy12', 'cy13', 'cy14', 'cy18',
                      'cy19', 'cy23', 'cy33', 'cy36', 'cy38', 'cy39',
@@ -88,10 +93,5 @@ for name in names_to_run:
         test.inputs['wwinp'] = 'wwinp24'
     if test.name in ['x25w', 'x25e', 'x25e_noRR', 'x25w_noRR']:
         test.inputs['wwinp'] = 'wwinp25'
-
-    # FATAL option
-    if test.name in ['rg03', 'rg03_noRR', 'rg11', 'rg11_noRR', 'x25w', 'x25e',
-                     'x25e_noRR', 'x25w_noRR']:
-        test.flags.append('fatal')
 
 dagtest.run_multiple_tests(names_to_run, tests, args)

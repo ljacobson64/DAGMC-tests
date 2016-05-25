@@ -50,6 +50,10 @@ for name in names_to_run:
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 
+    # FATAL option
+    if test.name in ['001', '002', '003', '139']:
+        test.flags.append('fatal')
+
     # Cross section data
     test.dirs['xsdir'] = '../xsec_data'
     if test.name in ['010', '011', '012', '013', '014', '015', '016', '017',
@@ -66,10 +70,6 @@ for name in names_to_run:
     if test.name in ['001', '002', '003', '004', '009', '139']:
         test.inputs['xsdir'] = 'testdir1'
         test.other['xslib'] = 'testlib1'
-
-    # FATAL option
-    if test.name in ['001', '002', '003', '139']:
-        test.flags.append('fatal')
 
     # RSSA dependencies
     if test.name in ['004']:
