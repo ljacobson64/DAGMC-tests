@@ -57,8 +57,9 @@ for name in names_to_run:
         test.flags.append('CN')
 
     # FATAL option
-    if test.name in ['001', '002', '008', '009', '011', '014', '018', '017',
-                     '020', '022', '023', '025', '026', '029', '117', '150']:
+    if test.name in ['001', '002', '008', '009', '011', '012', '014', '017',
+                     '018', '017', '020', '022', '023', '025', '026', '029',
+                     '034', '117', '123', '150']:
         test.flags.append('fatal')
 
     # Cross section data
@@ -78,12 +79,10 @@ for name in names_to_run:
 
     # WWINP input
     test.dirs['wwinp'] = 'Files'
-    if test.name in ['008']:
-        test.inputs['wwinp'] = 'wwinp008'
-    if test.name in ['010', '301']:
+    if test.name in ['008', '010', '014']:
+        test.inputs['wwinp'] = 'wwinp' + test.name
+    if test.name in ['301']:
         test.inputs['wwinp'] = 'wwinp010'
-    if test.name in ['014']:
-        test.inputs['wwinp'] = 'wwinp014'
 
     # GENXS files
     test.dirs['genxs'] = 'Files'
@@ -95,7 +94,7 @@ for name in names_to_run:
         test.depends.append(['007', 'rssa'])
     if test.name in ['022']:
         test.depends.append(['021', 'rssa'])
-    if test.name in ['026', '027']:
+    if test.name in ['027']:
         test.depends.append(['009', 'rssa'])
     if test.name in ['034']:
         test.depends.append(['033', 'rssa'])
@@ -110,6 +109,10 @@ for name in names_to_run:
     if test.name in ['017']:
         test.depends.append(['009', 'srctp'])
 
+    # WSSA dependencies
+    if test.name in ['026']:
+        test.depends.append(['009', 'rssa'])
+
     # MDATA output
     if test.name in ['039', '201', '202', '203', '204', '207', '302']:
         test.outputs['mdata'] = 'mdata'
@@ -119,7 +122,7 @@ for name in names_to_run:
         test.outputs['ptrac'] = 'ptrac'
 
     # WWOUT output
-    if test.name in ['010', '012', '014', '301']:
-        test.outputs['ptrac'] = 'wwout'
+    if test.name in ['008', '010', '012', '014', '301']:
+        test.outputs['wwout'] = 'wwout'
 
 dagtest.run_multiple_tests(names_to_run, tests, args)
