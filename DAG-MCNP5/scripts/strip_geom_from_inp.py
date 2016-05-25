@@ -6,7 +6,8 @@ def strip_geom_from_inp(inp_orig_file):
     reader.close()
 
     # Put the DAG-MCNP input file in the "Inputs" directory
-    inp_file = os.path.join('Inputs', os.path.basename(inp_orig_file))
+    inp_file = os.path.join(os.path.dirname(os.path.dirname(inp_orig_file)),
+                            'Inputs', os.path.basename(inp_orig_file))
 
     num_blank_lines = 0
     prdmp_found = False
