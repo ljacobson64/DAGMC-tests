@@ -1,0 +1,34 @@
+Test of mix & match
+1  1 -1.  -1
+2  2 -1.  -2 1
+3  3 -1.  -3 2
+4  4 -1.  -4 3
+5  5 -1.  -5 4
+6  0         5 
+
+1 so .1
+2 so .2
+3 so .3
+4 so .4
+5 so .5
+
+mode n p h
+imp:n,p,h 1 4r 0
+sdef erg=123 par=h
+print -161 -162
+m1 82000 1 79000 1 26056 1
+m2 13027 1 1001  1 32000 1
+m3 9019 1 8016 1
+m4 6000 1 1003 1
+m5 2004 1
+phys:n 160 6j -1
+phys:p 200 2j 1 1
+phys:h 180 j -1
+nps 10000
+f4:n 5
+f14:p 5
+f24:h 5
+prdmp 2j -1
+dbcn  26j  1  j  0 12j  1 2j 1
+lca    8j  1
+tropt  mcscat  gaussian

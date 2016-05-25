@@ -1,0 +1,36 @@
+     unresolved criticality test of Pu-239 and U-238, i52u 
+    1   1 .05   -1
+    2   1 .05   -2    1 
+    3   1 .05   -3    2 
+    4   1 .05   -4    3  
+    5   1 .05   -5    4 
+    6   0        5     
+ 
+    1   so   5. 
+    2   so  10. 
+    3   so  15. 
+    4   so  20. 
+   *5   so  25. 
+ 
+mode     n
+imp:n     1. 4r 0.
+m1       94239 .01  1001.24c .002 92238.48c .10 nlib 49c
+m2       94239.49c 1.
+m3       92238.48c 1.
+print    140
+fc4        flux tally in cells 
+f4:n    (1 2 3 4 5) 
+e4        1.e-6 1.e-5 1.e-4 .0003 .001 .004 .02 .15 .25 1. 30.        
+fc14    Pu-239    fission tally in cells 
+f14:n    (1 2 3 4 5)
+e14       1.e-6 1.e-5 1.e-4 .0003 .001 .004 .02 .15 .25 1. 30.        
+fm14      1. 2 -6
+fc24     U-238    capture tally in cells 
+f24:n    (1 2 3 4 5)
+e24       1.e-6 1.e-5 1.e-4 .0003 .001 .004 .02 .15 .25 1. 30.        
+fm24      1. 3 -2
+kcode   1000 1 5 12
+ksrc     0 0 0
+prdmp 2j -1
+dbcn 28j 0
+

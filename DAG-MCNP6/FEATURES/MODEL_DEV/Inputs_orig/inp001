@@ -1,0 +1,17 @@
+DEV_TEST test problem 001
+c 800 Gev protons on Au-197
+11  12 -11.34  -40
+31  0           40
+
+40  so  1.0
+
+dbcn  28j 0
+m12  79197 1
+sdef erg = 800000 par = h dir = 1 pos = 0 0 0  vec = 0 0 1
+imp:h  1 0
+phys:h 1000000
+mode h 
+lca   7j -1
+nps   200
+prdmp 2j -1 j -1
+tropt genxs inxs001

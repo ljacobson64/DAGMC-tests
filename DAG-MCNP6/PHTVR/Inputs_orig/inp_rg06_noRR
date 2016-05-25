@@ -1,0 +1,102 @@
+gamma  ray skyshine experiment  d hollowell 3/90
+c
+c     this mcnp file is an attempt to recreate the gamma
+c      ray skyshine experiment of Nason, Shultis, Faw and
+c      Clifford, Nuc. Sci. & Engineering 79 (1981), p 404.
+c      this input deck should model an approximately 150
+c      degree upward cone gamma ray source, from cobalt 60.
+c      we measure the dose at 100 m intervals from the source,
+c      out to 700 m, and we measure it at 50 m.  we use
+c      ring detectors for this measurement.
+c     the majority of effort in setting up this problem is
+c      getting a good geometry to give good weight to the
+c      detected photons.
+c
+c     the region directly illuminated by the source is
+c      divided into concentric spheres.  the region above
+c      the ground indirectly illuminated is divided into
+c      a set of nestled cones, all with ~ 150 degree
+c      opening.  the ground is divided into three layers.
+c
+ 1    1  -.001124   -1      +7   -20  #31
+ 2    1  -.001124   +1  -2  +7   -20
+ 3    1  -.001124   +2  -3  +7   -20
+ 4    1  -.001124   +3  -4  +7   -20
+ 5    1  -.001124   +4  -5  +7   -20
+ 6    1  -.001124       +5  -6    +7  -20
+ 7           0              +6:  -42 : +26
+21    1  -.001124   -1      +7   +20
+22    1  -.001124   +1  -6  +7   +20  -21
+23    1  -.001124       -6  +7   +21  -22
+24    1  -.001124       -6  +7   +22  -23
+25    1  -.001124       -6  +7   +23  -24
+26    1  -.001124       -6  +7   +24  -25
+27    1  -.001124       -6  +7   +25  -26
+31    0                     +7   +30  -31  -32
+40    0                     -7   +42  -31
+41    2  -2.6           -6  -7   +31  +40
+42    2  -2.6           -6  -40  +31  +41
+43    2  -2.6           -6  -41  +31  +42
+
+ 1     so      3000.                $  a concentric spherical shell
+ 2     so     13000.                $  a concentric spherical shell
+ 3     so     35000.                $  a concentric spherical shell
+ 4     so     55000.                $  a concentric spherical shell
+ 5     so     75000.                $  a concentric spherical shell
+ 6     so    100000.                $  an outer boundary to the problem
+ 7     pz     0.                    $  the ground/air interface
+20     kz      -60.   20.346   +1   $  cone with xy plane radius 217cm
+21     kz     -665.   20.346   +1   $  cone with xy plane radius 3000cm
+22     kz    -2882.   20.346   +1   $  cone with xy plane radius 13000cm
+23     kz    -7759.   20.346   +1   $  cone with xy plane radius 35000cm
+24     kz   -12193.   20.346   +1   $  cone with xy plane radius 55000cm
+25     kz   -16627.   20.346   +1   $  cone with xy plane radius 75000cm
+26     kz   -22169.   20.346   +1   $  cone with xy plane radius 100000cm
+c      cz  125.                     $  columation silo inner diameter
+30     cz  117.75                   $  columation silo inner diameter
+c      cz  129.41                   $  columation silo inner diameter
+31     cz  217.5                    $  columation silo outer diameter
+32     pz  229.                     $  plane at the top of the silo
+40     pz   -3.                     $  underground plane for photon imp.
+41     pz   -6.                     $  underground plane for photon imp.
+42     pz   -9.                     $  underground plane for photon imp.
+
+c        the importances have been found, more or less, by trial and error
+imp:p      1  1.7  2  3.3  6.7  17.   0
+          10. 2.0  3  7.0  27.  100.  400.
+           0.  0.  2.  4.   6.
+c
+c     material #1 is dry air, and #2 is dirt
+c
+m1    6000.04p  .000125      7000.04p  .686910
+      8000.04p  .301248     18000.04p  .011717
+m2    8000.04p  .46133
+     11023.04p  .02346
+     13000.04p  .08272
+     14000.04p  .28038
+     20000.04p  .04126
+     26000.04p  .05598
+c
+mode p
+c
+c
+sdef pos = 0. 0. 198.  erg = d1
+sc1  for cobalt 60 photons
+si1  l  1.173  1.322
+sp1  d  1.     1.
+c          the low energy photons are not worth the bother
+c          since they are below the detector response function cut rusroul offoff
+phys:p .03
+cut:p       1.e+33 0.0399 1e-4 5e-5
+var rr=off
+c
+prdmp 2j -1
+print -10 -20 -30 -40 -50 -60 -70 -72 -80 -85 -86 -90 -100 -102 -110
+       -120 -140 -161 -162 -170 -190 -200
+nps 4
+f328:p 1 2 3 4 5 6 21 22 23 24 25 26 27 41 42
+       43  T
+e328 0 1e-5 .001 .1 3i .5 .52 .6 3i 1 1.025 1.5 14i 15.5
+f338:p 1 2 3 4 5 6 21 22 23 24 25 26 27 41 42
+       43  T
+e338  0 1e-5 .001 .1 3i .5 .52 .6 3i 1 1.025 1.5 14i 15.5

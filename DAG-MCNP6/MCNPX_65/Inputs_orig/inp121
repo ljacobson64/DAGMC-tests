@@ -1,0 +1,21 @@
+Test SPABI, esplt combination
+1  1  -1  -1  imp:n=1
+2  0       1  imp:n=0
+
+1  so 10
+
+m1 1001 2 8016 1
+sdef
+cut:n j 10
+mode n p
+fcl:n 1 0
+fcl:p 1 0
+spabi:p n 20 4
+esplt:n  1.5 20
+esplt:p   1.2 10    1.1   1    1 0.1
+print
+nps 100000
+e0 0 99i 20
+f4:n 1
+f14:p 1
+prdmp 2j -1 j 4000

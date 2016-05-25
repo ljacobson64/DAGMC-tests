@@ -1,0 +1,26 @@
+test DB - U-235 fission
+1  1  -1.0    -1  imp:n=1
+2  0           1  imp:n=0
+
+1  so  1.0
+
+mode n p e
+m1   92235 1
+sdef par=n  erg=1e-6
+ACT  FISSION=n,p,e DN=model DG=mg
+lca  7j -2
+f1:n  1
+t1    100 1e37
+e1    1e-3 199i 10
+f11:p 1
+t11   100 1e37
+e11   1e-3 199i 10
+f21:e 1
+t21   100 1e37
+e21   1e-3 199i 10
+f31:e 1
+t31   .001e8 199log 1000e8
+print
+prdmp 2j -1
+nps  100
+

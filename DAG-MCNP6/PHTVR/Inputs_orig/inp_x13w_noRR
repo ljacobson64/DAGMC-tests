@@ -1,0 +1,26 @@
+Test of f8 tally without Russian roulette
+1 31 10.    -11
+2  5 1.e-12 -12 11
+3  0        -13 12
+4  0         13
+
+11 so .99
+12 so 1
+13 so 5
+
+wwp:p 3 2 3
+wwn1:p .5 1.25 -1 -1
+mode p
+m31 1001 1
+m5  8016 1
+print -10 -20 -30 -40 -50 -60 -70 -72 -80 -85 -86 -90 -100 -102 -110
+       -120 -140 -161 -162 -170 -190 -200
+dbcn   42j   0
+sdef  erg 100
+nps 100000
+cut:p j  j
+var rr=off
+c
+f8:p 3
+e8 -1 0 1e-5 .001 .1 3i .5 .512 .63 3i 1.03 2 30ilog 120
+prdmp 2j -1 j -1

@@ -1,0 +1,30 @@
+        test of photon production, iprodu
+    1   1 .00008000 -1
+    2   0             1
+ 
+    1   so   2.
+ 
+mode     n p
+imp:n     1.  0.
+wwp:p
+wwn1:p .01 -1
+sdef     erg=d1        
+si1      .000380001 .0003800011
+sp1       0.    1. 
+cut:n   j .000380001  0. 0.
+phys:p   j 1 j -1 1
+nonu
+m1       94239.49c .1 
+mpn1 73181
+fc4      n  flux tally in cells 
+f4:n     1
+e4        1.e-6 1.e-5 360.e-6 380.0e-6 381.e-6 20.                 
+sd4      1.
+fc14     p  flux tally in cells 
+f14:p     1
+e14      0.1 0.5 1. 2. 5. 20.
+sd14      1.
+nps     500000
+prdmp 2j -1 j 32000
+dbcn   29j  13j  0
+

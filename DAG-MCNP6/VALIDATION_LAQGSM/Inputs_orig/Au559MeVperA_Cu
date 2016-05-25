@@ -1,0 +1,31 @@
+MCNP6 test: 559 MeV/A Au197 + Cu64 by LAQGSM03.03, nevtype=66
+  1  1  1.0   -1 2 -3
+  2  0        -4 (1:-2:3)
+  3  0         4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  -1.0
+  3  pz  1.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+dbcn 28j 1
+  m1 29064  1.0
+  sdef erg=110123 par=79197 dir=1 pos=0 0 0 vec 0 0 1
+  imp:n 1 1 0
+  imp:h 1 1 0
+  phys:h 110150
+  phys:# 110150
+  mode  # n a t d s h
+LCA  2 1 5j -1 1j 1    $ use LAQGSM, nevtype = 66                   !!!
+lcb  0 0 0 0 0 0
+lea  2j 0
+c  tropt genxs inxc68  nreact on  nescat off
+  tropt genxs inxc68
+c ---------------------------------------------------------------
+  print 40 110 95
+c  nps 100
+  nps 100000
+  prdmp 2j -1
+

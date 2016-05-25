@@ -1,0 +1,64 @@
+ test of boxes, cyls, and hexs inside sphere, trans incl rotations, ibch6
+    1   0       -70              fill=5 u=1    $ box of low dens iron & void
+    2   1 -0.80  27                     u=5    $ low dens iron beyond cyl   
+    3   0       -27                     u=5    $ inner void z-cyl
+    4   0       -10              fill=2 u=1    $ box surf trans in x
+    5           like 1 but trcl=2              $ trans in x,y and rot
+    6           like 1 but trcl=3              $ trans in z
+    7   0       -27     trcl=4   fill=7 u=1    $ cyl of low dens iron bey hex 
+    8   0        -9     trcl=5   fill=8 u=1    $ sph containing hex lattice   
+    9   2 -0.10      #1 #4 #5 #6 #7 #8  u=1    $ low dens water beyond 
+   10   0        -7              fill=1        $ universe 1 inside sphere
+   11   1 -8.0   -8    7                       $ 1 cm iron beyond sphere
+   12   0       -20               lat=1 u=2    $ rec lattice defined by box
+                fill=-2:2 -2:2 0:0
+           2 4r  2 4 3 4 2  2 3 4 3 2  2 4 3 4 2   2 4r
+   13   1 -1.2  -31                     u=3    $ x-axis cyl of l.d. iron in lat
+   14   2 -0.3   31                     u=3    $ beyond x-axis cyl is l.d. water
+   15   1 -1.2  -35                     u=4    $ y-axis cyl of l.d. iron in lat
+   16   2 -0.3   35                     u=4    $ beyond y-axis cyl is l.d. water
+   17   1 -0.80  40                     u=7    $ low dens iron beyond hex
+   18   0       -40                     u=7    $ void inside hex
+   19   0       -50               lat=2 u=8    $ hex lattice defined by hex
+                fill=-2:2 -2:2 0:0
+           8 4r  8 8 9 9 8  8 9 8 9 8  8 9 9 8 8  8 4r
+   20   1 -0.80 -60                     u=9    $ iron inside hex of row 2
+   21   2 -0.10  60                     u=9    $ water outside hex of row 2
+   22   0          8                           $ outside world
+
+   70   box  -5 -7 -9  10 0 0  0 14 0  0 0 18  $ 10x14x19 box             
+   27   rcc  0 0 -5    0 0 10   3     $ cyl, r=3, 10 high on z axis
+    7   sph  30.
+   20   box  14 -1.5 0  2 0 0  0 3 0  
+   31   rcc  14.3 0 0  1.4 0 0  0.5   $ cyl, r=.5, 1.4 high on x axis
+   35   rcc  15. -.7 0 0 1.4 0  0.5   $ cyl, r=.5, 1.4 high on y axis
+    8   sph  0 0 0 31.    
+    9   so   7.
+   10 1 rpp  -4 4   -7 7      -8 8    $ box with trans
+   40   rhp  0 0 -4  0 0 8    0 2 0   $ hex, z-axis, normal-y
+   50   rhp  0 0 0   0 0 2.e6 2 0 0   $ hex, z-axis inf, normal-x
+   60   rhp  0 0 0   0 0 2.e6 1.6 0 0 $ hex within lattice cell
+
+mode   n
+tr1     15.   0.  0.
+tr2     13.  22.  0.   0.866 0.5 0.  -0.5 0.866 0.  0. 0. 1.
+tr3      0.   0. 19. 
+tr4    -10.  10.  0.
+tr5    -12. -12.  0.
+c       14 MeV source at origen
+sdef     cel=10:1:3
+imp:n    1 20r 0
+c      idum     1
+nps      10000
+print
+m1     26000.55  1.
+m2      1001.50  2.    8016.50 1.
+e0      1.e-6 .001 1. 10. 20.
+fc2      leakage flux
+f2:n     7
+c      fc12      flux below center box
+c      f12:n   76
+c      sd12      140.
+prdmp 2j -1
+c                         
+

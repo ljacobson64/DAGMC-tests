@@ -1,0 +1,19 @@
+PUb-H2O(10)-1-0-CY
+c  CELL CARDS
+1  1   1.0    -1           $SEMI-INFINITE CYLINDER
+2  2   1.0     1   -2      $REFLECTOR
+3  0           2           $OUTSIDE WORLD
+
+c  SURFACE CARDS
+1  rcc 0 0 0   0 0 1e12  3.077574
+2  rcc 0 0 0   0 0 1e12 33.714829
+
+c  DATA CARDS
+imp:n   1  1  0
+kcode   20000  1.0  50  2050
+ksrc    0.0   0.0  1.0e6
+m1      92250.02m 1.0
+m2      92250.03m 1.0
+mgopt f 1
+phys:n  j 100
+prdmp   3j 2

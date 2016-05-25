@@ -1,0 +1,43 @@
+Test case 3 - Spontanous gamma emission, sp with distributed location
+1  1  -1.6   -1  imp:p=1
+2  2   -7    -2  imp:p=1
+3  0  -99  #1 #2 imp:p=1
+99  0  99  imp:p=0
+
+1   s  -10 0 0 10.0
+2   s   10 0 0 5.0
+99  so  100.0
+
+mode p n
+m1   1001 -.002
+     8016 -.527
+     11023 -.021
+     13027 -.061
+     14028 -.345
+     19000 -.029
+     26056 -.016
+     27057 -.0000595    $ use material source
+     27060 -.00040      $ use material source
+     55137 -.0010       $ use material source
+m2   28058  0.6827 
+     28057  1e-6        $ material source
+     28060  0.2610
+sdef par=sp erg=0 pos=d1 rad=fpos=d2
+si1   L  -10 0 0   10 0 0 
+sp1          0.26   0.21
+ds2   S   3   4  
+si3   0 10
+sp3  -21 2
+si4   0  5
+sp4  -21 2
+nps  100
+phys:p 4j 1  j  
+act  NONFISS=p dg=line
+mphys on
+f11:p 1 2
+e11   0 999i 10
+sd11  1 0.25
+prdmp 2j -1
+print
+c dbcn  20j  j  7j  1  2j  0  0
+  dbcn  20j  j  7j  0  2j  0  0

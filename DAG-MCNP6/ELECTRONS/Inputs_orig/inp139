@@ -1,0 +1,28 @@
+Test bank overflows and photon-electron weight-window generation.
+1 14  -1.   -11
+2 13  -.5   -12 11
+3 13  -.5   -13 12
+4  0         13
+
+11 so 3
+12 so 6
+13 so 10
+
+imp:p   1 1 1 0
+imp:e   1 1 1 0
+wwp:p   4j  .25
+wwp:e   4j  .25
+mode p e
+m13 13000 1 $ al
+m14 14000 1 $ Si
+print
+sdef  par e  pos 0 0 -9  erg 10 vec 0 0 1  dir 1
+nps     100
+f1:p    13
+f8:p,e  1
+e8      0 1e-5 .001 .1 3i .5 .52 .6 4i 1.1 46i 10.5 11 8i 20
+prdmp   2j -1
+wwg     1  3  0  j  0
+wwge:p  1  8i  10
+wwge:e  .001  8ilog  10.
+dbcn    17j  0  4j  -1  19j  0

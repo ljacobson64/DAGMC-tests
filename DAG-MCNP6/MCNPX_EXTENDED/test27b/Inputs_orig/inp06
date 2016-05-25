@@ -1,0 +1,18 @@
+test of lattice sampling
+1  0      -1             fill=2                      imp:n=1
+2  0      -2   lat=1 u=2 fill=-5:5 -5:5 -5:5 3 1330r imp:n=1
+3  0       1                                         imp:n=0
+4  1 -1.0 -3         u=3                             imp:n=1
+
+1  so 10
+2  rpp -1 1 -1 1 -1 1
+3  so 20
+
+m1   1001 2 8016 1
+sdef cel=d1
+si1  L (4<2[-1:1 -2:2 -3:3]<1)
+sp1       1 104r
+nps  50
+prdmp 2j -1
+print
+dbcn    29j  2j  0  0

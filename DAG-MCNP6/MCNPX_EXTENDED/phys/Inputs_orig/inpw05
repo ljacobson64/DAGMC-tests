@@ -1,0 +1,41 @@
+newton scientific problem 20 kev electons on W
+1  1   -19.3  1 -2 -3 imp:e,p 1
+2  0          -1:2:3  imp:e,p 0
+
+1  pz   0
+2  pz   2e-5
+3  cz  10.
+
+mode e p
+sdef erg=0.02 par=3 sur=1 dir=1 vec=0 0 1 pos=0 0 0
+m1  74000.03e 1.0
+phys:e 0.02
+c
+f1:p    2 1 3 t
+e1      0.001 100i 0.02
+tf1     4
+fq1     e f
+c
+*f11:p  2 1 3 t
+e11     0.001 100i 0.02
+tf11    4
+fq11    e f
+c
+*f21:e  2 1 3 t
+e21     0.001 100i 0.02
+tf21    4
+fq21    e f
+c
++f6     1
+fm6     0.121265476429  $ mass of cell 1, converts tally to MeV.
+c
+f16:e   1
+fm16    0.121265476429  $ mass of cell 1, converts tally to MeV.
+c
+*f8:p,e 1
+c
+print
+prdmp  2j -1 j 2000
+nps    40000
+dbcn   49j  2
+

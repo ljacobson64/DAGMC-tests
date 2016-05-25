@@ -1,0 +1,61 @@
+test of GWM trigger: FT8 PHL TDEP
+1  1  -2e-3   -1     imp:n=1
+2  2  -1.0     1 -2  imp:n=1
+3  0           2 -3  imp:n=1
+4  0              3  imp:n=0
+
+1  so 3.0
+2  so 13.0
+3  so 100.0
+
+mode n h d t s
+m1  2003.70c 1
+m2  1001.70c 1 6000.70c 1
+phys:n  6j 2
+phys:h  6j 1
+phys:s 100
+cut:n         j j 0 0
+cut:h,d,t,s   j 0 0 0
+sdef par=n erg=1 pos=-14 0 0 vec=1 0 0 dir=1
+f6:h  1
+f16:d 1
+f26:t 1
+f36:s 1
+f8:h,t,s 1
+ft8  PHL 3 6 1 26 1 36 1  0  tdep
+t8   0 99i 0.2 1000 1e8 1e20
+f46:s 1
+f18:s 1
+ft18  PHL 1 46 1  0 tdep 8
+t18   0 99i 0.2 1000 1e8 1e20
+f56:h 1
+f66:t 1
+f28:h,t 1
+ft28  PHL 2 56 1 66 1  0 tdep 8.1
+t28   0 99i 0.2 1000 1e8 1e20
+fq0 t f
+print -10 -20 -40 2i -70 -85 -86 -160 -161 -162
+prdmp 2J -1 j -1
+nps  15000
+
+
+
+***********************************
+2003.70h causes out of bounds unless phys:h 6j 1 (light ion recoil)
+turned on to prevent bad 3-He (2003) production from h on 2003.
+
+***********************************
+Matches GWM trigger capability if:
+
+add to input:
+idum 2J 1
+
+Change:
+            if( tv==tds(iptal(8,1,ital)+ibt) ) ibt=ibt+1
+to:
+            if( idum(3)==0 .and. tv==tds(iptal(8,1,ital)+ibt) )
+     &      ibt=ibt+1
+
+and add:
+*i,ty.215    bug to track GWM trigger            <57518>
+      if( idum(3)/=0 .and. jptal(2,ital)==6 ) go to 490

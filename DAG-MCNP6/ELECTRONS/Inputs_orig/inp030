@@ -1,0 +1,28 @@
+Spectrum after 1.5 cm water. 10 MeV electrons, single cell, single-event.
+1    1  -1.0  1  -998  -999  imp:p,e 1.
+2    0       -1 : 998 : 999  imp:p,e 0.
+
+1    pz    0.0
+998  pz    1.5
+999  cz  100.0
+
+mode   e p
+c      Turn off knock-on electrons and MCS, and activate single-event.
+phys:e 10.0  1  5j 0.  j j -1.  j j j  20.
+m1     1000.12p 2   8000.12p 1  elib 03e
+sdef   par=e erg=10.0 sur=1 pos 0. 0. 0. dir=1.
+c
+f1:e   998
+e1     0.05  198i  10.0
+c
+*f11:e 998
+e11    0.05  198i  10.0
+c
+*f21:e 998
+c
+prdmp  2j -1
+print
+nps    100
+c      nps    40000  $  in 70 minutes sequential on Turing.
+c      Include excitation. Turn off elastic scattering, ionization angles.
+dbcn   17j  2.  44j  1.  1.  1.

@@ -1,0 +1,32 @@
+test problem 125 -- keff perturbation (material substitution) test
+19   94 4.02902E-02  -5   imp:n=1
+999  0 +5             imp:n=0
+
+1 so 2.3849
+2 so 3.3849
+3 so 4.3849
+4 so 5.3849
+5 so 6.3849
+
+mode n
+kcode     2000 1.0 10 60
+totnu
+ksrc 0. 0. 0.0
+c sdef pos=0. 0. 0. rad=d1 erg=d2
+si1 0. 6.3849
+sp1 -21 2
+sp2 -3
+c Pu, from ICSBEP
+m94  94239. 3.7047-2  92238. 1.7512-3  1001. 1.1674-4
+m194 94239. 1.0
+c
+kpert01  cell= 19  rho=0.04431922   linear=yes
+kpert206 cell= 19  linear=yes rho= 0.0000525729
+kpert11  cell= 19  mat=194  rho= 4.02902E-02
+kpert127 cell= 19  rho=4.02902E-02  rxn=-7 -6  erg=0.0 1.e-1 1.e0 2 5 10 20
+kopts blocksize=10
+c
+print -30
+prdmp  2j  -1
+
+

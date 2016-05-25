@@ -1,0 +1,20 @@
+godiva critical assembly.
+1    1  -19.74  -1
+2    0           1
+
+1    so 8.741
+
+kcode 1000 1.0 10 40
+ksrc  0. 0. 0.
+imp:n 1 0
+m1    92235.60c -94.73  92238.60c -5.27
+f4:n 1
+sd4 1
+fm4 (-1 1 -6 -7)
+f1:n 1
+f2:n 1
+pert1:n cell=1 rho=-18.74
+pert2:n cell=1 rho=-18.74 method=-1
+prdmp 2j -1 j -1
+c                          
+

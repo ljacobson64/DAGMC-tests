@@ -1,0 +1,267 @@
+fusion spectra problem
+    1 1 7.506e-2 1 -2 10 -21 -22 29 $ floor cell $
+    2 1 7.506e-2 7 -8 10 -21 -22 29 $ ceiling cell $
+    3 1 7.506e-2 2 -7 10 -21 -22 23 $ left wall cell $
+    4 1 7.506e-2 2 -7 10 -21 -28 29 $ right wall cell $
+    5 1 7.506e-2 2 -7 20 -21 -23 28 $ front wall cell $
+    6 2 4.614e-5 2 -4 10 -11 -23 32 $ left door cell $
+    7 2 4.614e-5 2 -4 10 -11 -33 34 $ middle door cell $
+    8 2 4.614e-5 2 -4 10 -11 -35 28 $ right door cell $
+    9 1 7.506e-2 4 -7 10 -11 -23 32 $ concrete above left door $
+   10 1 7.506e-2 4 -7 10 -11 -33 34 $ concrete above middle door
+   11 1 7.506e-2 4 -7 10 -11 -35 28 $ concrete above right door
+   12 1 7.506e-2 2 -4 10 -11 -32 33 $ concrete cell betwn l/m doors
+   13 1 7.506e-2 2 -4 10 -11 -34 35 $ concrete cell betwn m/r doors
+   14 1 7.506e-2 4 -7 10 -11 -32 33 $ wall concrete above cell 12
+   15 1 7.506e-2 4 -7 10 -11 -34 35 $ wall concrete above cell 13
+   16 2 4.614e-5 2 -7 11 -12 -23 28 $ air cell btwn left door & block back
+   17 2 4.614e-5 6 -7 12 -17 -23 28 $ cells 26-35: air cells abv the block
+   18 2 4.614e-5 2 -6 12 -20 -23 24 $ cells 36-47: air cells left of block
+   19 2 4.614e-5 6 -7 17 -20 -23 28 $ cells 60-69: air cells abv thermal shield
+   20 2 4.614e-5 2 -6 12 -20 -27 28 $ cells 48-59: air cells right of block
+   21 4 8.75e-2 3 -5 -25 26 15 -44 $ cells 94-103: air and shield cells inside
+   22 6 .11150 3 -5 -25 26 44 -45
+   23 4 8.75e-2 3 -5 -25 26 45 -46
+   24 6 .11150 3 -5 -25 26 46 -47
+   25 4 8.75e-2 3 -5 -25 26 47 -48
+   26 2 4.614e-5 3 -5 -25 26 48 -17
+   27 2 4.614e-5 3 -9 -25 26 17 -18 $ air cell btwn inner box and thermal shield
+   28 2 4.614e-5 3 -9 -30 31 19 -20 $ cells 105-106: air cells fitting between
+   29 2 4.614e-5 3 -9 -26 27 17 -20
+   30 2 4.614e-5 9 -6 -24 27 17 -20 $ cells 107-109: air cells between the upper
+   31 2 4.614e-5 2 -3 -24 27 17 -20 $ cells 110-112: air cells between the
+   32 2 4.614e-5 3 -9 -24 25 17 -20 $ cells 113-118: air cells between the
+   33 0 -36 12 -13 $ vacuum inside beamline
+   34 0 -36 13 -14 $ vacuum inside iron can
+   35 0 14 -15 -38 $ vacuum inside iron pipe
+   36 3 8.48e-2 36 -37 12 -13 $ beamline
+   37 3 8.48e-2 36 -39 13 -14 $ iron can
+   38 3 8.48e-2 38 -39 14 -15 $ iron pipe
+   39 5 1.1139e-1 37 -39 12 -13
+   40 1 7.506e-2 5 -6 12 -17 -24 27 $ cells 126-134: concrete box top cells
+   41 1 7.506e-2 2 -3 12 -17 -24 27 $ cells 135-143: cncr box bottom cells
+   42 1 7.506e-2 -24 25 3 -5 12 -17 $ cells 144-149: concrete box left
+   43 1 7.506e-2 -26 27 3 -5 12 -17 $ cells 150-155: concrete box right
+   44 1 7.506e-2 3 -5 -25 26 39 12 -15 $ cells 156-164: inner concrete box cells
+c       165 2 4.614e-5 9 -5 -25 26 18 -40 $ cells 165-170: air cells centered
+c       166 2 4.614e-5 9 -5 -25 26 40 -20 $ around the thermal shield
+   45 2 4.614e-5 -25 30 3 -9 18 -20
+   46 2 4.614e-5 -31 26 3 -9 18 -20
+   47 4 8.75e-2 18 -19 3 -9 -30 31 $ thermal shield
+   48 0 -1  $ void cell below the concrete room
+   49 0  8 $ void cell above the concrete room
+   50 0  1 -8 -22 29 -10 $ void cell behind the rear wall
+   51 0  1 -8 -22 29 21  $ void cell in front of the front wall
+   52 0  1 -8 22 $ void cell left of the room
+   53 0  1 -8 -29 $ void cell right of the room
+ 
+    1 pz -91.44
+    2 pz 0 $ upper floor plane
+    3 pz 81.2 $ inner box bottom/lower thermal shield edge
+    4 pz 218.4 $ door upper edge
+    5 pz 253.92 $ inner box top
+    6 pz 317.50 $ concrete box top
+    7 pz 495.30 $ ceiling plane (lower)
+    8 pz 586.74 $ ceiling plane (upper)
+    9 pz 233.60 $ upper thermal shield edge
+   10 py -29.21 $ rear wall plane (rear)
+   11 py 0 $ rear wall plane (front)
+   12 py 160.02 $ rear of concrete box
+   13 py 208.28 $ end of paraffin
+   14 py 225.56 $ rear edge of iron can
+   15 py 253.06 $ end of iron pipe/rear of inner box
+   16 py 232.02 $ plane of target
+   17 py 353.06 $ front of concrete box
+   18 py 436.52 $ front of thermal shield
+   19 py 441.60 $ rear of thermal shield
+   20 py 570.20 $ front wall plane (inside)
+   21 py 661.64 $ front wall plane (outside)
+   22 px 91.44  $ left wall plane (outside)
+   23 px 0     $ left wall plane (inside)
+   24 px -200.66 $ left side of concrete box
+   25 px -278.76 $ left side of inner box
+   26 px -434.97 $ right side of inner box
+   27 px -513.08 $ right side of concrete box
+   28 px -716.28 $ right wall plane (inside)
+   29 px -807.72 $ right wall plane (outside)
+   30 px -280.66 $ left edge of thermal shield
+   31 px -433.06 $ right edge of thermal shield
+   32 px -114.3  $ right edge of left door
+   33 px -300.99 $ left edge of middle door
+   34 px -415.29 $ right edge of middle door
+   35 px -601.98 $ left edge of right door
+   36 c/y -356.87 157.4 4.5   $ beamline inner surface
+   37 c/y -356.87 157.4 5.0   $ beamline outer surface
+   38 c/y -356.87 157.4 8.87  $ iron pipe inner surface
+   39 c/y -356.87 157.4 16.37 $ iron pipe outer surface
+   44 py 288.62
+   45 py 293.70
+   46 py 298.78
+   47 py 303.86
+   48 py 308.94
+ 
+mode n
+imp:n  1 46r 0 5r
+sdef pos=-356.87 232.02 157.4 dir=d1 erg=fdir=d2 rad=d3 vec=0 1 0
+     sur=16
+si4   -1.0 572
+sp4    0 1
+si1  a  -1.0000 -.99619 -.98481 -.96593 -.93969
+        -.90631 -.86603 -.81915 -.76604 -.70711
+        -.64279 -.57358 -.50000 -.42262 -.34202
+        -.25882 -.17365 -.08716  .00000  .08716
+         .17365  .25882  .34202  .42262  .50000
+         .57358  .64279  .70711  .76604  .81915
+         .86603  .90631  .93969  .96593  .98481
+         .99619  1.0000
+sp1      .874 .874 .875 .876 .877
+         .879 .882 .884 .888 .891
+         .895 .899 .904 .909 .914
+         .919 .924 .930 .935 .941
+         .946 .952 .957 .962 .967
+         .972 .976 .981 .985 .988
+         .991 .994 .996 .998 .999
+         1.0 1.0
+ds2  q  -.99619 180 -.98481 175 -.96593 170 -.93962 165 -.90631 160
+        -.86603 155 -.81915 150 -.76604 145 -.70711 140 -.64279 135
+        -.57358 130 -.50000 125 -.42262 120 -.34202 115 -.25882 110
+        -.17365 105 -.08716 100  0.0000 95   .08716 90   .17365 85
+         .25882 80   .34202 75   .42262 70   .50000 65   .57358 60
+         .64279 55   .70711 50   .76604 45   .81915 40   .86603 35
+         .90631 30   .93969 25   .96593 20   .98481 15   .99619 10
+         1.0000 5
+si3  h 0 .64
+sp3  d -21 1
+si5  h 15.106 15.110
+sp5  d 0 1
+si10 h 15.095 15.106
+sp10 d 0 1
+si15 h 15.075 15.095
+sp15 d 0 1
+si20 h 15.049 15.075
+sp20 d 0 1
+si25 h 15.015 15.049
+sp25 d 0 1
+si30 h 14.974 15.015
+sp30 d 0 1
+si35 h 14.927 14.974
+sp35 d 0 1
+si40 h 14.873 14.927
+sp40 d 0 1
+si45 h 14.814 14.873
+sp45 d 0 1
+si50 h 14.750 14.814
+sp50 d 0 1
+si55 h 14.681 14.750
+sp55 d 0 1
+si60 h 14.608 14.681
+sp60 d 0 1
+si65 h 14.532 14.608
+sp65 d 0 1
+si70 h 14.453 14.532
+sp70 d 0 1
+si75 h 14.372 14.453
+sp75 d 0 1
+si80 h 14.289 14.372
+sp80 d 0 1
+si85 h 14.206 14.289
+sp85 d 0 1
+si90 h 14.123 14.206
+sp90 d 0 1
+si95 h 14.040 14.123
+sp95 d 0 1
+si100 h 13.958 14.040
+sp100 d 0 1
+si105 h 13.878 13.958
+sp105 d 0 1
+si110 h 13.800 13.878
+sp110 d 0 1
+si115 h 13.725 13.800
+sp115 d 0 1
+si120 h 13.654 13.725
+sp120 d 0 1
+si125 h 13.586 13.654
+sp125 d 0 1
+si130 h 13.522 13.586
+sp130 d 0 1
+si135 h 13.464 13.522
+sp135 d 0 1
+si140 h 13.410 13.464
+sp140 d 0 1
+si145 h 13.362 13.410
+sp145 d 0 1
+si150 h 13.320 13.362
+sp150 d 0 1
+si155 h 13.284 13.320
+sp155 d 0 1
+si160 h 13.254 13.284
+sp160 d 0 1
+si165 h 13.230 13.254
+sp165 d 0 1
+si170 h 13.214 13.230
+sp170 d 0 1
+si175 h 13.203 13.214
+sp175 d 0 1
+si180 h 13.200 13.203
+sp180 d 0 1
+f4:n    27
+cf4   16
+f5:n  -310.87 386.52 157.4 1
+dd5   -1.e-8 10
+e5     .85 .95 1.05 1.15 1.25 1.35 1.45 1.55 1.65 1.75 1.85 1.95
+       2.15 2.35 2.55 2.75 2.95 3.15 3.35 3.55 3.75 3.95 4.15 4.45
+       4.75 5.05 5.35 5.65 5.95 6.25 6.55 6.85 7.25 7.75 8.25 8.75
+       9.25 9.75 10.25 10.75 11.25 11.75 12.55 13.35 14.15 14.95
+       15.75 16.55
+em5    1 10 10r 5 10r 3.33 8r 2.5 2 8r 1.25 5r
+c      cut:n 1e33 .850 $ ignore neutrons below the detector response
+cut:n 1e33 .850  0  0
+wwg  4 0 0
+c     wwge:n   2 4 8 100
+wwp:n   5 3 10000 0 -1
+fq5  e d
+ft5   geb  .03 .08                $ mcnp4 patch format
+c    ft5  geb 0 .282842713 .375        $ mcnp4a format
+m1    1001 7.86e-3
+      8016 4.39e-2
+     11023 1.05e-3
+     12000 1.40e-4
+     13027 2.39e-3
+     14000 1.58e-2
+     19000 6.90e-4
+     20000 2.92e-3
+     26000 3.10e-4
+m3   26000 8.48e-2
+m4   24000 1.77e-2
+     25055 1.77e-3
+     26000 6.02e-2
+     28000 7.83e-3
+m2    7014 3.64e-5
+      8016 9.74e-6
+m5   1001 5.926e-2
+     6000 3.338e-2
+     8016 1.125e-2
+     3006 5.565e-4
+     3007 6.944e-3
+m6    1001 7.13e-2
+      6000 3.41e-2
+      5010 4.87e-4
+      5011 1.97e-3
+print
+dbcn   j j 1 1 100
+nps   5000
+prdmp   2j -1
+mesh    ref -357 233 158
+        origin -807.73 -29.22 -91.45
+        geom  xyz
+        imesh -513.08 -200.66 92.
+        iints    1 1 1
+        jmesh   0.000 160.20 208.28 225.56 232.02 254.
+               288.62 293.70 298.78 303.86 308.94
+               353.06 436.52 441.60 570.20 661.64
+        jints  1 1 1 1 1 1
+               5 1 2 1 2
+               1 1 1 1 1
+        kmesh 81.2 317.5 588.
+        kints    1 1 1
+totnu no

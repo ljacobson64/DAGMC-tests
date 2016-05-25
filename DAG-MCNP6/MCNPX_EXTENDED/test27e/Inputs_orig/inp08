@@ -1,0 +1,29 @@
+Test of m0
+1 1 -1.0 -1 imp:n,h,p=1
+2 2 -1.0 1 -2 imp:n,h,p=1
+3 0 2 imp:n,h,p=0
+
+1 so 5
+2 so 7
+
+sdef par=d1 erg=2
+si1 L n p h
+sp1   1 1 1
+mode n p h
+nps 10000
+m1   8016.60c 1.0
+     82206 10.0
+m2   1001 1.0
+     8016 1.0
+m0   nlib=70c 
+     hlib .24  elib=03  plib 03p
+c    gas cond zlib=.60c estep=3 hstep=4
+     pnlib=24
+phys:p j j j 1 1 j
+print -85 -86 -160 -161 -162
+prdmp 2j -1
+f11:n 1 2
+f21:p 1 2
+f91:h 1 2
+dbcn   29j  12j  1
+phys:h  10j  1

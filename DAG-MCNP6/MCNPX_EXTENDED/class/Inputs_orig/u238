@@ -1,0 +1,23 @@
+adv class - exercise # 2 - generating multigroup cross sections
+1    1 -18 -1
+2    0 1
+ 
+1    so 1.e-10
+ 
+mode n
+sdef erg=d1
+si1  a 22.6e-06 61.4e-06 100.e-06
+sp1  210.35 127.62 100.
+m1   92238.60c -1
+m2   92238.60c 1
+m3   92238 -1 1001 -.667 8016 -.333
+f4:n 1
+f14:n 1
+fm14 1 2 102
+e0   1.e-11 22.6e-06 61.4e-06 20
+imp:n 1 0
+nps  100000
+prdmp 2j -1 j -1
+cut:n 1j 22.6e-06
+c                         
+ 

@@ -1,0 +1,43 @@
+MCNP6 test: 2.1 GeV/A  Ne20 + Pb208 by LAQGSM03.03, nevtype=6
+  1  1  1.0   -1 2 -3
+  2  0        -4 (1:-2:3)
+  3  0         4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  -1.0
+  3  pz  1.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+dbcn 28j 1
+  m1 82208  1.0
+  sdef erg=42000 par=10020 dir=1 pos=0 0 0 vec 0 0 1
+  imp:n 1 1 0
+  imp:h 1 1 0
+  phys:n 42008
+  phys:h 42008
+  phys:/ 42008
+  phys:* 42008
+  phys:z 42008
+  phys:k 42008
+  phys:? 42008
+  phys:q 42008
+  phys:g 42008
+  phys:d 42008
+  phys:t 42008
+  phys:s 42008
+  phys:a 42008
+  phys:# 42008
+  mode  n h / * z k ? q g d t s a #
+LCA  2 1 5j -1 1j 1 6   $ use LAQGSM, nevtype = 6: LCA(11)=6        !!!
+lcb  0 0 0 0 0 0
+lea  2j 0
+  tropt genxs inxc88  nreact on  nescat off
+c  tropt genxs inxc38
+c ---------------------------------------------------------------
+  print 40 110 95
+  nps 1000
+c  nps 700000
+  prdmp 2j -1
+

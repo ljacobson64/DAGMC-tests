@@ -1,0 +1,24 @@
+test dn
+1  1  -19.0   -1    imp:p=1
+2  0          +1 -2 imp:p=1
+3  0             +2 imp:p=0
+
+1 sph 0 0 0  3
+2 sph 0 0 0  100
+
+mode p n
+phys:n  3j   j
+phys:p  3j 1 1
+act  FISSION=n dn=model dnbias=5
+sdef erg=15 par=p
+m1   92238 1
+xs1  94238.27u 236.004500 bofod01u2 0 2 248 51088 1024 512 0.0000E+00
+nps  10000
+f1:n  1
+e1    1e-6 99log 10
+f4:p  1
+fm4  (-1 1 18 1018) (-1 1 18)
+sd4   1
+prdmp 2j -1
+c dbcn  20j  j  7j  1  2j  0  0  9j  0
+  dbcn  20j  j  7j  0  2j  0  0  9j  0

@@ -1,0 +1,37 @@
+variance reduction problem
+1 1 -2.03  -1
+2 0        -2
+3 1 -.0203 -3
+4 0        -4 3
+5 0         1 2 4
+
+1 rcc 0 0 0       0 180 0    100
+2 rcc 0 180 0     0 1820 0   100
+3 rcc 0 2000 0    0 10 0     100
+4 rcc 0 2000 0    0 10 0     201
+ 
+c        the following is  pseudo-concrete
+m1    1001 -.010      6012 -.001      8016 -.529
+     13027 -.034     14000 -.337     26000 -.014
+sdef   x=0 y=1.e-6 z=0 cel=1 wgt=1  erg=d1  vec=0 1 0  dir=d2
+si1    2 2.00000001 14 14.00000001
+sp1   0 .5 .5 1
+sb2  -31 3
+cut:n j 0.01  0 0   $ .01 Mev energy cutoff
+f1:n  1.2
+f4:n  3
+fy5:n 2005 200 0
+pd5   0 0 1 0 0
+fcl:n 0 0 1 0 0
+nps   50000
+imp:n 1 1 1 1 0
+ext:n .9y 0 0 0 0
+wwg 1 0
+mesh  geom cyl ref 0 1.e-6 0 origin 1.e-6 -1.e-6 1.e-6 axs 0 1 0 vec 1 0 0
+      imesh 50 101 iints 1 1
+      jmesh 181 2000 2011  jints 18 1 1
+      kmesh .5 1 kints 1 1
+prdmp 2j -1
+c                         
+
+

@@ -1,0 +1,42 @@
+test problem for time splitting test
+1  2  -1.       -1  imp:p=1
+2  2  -1.   1   -2  imp:p=1
+3  0             2  imp:p 0
+
+1    so     0.1
+2    so    30.0
+
+mode e p
+imp:e  1 1 0 $ just as a read test
+sdef cel=1 erg d2 rad=d1
+si1 0.0 0.001
+si2 h .303 1.353
+sp2   0    1
+m2   1001 2  8016 1
+fc204 photon flux in cell 2
+f204:p 2 1
+fc304 electron flux in cell 2
+f304:e 2 1
+e0   .01 .1 1 100
+t0   100 1000 10000 1e20
+rand gen=1  hist=8401
+esplt:e   .5 .001  .5 1  .5 10  .5 .1  .5 .01
+esplt:p   .5 .01  .5 .1  .5 10  .5 1  .5 .001
+tsplt:p    2 10000  2 100  2 100000  2 1000
+tsplt:e    3 1000   3 100000  3 100  3 10000
+f348:e 1 2  T
+e348 0 .1 18i 15.
+f358:e 1 2  T
+e358  0 .1 18i 15.
+f368:e 1 2  T
+e368 0 .1 18i 15.
+f378:p 1 2  T
+e378 0 1e-5 .001 .1 3i .5 .52 .6 3i 1 1.025 1.5 4i 15.5
+f388:p 1 2  T
+e388  0 1e-5 .001 .1 3i .5 .52 .6 3i 1 1.025 1.5 4i 15.5
+print -10 -20 -30 -40 -50 -60 -70 -72 -80 -85 -86 -90 -100 -102 -110
+       -120 -140 -161 -162 -170 -190 -200
+prdmp 2j -1
+nps 400
+cut:p j  j
+dbcn    17j   0   21j   j  j  j  0

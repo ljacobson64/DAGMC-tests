@@ -1,0 +1,43 @@
+MCNP6 test: 400 GeV p + Ta181 by LAQGSM03.03, nevtype=66
+  1  1  1.0   -1 2 -3
+  2  0        -4 (1:-2:3)
+  3  0         4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  -1.0
+  3  pz  1.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+dbcn 28j 1
+  m1 73181  1.0
+  sdef erg=400000 par=h dir=1 pos=0 0 0 vec 0 0 1
+  imp:n 1 1 0
+  imp:h 1 1 0
+  phys:n 400008
+  phys:h 400008
+  phys:/ 400008
+  phys:* 400008
+  phys:z 400008
+  phys:k 400008
+  phys:? 400008
+  phys:q 400008
+  phys:g 400008
+  phys:d 400008
+  phys:t 400008
+  phys:s 400008
+  phys:a 400008
+  phys:# 400008
+  mode  n h / * z k ? q g d t s a #
+LCA  2 1 5j -1 1j 1    $ use LAQGSM, nevtype = 66                   !!!
+lcb  0 0 0 0 0 0
+lea  2j 0
+  tropt genxs inxc38  nreact on  nescat off
+c  tropt genxs inxc38
+c ---------------------------------------------------------------
+  print 40 110 95
+  nps 1000
+c  nps 700000
+  prdmp 2j -1
+

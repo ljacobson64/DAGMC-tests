@@ -1,0 +1,46 @@
+Muonic X-Rays for B-10 (5010)
+1  1 -0.012  -1 2  imp:|,n,p=1  $ world
+2  2 -20.0   -2    imp:|,n,p=1  $ material
+3  0          1    imp:|,n,p=0  $ nowhere
+ 
+1 so 500.0
+2 so 3.0
+
+m1  7014 -0.75778  7015 -0.00281 8016 -0.2386
+m2  5010  1
+C
+mode n p | e
+nps 1000
+sdef par=| erg=20  vec= 0 0 1 dir=1 x=0 y=0 z=-200
+tropt   mcscat gaussian
+phys:n j j j  j   
+phys:p j j j -1 1  j  
+act  FISSION=n,p dn=model dg=mg
+cut:n j j 0 0 
+cut:p j j 0 0 
+C
+f1:p 1 
+fc1  photon surface current at edge of sphere
+e1  0.001 9ilog 10.0 T
+c
+f11:| 1
+fc11  muon surface current at edge of sphere
+e11  0.001 9ilog 10.0 T
+c
+f21:n 1
+fc21  neutron surface current at edge of sphere
+e21  0.001 9ilog 10.0 T
+lca  10j  6
+prdmp 2J -1
+dbcn  17j 0 2j 0  5j  1  2500  0  2j  0  j  1  j  1  5j  1  0
+c         18  Electron straggling mode
+c              21  Unused
+c                     27  Antiparticle promotion
+c                        28  Bank size
+c                              29 Unused
+c                                     32  Internal Bremstrahlng
+c                                           34 Muon Gamma bug
+c                                                 36  Muon II Data
+c                                                        42  Xsec model
+c                                                           43 Form factor interpolation
+print 130 160

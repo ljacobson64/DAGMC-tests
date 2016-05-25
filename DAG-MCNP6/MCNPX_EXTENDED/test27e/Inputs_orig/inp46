@@ -1,0 +1,32 @@
+test first fission capability
+1  1  -19.0   -1  imp:n=1
+2  0           1  imp:n=0
+
+1  so 1.0
+
+m1  94239 1 92238 1 92235 1 94240 1 90232 1
+mphys on
+sdef
+lca  7j -2
+cut:n 2J 0 0
+print -85 -86 -160 -161 -162
+nps 40000
+prdmp 2j -1 j -1
+c
+f1:n 1
+ft1 FFT
+fu1 92238 0 16 18 94241 92235 94239
+fq1 u f
+f11:n 1
+fq11 u f
+ft11 tag 3
+fu11 92238.00018                  $ U238 fission
+     94241.00018                  $ Pu241 fission - not in problem
+     92235.00018                  $ U235 fission
+     94239.00018                  $ Pu239 fission
+     94240.19 94240.20            $ Pu240 fission 
+     .00018 .00019 .00020         $ other nuclide fission
+     .00021 .00022 .00023 .00024  $ fission? reactions may not exist
+     .00016 .00017                $ (n,xn)
+     .99999                       $ delayed fission
+     1e10                         $ everything else

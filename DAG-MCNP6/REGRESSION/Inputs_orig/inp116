@@ -1,0 +1,21 @@
+Test problem with source on internal surface
+10  0  -1                  imp:n=1 vol=1
+20  0  -2                  imp:n=1 vol=1
+30  0  -3                  imp:n=1 vol=1
+40  0  -4                  imp:n=1 vol=1
+50  0  #10 #20 #30 #40 -9  imp:n=1 vol=1
+99  0   9                  imp:n=0 vol=0
+
+1  rpp   2  52   -25  25     0  50
+2  rpp   2  52   -25  25   -50   0
+3  rpp -52  -2   -25  25     0  50
+4  rpp -52  -2   -25  25   -50   0
+9  so 100
+
+sdef
+f1:n  9
+f4:n  10 20 30 40 50
+nps   100000
+prdmp 999999 999999 -1 999999 8000
+print -10 -30 -50 -60 70 -98 110 126 -130 -160 -161 -162
+

@@ -1,0 +1,20 @@
+test of notrn with a bad geometry
+1    0 -2  $ surface should be -1 and not -2.
+2    0  1 -2
+3    0  2 -3
+4    0  3
+
+1    so 10
+2    so 20
+3    so 30
+
+imp:n 1 1 1 0
+sdef
+f1:n 3
+f5:n 0 0 25 0
+nps  15
+lost 20 10
+print
+prdmp  2j  -1
+notrn
+

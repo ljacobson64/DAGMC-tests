@@ -1,0 +1,34 @@
+spherical weight windows + delayed neutrons and gammas. GWM 12/6/06
+1  1  -19.0   -1    imp:n,p=1
+2  2  -1.0    +1 -2 imp:n,p=1
+3  0             +2 imp:n,p=0
+
+1 sph 0 0 0  3
+2 sph 0 0 0  100
+
+mode n p
+phys:n 3j     j   $ turn on delayed neutrons
+phys:p 4j 1   j   $ turn on delayed gammas
+act  FISSION=n,p dn=model dnbias=1 dg=mg
+sdef par=n erg=7 pos -99 1 1 vec=1 0 0 dir=1
+m1   92235 .5 92238 .5
+m2   1001 2 8016 1
+nps 10000
+f1:p 2
+t1   0.1e8 1e30 nt
+f4:n 1
+c    wwg 1 0
+mesh geom rpt origin=0 0 0 ref=-99 1 1 axs 1 0 0 vec 0 1 0
+     imesh  3.01 101.  iints  6 20
+     jmesh   .25 .5 jints  5 10
+     kmesh   1  kints  1
+wwp:n 4j -1
+wwp:p 4j -1
+prdmp 2j -1
+c dbcn  20j  j  7j  1  2j  0  0  9j  0
+  dbcn  20j  j  7j  0  2j  0  0  9j  0
+
+mesh geom xyz origin=-101 -101 -101 ref=-99 1 1
+     imesh  101.  iints  20
+     jmesh  101.  jints  20
+     kmesh  101.  kints  20

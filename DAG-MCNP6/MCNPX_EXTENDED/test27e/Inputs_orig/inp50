@@ -1,0 +1,33 @@
+Background Source for cube with tally tagging--> wgt=SA/3.6819549
+1 0 -1
+2 0 1 -2
+3 0 2
+
+1 sph 60 60 60 1
+2 rpp 0 120 0 120 0 120
+
+sdef x=d1 y=d2 z=d3 wgt=2.3465e4 par=bg dat=1 1 1981 loc=10 -120 0
+si1 1e-4 119.999
+sp1 0 1
+si2 1e-4 119.999
+sp2 0 1
+si3 1e-4 119.999
+sp3 0 1
+f4:n 1
+f14:p 1
+e4 1e-9 299log 1e3
+e14 1e-9 299log 1e3
+f24:n 1
+ft24 tag 3 
+Fu24 -1 1e10
+f34:p 1
+ft34 tag 3
+fU34 -1 1e10
+f5:n 60 60 60 1 
+f15:p 60 60 60 1
+nps 1e6
+imp:n,p 1 1 0
+phys:n 1e5
+prdmp 2j -1 j -1
+print
+mode n p

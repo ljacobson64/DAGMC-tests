@@ -1,0 +1,28 @@
+test cyclic time bins
+1  1 -19.0    -1  imp:n=1
+2  0           1  imp:n=0
+
+1  so 1
+
+m1   92235 1
+mode p n
+phys:p 3j 1 1 j
+act  fission=n,p dn=library dg=mg
+sdef par=n erg=2 tme=d1<d2 pos=-.99 0 0 vec=1 0 0 dir=1
+si1  0 0.000001e8 .010e8
+sp1  0          1      0
+si2  0       10e8
+sp2  0          1
+f1:p 1
+t1    Cbeg=0.0 cfrq=100.e-8 Cofi=.001e8 coni=.010e8 CEND= 10e8 $ keep all bins to 10s
+ft1   tag 1
+fu1   92235.99999 92000.0
+f11:p 1
+t11   0 9999i 10e8 1e36 $ every ms
+ft11  tag 1
+fu11  92235.99999 92000.0
+nps   1000000
+print -160 -161 -162
+prdmp 2j -1 j 64000
+dbcn   9j 1e12 19j  13j  0
+totnu  no

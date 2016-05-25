@@ -1,0 +1,29 @@
+Magnetic fields -- electrons in a box
+c CELL CARDS
+  10  1 -1.00000E-03 -200 201 -202 203 -204 205  imp:e,p=1
+  20 0 #10 imp:e,p=0
+
+c SURFACE CARDS
+200 px 12
+201 px -12
+202 py 12
+203 py -12
+204 pz 12
+205 pz -12
+
+c Air
+m1      6012.70c -0.00012  $ Carbon   - Good first approximation
+	7014.70c -0.75527  $ Nitrogen - Good first approximation
+	8016.70c -0.23178  $ Oxygen   - Good first approximation
+       18040.70c -0.01283  $ Argon    - Good first approximation
+c
+mode  e
+print
+c
+sdef   erg=2.0 par=e
+nps 100000
+bflcl 11 j
+bfld11 const field 50000.0e-09  vec 0 1 0
+       maxstep 10 mxdeflc 1
+f2:e 200 5i 205
+e2 1e-2 1e-1 1 10

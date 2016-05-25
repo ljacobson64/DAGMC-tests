@@ -1,0 +1,36 @@
+Test Olsher of F6:n Heating Tally - INCL/ABLA model
+c    TABL=0 m=water
+1    1 -1.0 -1  imp:n,h,d,t,s,a,p=1
+2    0 -2  1    imp:n,h,d,t,s,a,p=1
+3    0 2        imp:n,h,d,t,s,a,p=0
+
+1    so 15
+2    so 16
+
+mode  n h d t s a p 
+c       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+sdef    par=n sur=2 nrm=-1 dir=1 erg=100
+c       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+PHYS:N  1000 3j j 1j 1 0
+PHYS:H  1000 0  0 3j 1
+PHYS:P  4j 1
+CUT:h   1j 0
+CUT:d   1j 0
+CUT:t   1j 0
+CUT:s   1j 0
+CUT:a   1j 0
+F6+    1
+F16:h  1
+F26:d  1
+F36:t  1
+F46:s  1
+F56:a  1
+F66:n  1
+F76:p  1
+e0 1e-8 4log 1e-3 11log 10 50log 100
+m1       1001.24c 2 8016.24c 1
+nps 1000
+prdmp 2j -1
+dbcn  26j  1  j  0 12j  1 2j 1
+lca    8j  1
+tropt  mcscat  gaussian

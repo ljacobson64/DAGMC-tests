@@ -1,0 +1,54 @@
+Test problem for heavy-ion zaid packing. Writes surf source file
+c
+c
+c    *  *  *  *  *  *  *  *  *  *
+c    *  *  *  Cell Cards  *  *  *
+c    *  *  *  *  *  *  *  *  *  *
+c
+c  Define the inner boxes using macrobody rpp
+c
+1    0   -100    $ Void
+c
+c  Enclosing void
+ 9000  0  100 -999
+ 9999  0  999
+ 
+c
+c    *  *  *  *  *  *  *  *  *  *  *
+c    *  *  *  Surface Cards  *  *  *
+c    *  *  *  *  *  *  *  *  *  *  *
+c
+c
+c  Macrobody inner boxes
+c
+100  rpp  -1   1  -1   1  -1   1
+999  so    10
+c
+ 
+c
+c    *  *  *  *  *  *  *  *  *  *  *
+c    *  *  *  Material Cards *  *  *
+c    *  *  *  *  *  *  *  *  *  *  *
+c
+m1   3006   1
+c
+mode  #
+phys:n 236000
+phys:# 236000
+c
+c  U-235 point source, center of cell 1, isotropic.
+c
+sdef par=92235 erg=235000.000 
+c  LAQGSM
+lca 9j 1
+c
+imp:n  1.0  1.0  0.0
+nps  10000
+ssw 100.1 100.2 100.3 100.4 100.5 100.6
+c ssr
+c
+f1:#  999
+e1   0 199i 235000
+prdmp 2j -1
+c dbcn  20j  j  7j  1  2j  0  0
+  dbcn  20j  j  7j  0  2j  0  0

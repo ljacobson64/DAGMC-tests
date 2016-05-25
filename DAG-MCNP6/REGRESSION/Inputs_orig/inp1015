@@ -1,0 +1,63 @@
+proton overlap 01: 10x10x10; 2 parts, 1st order hexs
+c
+c  Overlaping parts
+c
+c  ---------------------------------
+c  - MCNP / REGRESSION Test Suite  -
+c  - Unstructured Mesh Problem #15 -
+c  - Roger Martz                   -
+c  -  7/10/2012                    -
+c  ---------------------------------
+c
+11  1   -2.03   0      u=2
+12  1   -2.03   0      u=2
+13  1   -2.03   0      u=2
+14  1   -2.03   0      u=2
+20  0           0      u=2
+30  0         -99      fill=2
+40  0          99
+
+1   rpp  -6. 6.  -6. 6.  -1.  11.
+97  sph   0.  0. 5. 20.
+99  sph   0.  0. 5. 15.
+
+c  the following is pseudo-concrete
+c m1   1001 -0.02  8016 -0.60  14000 -0.38
+m1     74180 0.001300  74182 0.263000  74183 0.143000
+       74184 0.306700  74186 0.286000
+c
+c
+sdef   pos= 0 0 5  nrm= -1  erg=20000  par=H
+       rad=15      sur=99   wgt= 706.8583471
+c
+mode h
+imp:h  1  1  1  1  1  1  0
+c
+embed2 meshgeo=abaqus
+       mgeoin=um1015.inp
+       meeout=inp1015u
+       gmvfile=inp1015g
+       filetype=ascii
+       background= 20
+       matcell= 1 11  2 12  3 13  4 14
+c
+c
+embee4:h  embed=1
+embtb4  1e+39
+embtm4  1.0
+embeb4  1e+10
+embem4  1.0
+c
+f14:h  11
+f24:h  12 13
+f34:h  14
+c
+nps 10000
+print
+void
+prdmp 10000000 10000000  -1 J 10000
+c
+tropt eloss off
+c                    E-loss      Striganov    Int==Atten    Elastic on
+phys:h 23080  3j   j     5j    j            1
+cut:h J 10000

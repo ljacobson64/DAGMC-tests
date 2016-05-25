@@ -1,0 +1,104 @@
+FT8 PHL, CAP, EDEP Test - Martyn Swinhoe
+6 43 -1.664e-4 -21 imp:n=1 $ B lined detector, counting gas 0.1 atm Ar
+7 42 -2.52 -22 21 imp:n=1  $ B liner
+8 35 -7.87 -23 22 imp:n=1  $ detector wall
+9 40 -1.3 -24 23 imp:n=1   $ preamp (half density Al)
+998 0 -999  24 imp:n=1
+999 0 999 imp:n=0
+
+c detector
+21 rcc 0 0 -8.5   0 0 20 1.27     $counting gas
+22 rcc 0 0 -8.5   0 0 20 1.270075 $ B4C 0.75 microns
+23 rcc 0 0 -8.6   0 0 20.2 1.37   $tube wall
+24 rcc 0 0 -8.6   0 0 22.7 1.37   $ preamp
+c
+999 rcc 0 0 -30 0 0 60 60
+
+   m35  26056.    0.865      $ stainless steel 403
+        24052.    0.12
+        25055.    0.01
+        14000.    0.005
+   m40  13027.    1.0        $ aluminum
+   m42  5010.60c   0.72      $ boron10 carbide (90% 10B)
+        5011.60c   0.08
+        6000.60c   0.20
+   m43  18000.    1.0        $ Ar 1atm 293K = 1.664e-3 g/c
+c
+c Neutron Transport
+phys:n 25 0 0 j j j 3      $ force NCIA (no recoils)
+FMULT METHOD=0 DATA=0 SHIFT=0
+cut:n j j 0 0
+c
+C -----------------FOR 10B --------------------------
+mode n a #
+phys:a 20 3j 1       $ alpha transport
+phys:# 20 3j 1       $ Li transport
+cut:a j 0.001
+cut:# j 0.001
+dbcn 17j 0
+c -----------------------------------------------------
+C unidirectional monoenergetic thermal neutron source
+sdef erg=.025e-6 pos=-20 0 0 vec 1 0 0 dir 1.0
+c
+c FOR 10B tallies -----------------------------------------------
+f4:n 7
+fm4 -1 42 107
+sd4 1
+f6:a 6                $ cell 6 is the gas
+sd6 1
+f16:# 6               $ no energy bins needed
+sd16 1
+fc8 Sum of alpha and 7Li
+f8:a 7                $ particle type and cell number are irrelevant
+ft8 phl 2 6 1 16 1 0
+e8 0 1e-5 25e-3 50e-3 75e-3 100e-3 75i 2
+fc18 alpha spectrum
+f18:a 7               $ particle type and cell number are irrelevant
+ft18 phl 1 6 1 0
+e18 0 1e-5 25e-3 50e-3 75e-3 100e-3 75i 2
+fc28 7Li spectrum
+f28:# 7               $ particle type and cell number are irrelevant
+ft28 phl 1 16 1 0
+e28 0 1e-5 25e-3 50e-3 75e-3 100e-3 75i 2
+c fc88 sum of alpha+7Li in gas
+f88:a,# 6
+e88 0 1e-5 25e-3 50e-3 75e-3 100e-3 75i 2
+c
+fc98 alpha in gas
+f98:a 6
+e98 0 1e-5 25e-3 50e-3 75e-3 100e-3 75i 2
+c
+fc108 7Li in gas
+f108:# 6
+e108 0 1e-5 25e-3 50e-3 75e-3 100e-3 75i 2
+c -----------------------------------------------------------
++f26 6
+sd26 1
+f36:a,# 6
+sd36 1
+f46:n 6
+sd46 1
+f56:n,a,# 6
+sd56 1
+*f328:n 6
+*f338:a 6
+*f348:# 6
+*f358:a,# 6
+*f368:n,a,# 6
+f218:n 7
+ft218 cap 5010 5011 6000
+f228:n 6
+ft228 cap edep   6 0
+f238:n 999
+ft238 cap edep  16 0
+f248:n 999
+ft248 cap edep  36 0
+f428:n 999
+ft428 cap edep 338 0
+f438:n 999
+ft438 cap edep 348 0
+f448:n 999
+ft448 cap edep 358 0
+nps 100000
+print -10 -30 -40 -41 -70 -72 -85 -86 -98 -161 -162
+prdmp 2J -1 j -1

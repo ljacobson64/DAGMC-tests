@@ -1,0 +1,33 @@
+Test delayed-gamma lines. 14-MeV photon source.
+    1    1 -19.0    -1    imp:n=1   imp:p=1
+ 9000    0  1    imp:n=0  imp:p=0
+ 
+    1    so  3.975
+ 
+m1    92235.60c  0.9990  92238.60c   0.0010
+m2    92235.60c  0.9990  92238.60c   0.0010
+m3    92235.60c  0.9990  92238.60c   0.0010
+m4    92235.60c  0.9990  92238.60c   0.0010
+totnu
+mode p n
+phys:n 3j   j
+phys:p 3j 1 1
+act  FISSION=n dn=model dnbias=1
+sdef  par=p erg=14.0 cel=1 rad=d2
+si2  l  0.0 4.0
+sp2  -21  2
+nps  5000
+print
+prdmp 2j -1
+c
+fc1     f1 delayed-neutron tally particles on surface 1
+f1:n    1
+t0    0.001 0.01 0.1 1.0  10.0  1.0e2 1.0e3 1.0e4 1.0e5 1.0e6 1.0e7
+      1.0e8 5.0e8 1.0e9 5.0e9 1.0e10 5.0e10 1.0e11 5.0e11
+      1.0e12 2.0e12 5.0e12 1.0e13
+e0    1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+fc11    f1 delayed-gamma tally particles on surface 1
+f11:p    1
+c dbcn  20j  j  7j  1  2j  0  0  9j  0
+  dbcn  20j  j  7j  0  2j  0  0  9j  0
+

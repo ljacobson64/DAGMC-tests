@@ -1,0 +1,45 @@
+inp58 - Test of rectangular image problem and cosine degree bins
+1    0 -1          imp:p=1
+2    0 -2          imp:p=1
+3    0 -3          imp:p=1
+4    0 -4          imp:p 1
+5    1 -7.85 1 2 3 4 -5  imp:p=1
+6    0  5 -6 8 9   imp:p=1
+7    0  -8         imp:p=1
+8    0  -9         imp:p=1
+9    0  6          imp:p=0
+
+1    sy 4 2
+2    sz 4 1.5
+3    sy -4 0.5
+4    sz -4 1
+5    so 8.
+6    so 1000
+8    sx -109 10
+9    sx -90 8
+
+mode p
+sdef  erg=d1 pos=-100 0 0 par=p
+si1 h 0.1 10
+sp1 d  0   1
+m1   26000 1.
+f1:p 8 9
+*c1 0.0 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170
+e1 1 5 10
+f21:p 8 9
+c21  -0.984807753 -0.939692621 -0.866025404 -0.766044443 -0.642787610 -0.5
+     -0.342020143 -0.173648178  0.000000000  0.173648178  0.342020143  0.5
+      0.642787610  0.766044443  0.866025404  0.939692621  0.984807753  1.0
+e21 1 5 10
+c
+c The *c1 and c21 cards are the same angle bins, but in different units.
+c The F1 and F11 tallies should agree within roundoff.
+c Both F1 and F11 can be plotted at the same time to check warning message.
+c
+fir5:p  100 0 0 0 -100 0 0 0 1000 0
+fs5    -16.1 2i 16.1
+c5     -16.1 2i 16.1
+nps   100
+print
+prdmp   2j -11
+

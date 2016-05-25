@@ -1,0 +1,54 @@
+c MCNP AVATAR PATCH.WWA15 TEST INPUT-INFINITE SLAB PROBLEM-AVATAR WW GENERATOR
+c 1 MEV PHOTON SOURCE WITH SPLITTING
+c 3 ENERGY GROUPS
+c TALLY ON RIGHTHAND SURFACE OF SLAB, X=10 CM
+c <AVR01>
+1    1 -1.0 1 -2
+2    1 -1.0 2 -3
+3    1 -1.0 3 -4
+4    1 -1.0 4 -5
+5    1 -1.0 5 -6
+6    1 -1.0 6 -7
+7    1 -1.0 7 -8
+8    1 -1.0 8 -9
+9    1 -1.0 9 -10
+10   1 -1.0 10 -11
+11   0        11
+12   0        -1
+
+1    px 0
+2    px 1
+3    px 2
+4    px 3
+5    px 4
+6    px 5
+7    px 6
+8    px 7
+9    px 8
+10   px 9
+11   px 10
+
+mode p
+dbcn   29j  13j   0
+imp:p 1 2 2 2 3 4 4 5 7 8 0 0
+phys:p 4j 1
+m1   1000.02p .667 8000.02p .333
+sdef erg=1 x=0.0 y=d1 z=d2 dir=1 vec=1 0 0 sur=1
+si1  -1 1
+sp1  0 1
+si2  -1 1
+sp2  0 1
+f1:p 11
+wwg 1 0
+wwge:p .1 .5 1
+mesh geom=rec origin= 0 -1.1e6 -1.1e6 ref= .5 0 0
+     imesh 5    10
+     iints 5     5
+     axs 3.4 6 92
+     jmesh -1e6  1e6
+     jints 1     1
+     kmesh -1e6  1e6
+     kints 1     1
+nps  10000
+prdmp 2j -1
+print

@@ -1,0 +1,60 @@
+RIA target test
+1 1 5e-2  -3  -99
+2 0  3  -99
+99 0  99
+
+1  pz 0.0
+2  pz 1.0
+3  cx 1.5
+99 so 100.0
+
+mode # n a t d s h / * z
+m1  3006  1
+phys:# 100000
+phys:n 10000
+phys:h 10000
+phys:a 10000
+phys:t 10000
+phys:d 10000
+phys:s 10000
+phys:/ 10000
+C phys:-/ 10000    $ This card dives "Fatal error: double use of -/"
+phys:* 10000
+phys:z 10000
+lca  9j 1
+imp:# 1 1 0
+imp:n 1 1 0
+sdef par=92238 erg=95200 pos 0 0 -2 rad=d1 axs 0 0 1 vec 0 0 1 dir 1
+si1   0 0.2
+sp1   -21 1
+c nps 500
+nps 1e6
+prdmp 2J -1
+e0 0.0 99i 104000.0
+f4:# 2
+sd4  1
+f1:n 3
+e1 1 99i 10000
+f11:h 3
+e11 1 99i 10000
+f21:a 3
+e21 1 99i 10000
+f31:d 3
+e31 1 99i 10000
+f41:t 3
+e41 1 99i 10000
+f51:s 3
+e51 1 99i 10000
+f71:/ 3
+e71 1 99i 10000
+f81:* 3
+e81 1 99i 10000
+c f91:z 3
+c e91 1 99i 10000
+f94:z 1
+e94 1 99i 10000
+f61:# 3
+e61 1 99i 100000
+print
+c dbcn  20j  0  7j  1  2j  0  1
+dbcn  20j  0  5j  -1  j  1  2j  0  1  $ dbcn(27)=-1 should provide pi+ separately of pi-

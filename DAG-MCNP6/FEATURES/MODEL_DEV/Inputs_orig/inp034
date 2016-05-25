@@ -1,0 +1,32 @@
+High-energy proton-neutron transport in oxygen.
+1  1 -1 -1 imp:n,h=1
+99 0     1 imp:n,h=0
+
+1  so 1
+
+m1    8016 1
+mode  n h
+sdef  par=h  erg=1.0e+06
+phys:n  1e6
+phys:h  1e6
+c
+nps     50000
+prdmp   2j  -1  j 4000
+lca     9j   1  $ defaults, except that ilaq = 1
+c
+e0 1.0e3 48ilog 1.0e6 T
+c
+fc1 Neutron Current Tally
+f1:N 1
+c
+fc4 Neutron Cell Flux Tally
+f4:N 1
+c
+fc11 proton Current Tally
+f11:H 1
+c
+fc14 Proton Cell Flux Tally
+f14:H 1
+c
+print
+

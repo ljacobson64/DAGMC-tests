@@ -1,0 +1,36 @@
+fmsurf - test new fmesh partial current tallies
+10  0      -1        imp:n=1
+99  0      +1        imp:n=0
+
+1  rpp  -10.  10.     -10.  10.    -10. 10.
+10 px    -5.
+11 px    +5.
+
+nps 50000
+sdef
+print
+prdmp 999999 999999 -1 999999 999999
+c
+f11:n   1.1 1.2 1.3 1.4 1.5 1.6
+c
+fmesh99904:n  geom=xyz origin= -10. -10. -10.
+              imesh= 10.    iints=1
+              jmesh= 10.    jints=1
+              kmesh= 10.    kints=1
+              emesh= 10 100  eints=1 1
+c             tmesh= 10 100  tints=1 1
+c
+fmesh99901:n  geom=xyz origin= -10. -10. -10.
+              imesh= 10.    iints=1
+              jmesh= 10.    jints=1
+              kmesh= 10.    kints=1
+              emesh= 10 100  eints=1 1
+c             tmesh= 10 100  tints=1 1
+c
+fmesh12301:n  geom=xyz origin= -10. -10. -10.
+              imesh= 10.    iints=3
+              jmesh= 10.    jints=3
+              kmesh= 10.    kints=3
+              emesh= 10 100  eints=1 1
+c             tmesh= 10 100  tints=1 1
+

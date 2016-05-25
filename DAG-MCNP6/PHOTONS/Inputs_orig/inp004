@@ -1,0 +1,49 @@
+Show DOPPLERP for transport and detectors for hydrogen target, mcplib04.
+1     1 -1.    -1       imp:p=1.
+2     2 -1.    -2       imp:p=1.
+3     3 -1.    -3       imp:p=1.
+4     4 -1.    -4       imp:p=1.
+5     0   1 2 3 4  -5   imp:p=1.
+6     0         5       imp:p=0.
+
+1     s    0.01  0.    0.    .001
+2     s    0.    0.01  0.    .001
+3     s   -0.01  0.    0.    .001
+4     s    0.   -0.01  0.    .001
+5     so  10.01
+
+mode    p
+fcl:p   -1  -1  -1  -1  0  0
+sdef    pos  d1  vec 0. 0. 1. dir 1. par=2 erg=0.259183 ara 1.
+si1     L  0.01  0.    -1.
+           0.    0.01  -1.
+          -0.01  0.    -1.
+           0.   -0.01  -1.
+sp1     1 1 1 1
+m1      1000.04p  1.
+m2      2000.04p  1.
+m3      3000.04p  1.
+m4      4000.04p  1.
+c
+e0      0.003 199log  0.259183
+c
+fc1     Angular bin 2 is from 30.5 to 24.4 degrees from beam direction.
+f1:p    5
+c        up to 30.28,     up to 24.48,    forward.
+c1      0.863578945507   0.910097156747   1.
+ft1     frv  0. 0. 1.  scx  1
+fq1     e  u
+c
+fc5     Point detector is at 30 degrees from beam direction.
+f5:p    0.   5.   8.66025403   0.
+ft5     scx  1
+fq5     e  u
+c    For backward compatability, set the first calculation of the
+c  point detector average contribution at nps =  200
+dbcn    42j  0  23j   200
+print
+phys:p  j 1 1   $ no bremsstrahlung and no coherent scattering.
+cut:p   j 0.003 $ no fluorescence photons.
+prdmp   2j -1 j 8000
+nps     1000000
+

@@ -1,0 +1,60 @@
+Godiva HEU-MET-FAST-001
+c
+c  1st order tets
+c  Karen Kelley
+c  9/21/2009
+c
+c  ---------------------------------
+c  - MCNP / REGRESSION Test Suite  -
+c  - Unstructured Mesh Problem #05 -
+c  - Roger Martz                   -
+c  - 12/07/2010                    -
+c  ---------------------------------
+c
+c ---cell cards---
+10   1  4.7984e-02   0             u=2
+20   0               0             u=2
+100  0             -100         fill=2
+999  0              100
+
+c ---surface cards---
+50   so 8.8
+100  so 9.0
+200  so 1000.0
+
+c ---material cards---
+c   Material 1: HEU (Godiva)
+c   atom density:  4.7984e-02 at/b-cm
+m1   92235  4.4994e-02
+     92238  2.4984e-03
+     92234  4.9184e-04
+c
+c ---tally cards---
+f4:n 10
+c
+f26:n,p 10
+fm26    1.60219e-13
+c
+embee14:n   embed=2
+c
+embee36:n,p embed=2
+embem36     1.60219e-13
+c
+c ---source, etc cards---
+ksrc  0.00001 0.00001 0.00001
+kcode 2000 1 10 20 90000
+c
+c
+mode n p
+imp:n 1 2r 0
+imp:p 1 2r 0
+c
+embed2 meshgeo=abaqus mgeoin=um1005.inp
+       meeout=inp1005u
+       gmvfile=inp1005g
+       filetype=ascii
+       background=20
+       matcell=1 10
+c
+print
+prdmp 10000000 10000000  -1

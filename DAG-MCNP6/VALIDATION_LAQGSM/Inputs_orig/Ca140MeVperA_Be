@@ -1,0 +1,33 @@
+MCNP6 test: 140 MeV/A Ca40 + Be9 by LAQGSM03.03, nevtype=66
+  1  1  1.0   -1 2 -3
+  2  0        -4 (1:-2:3)
+  3  0         4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  -1.0
+  3  pz  1.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+dbcn 28j 1
+  m1 04009  1.0
+  sdef erg=5600 par=20040 dir=1 pos=0 0 0 vec 0 0 1
+  imp:n 1 1 0
+  imp:h 1 1 0
+  phys:g 200
+  phys:d 200
+  phys:h 200
+  phys:# 5600
+  mode  # n a t d s h
+LCA  2 1 5j -1 1j 1    $ use LAQGSM, nevtype = 66                   !!!
+lcb  0 0 0 0 0 0
+lea  2j 0
+  tropt genxs inxc69  nreact on  nescat off
+c  tropt genxs inxc69
+c ---------------------------------------------------------------
+  print 40 110 95
+c  nps 1000
+  nps 10000000
+  prdmp 2j -1
+

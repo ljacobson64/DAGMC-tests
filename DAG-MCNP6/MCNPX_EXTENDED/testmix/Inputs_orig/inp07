@@ -1,0 +1,18 @@
+Test of positron source
+1 1 -1   -1
+2 0       1
+
+1 so .1
+
+mode p e
+sdef par -e erg=1
+imp:p,e 1 0
+nps 1000
+m1 82000 1
+print -161 -162
+f1:e 1
+ft1 elc 3
+fq1 e u
+prdmp 2j -1
+dbcn 17j 0 10j 0  13j  0
+

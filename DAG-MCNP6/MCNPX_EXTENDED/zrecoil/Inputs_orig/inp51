@@ -1,0 +1,25 @@
+Test of multiple source particles.
+1 0    -1
+2 0    -2
+3 0    1 2
+
+1 so 5
+2 sx 15 5
+
+mode n h
+print -160
+prdmp 2j -1
+imp:n 1 1 0
+nps 10000
+sdef par=d1 pos fpar d2 erg fpar d3
+si1 L h n
+sp1   2 1
+sb1   1 2
+ds2 L 0 0 0 15 0 0
+ds3 L 2 3
+f21:n 1 2
+fq21 f c
+tf21 2
+f11:h 1 2
+fq11 f c
+dbcn  26j  1

@@ -1,0 +1,22 @@
+1-MeV neutrons into C-17
+1  1  -1.0    -1  imp:n=1
+2  0           1  imp:n=0
+
+1  so  1.0
+
+mode n
+mphys on
+m1   6017 1
+awtab 6017 17.0
+sdef par=n  erg=1
+ACT  NONFISS=n DN=model 
+lca  7j -2
+f1:n  1
+t1    100 1e37
+e1    1e-3 199i 10
+f11:n 1
+t11   0.001e8 199log 1000e8
+print
+prdmp 2j -1
+nps  1000
+

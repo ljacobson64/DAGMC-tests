@@ -1,0 +1,21 @@
+Class variance reduction problem 1
+ 1     1 -2.03  -1
+ 8     0         1
+
+ 1 rcc 0 0 0   0 70 0   100
+ 
+c        the following is  pseudo-concrete
+m1 1001 -.02 8016 -.60 14000 -.38
+sdef   pos= 0. 1.e-6 0. erg=2
+imp:n    1 0
+f1:n  1.2
+nps   10000
+print
+wwg 1 0
+wwge:n .001 .1 1 10
+wwp:n 5 3 5 0 -1
+mesh geom=xyz ref=0 .001 0 origin=-101 -.05 -101
+     imesh 202 jmesh 70.1 jints 7 kmesh 202
+prdmp 2j -1
+c                         
+

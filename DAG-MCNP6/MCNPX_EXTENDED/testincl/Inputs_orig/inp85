@@ -1,0 +1,35 @@
+Test of n(0.8GeV)+Pb(208)
+1 1 -11.  -1 imp:h 1
+2 0        1 imp:h 0
+
+1 so .01
+
+mode h n
+sdef par n erg=800 vec 0 0 1 dir 1
+m1 82208 1
+phys:h 900 j 0
+phys:n 900 6j 0
+print  -160
+prdmp 2j -1 2
+nps 1000
+f38:h 1
+ft38 res 1 99
+fq38 u e
+fq1 e c
+*c1 167.5 9i 17.5 0 T
+e1 1 50log 1300 T
+fc1  *** neutron angle spectra tally ***
+f1:n  1
+ft1  frv 0 0 1
+fq11 e c
+*c11 167.5 9i 17.5 0 T
+e11 1 50log 1300 T
+fc11  *** proton angle spectra tally ***
+f11:h  1
+ft11  frv 0 0 1
+c lca 2 1 1 23 1 1 0  1 0    $ default
+c lea 1 4 1  0 1 0 0  1      $ default
+lca   2 1 0 23 1 1 0 -2 2    $ INCL4
+lea   1 4 1  0 1 0 0  1      $ Dresner
+dbcn  26j  1  j  0 12j  1 2j 1
+

@@ -1,0 +1,18 @@
+Godiva critical assembly, file from Jeff
+1      1 -18.74 -1
+2      0         1
+
+1      so 8.741
+
+kcode 5000 1.0 5 25
+ksrc  0 0 0
+imp:n 1 0
+m1    92235.61c -94.73 92238.61c -5.27
+fc14   test with fm tally of k
+f14:n 1
+fm14   (-1 1 -6 -7)
+sd14   1
+pert1:n cell=1 rho=-20 method=2
+pert2:n cell=1 rho=-20 method=1
+prdmp 2j -1
+c             

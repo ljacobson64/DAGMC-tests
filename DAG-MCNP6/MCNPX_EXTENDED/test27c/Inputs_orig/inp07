@@ -1,0 +1,35 @@
+Test light/heavy recoil
+1 1 -1 -1 imp:n=1
+
+1 so 10000
+
+m1 1001 2  8016 1  6000 1
+sdef erg=1
+phys:n 6j 1
+phys:h 6j 1
+phys:p 4j 1
+mode n h p #
+nps 1000
+cut:n j 1e-7
+cut:h j 1e-3
+cut:# j 1e-3
++f6 1
+sd6 1
+f4:h 1
+e4 1e-3 19i 1
+sd4 1
+f14:# 1
+e14 1e-3 19i 1
+ft14 res 3 9
+sd14 1
+f16:n 1
+sd16 1
+f26:p 1
+sd26 1
+f36:h 1
+sd36 1
+f46:# 1
+sd46 1
+prdmp 2j -1
+dbcn  26j  1  j  0
+tropt  mcscat gaussian

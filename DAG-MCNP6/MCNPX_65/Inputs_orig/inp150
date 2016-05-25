@@ -1,0 +1,22 @@
+Test TF and C bins
+c Should be fatal error when no matching F card exists
+1 0 -1
+2 0 1
+
+1 so 5
+
+imp:n,p 1 0
+nps 10
+mode n p
+sdef par=d1 erg 5
+prdmp 2j -1
+si1 l n p
+sp1 1 1
+f1:n 1
+f11:p 1
+c1 0 1
+c11 0 1
+c21 0 1
+tf1 5j 1
+tf11 5j 1
+tf21 5j 1

@@ -1,0 +1,28 @@
+Unresolved resonance testprob for 92238.66c from Bob Little
+1  1 -18.74   -1
+2  0           1 -2
+3  0           2
+
+1  so  1e-2
+2  so  1
+
+imp:n 1 1 0
+imp:p 1 1 0
+sdef  pos=-.5 0 0 vec= 1 0 0 dir=1 erg=d1
+si1  .01 .05 .1 .5 1 5 10 50 100
+sp1   0 1 1 1 1 1 1 1 1
+m1 92238.48c 1
+mode n
+fc1   Surface current binned in E and C
+f1:n  1
+ft1 frv 1 0 0
+fq1   c e
+fm1  150000
+c1 -.985 -.940 -.866 -.766 -.643 -.5 -.342 -.1736 0
+          .1736 .342 .5 .643 .766 .866 .940 .985 1
+e1       .05 .1 .5 1 5 10 50 100
+nps 500000
+print
+prdmp 2j -1 j 32000
+dbcn   29j  12j  1 2j 1
+lca    8j  1

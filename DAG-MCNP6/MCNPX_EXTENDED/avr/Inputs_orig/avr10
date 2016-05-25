@@ -1,0 +1,42 @@
+c V18 TEST PROBLEM/AVATAR WEIGHT WINDOW GENERATOR
+c TEST TRACKING IN 10CM WATER SLAB
+c AVATAR GENERATED WEIGHT WINDOWS CELL DEPENDENT
+c <AVR10>
+1    1 -1 1 -2
+2    1 -1 2 -3
+3    1 -1 3 -4
+4    1 -1 4 -5
+5    1 -1 5 -6
+6    1 -1 6 -7
+7    1 -1 7 -8
+8    1 -1 8 -9
+9    1 -1 9 -10
+10   1 -1 10 -11
+11   0    11 -12
+12   0        12
+13   0        -1
+
+1    px 0
+2    px 1
+3    px 2
+4    px 3
+5    px 4
+6    px 5
+7    px 6
+8    px 7
+9    px 8
+10   px 9
+11   px 10
+12   px 11
+
+mode p
+dbcn   29j  13j   0
+imp:p 1 2 3 4 5 6 7 8 9 10 10 0 0
+phys:p 4j 1
+m1   1000.02p .667 8000.02p .333
+sdef erg=1.0 pos=0 0 0 sur=1
+f5:p 10.5 0 0 0
+wwg 5 1 
+nps  50000
+prdmp 2j -1
+print

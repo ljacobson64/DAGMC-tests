@@ -1,0 +1,72 @@
+simple cube, each element is a statistical set, 8 total
+c
+c  8 1st order hex elements; 1 per octant
+c  fixed source
+c
+c  Karen Kelley
+c  12/16/2009
+c
+c  ---------------------------------
+c  - MCNP / REGRESSION Test Suite  -
+c  - Unstructured Mesh Problem #07 -
+c  - Roger Martz                   -
+c  - 12/07/2010                    -
+c  ---------------------------------
+c
+c ---cell cards---
+11   1  4.7984e-02   0        u=2
+12   1  4.7984e-02   0        u=2
+13   1  4.7984e-02   0        u=2
+14   1  4.7984e-02   0        u=2
+15   1  4.7984e-02   0        u=2
+16   1  4.7984e-02   0        u=2
+17   1  4.7984e-02   0        u=2
+18   1  4.7984e-02   0        u=2
+20   0               0        u=2
+997  0             -50     fill=2
+998  0          50 -100
+999  0              100
+
+c ---surface cards---
+50   so 20.0
+100  so 30.0
+
+c ---material cards---
+c   Material 1: HEU (Godiva)
+c   atom density:  4.7984e-02 at/b-cm
+m1   92235  4.4994e-02
+     92238  2.4984e-03
+     92234  4.9184e-04
+c
+c ---tally cards---
+f4:n 11 12 13 14 15 16 17 18
+c
+f16:n   11 12 13 14 15 16 17 18
+f26:p   11 12 13 14 15 16 17 18
+f36:n,p 11 12 13 14 15 16 17 18
+c
+embee14:n   embed=2  errors=yes
+c
+embee36:n,p embed=2  errors=yes
+embtb36  1.0 1e+39
+embtm36  1.0  1.0
+embeb36  2.0  1e+10
+embem36  1.0  1.0
+c
+sdef x=0.00001 y=0.00001 z=5.00001 erg=14
+totnu  no
+nps 1000
+prdmp J 10000000  -1
+c
+mode n p
+imp:n 1 10r 0
+imp:p 1 10r 0
+c
+embed2 meshgeo=abaqus mgeoin=um1007.inp
+       meeout=inp1007u
+       gmvfile=inp1007g
+       filetype=ascii
+       background= 20
+       matcell= 1 11  2 12  3 13  4 14  5 15  6 16  7 17  8 18
+c
+print

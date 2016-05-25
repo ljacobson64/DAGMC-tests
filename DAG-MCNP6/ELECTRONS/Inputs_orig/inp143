@@ -1,0 +1,29 @@
+Test *F8 tally, including particle types other than photons and electrons.
+1     1 -7.86  -1
+2     0         1
+
+1     so  10.
+
+mode    n p e
+imp:n   1 0
+imp:p   1 0
+imp:e   1 0
+sdef    erg=10.
+m1      26058.60c 1
+*f11:n      1
+*f21:p      1
+*f41:e      1
+*f18:n      1
+*f28:p      1
+*f38:n,p    1
+*f48:e      1
+*f58:n,e    1
+*f68:p,e    1
+*f78:n,p,e  1
+print
+dbcn   17j 1
+prdmp  2j -1
+cut:e  j  .01
+cut:p  j  .01
+nps    1000
+

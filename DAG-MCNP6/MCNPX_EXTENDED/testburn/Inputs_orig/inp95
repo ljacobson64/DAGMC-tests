@@ -1,0 +1,67 @@
+2 pin problem
+C  Cell Cards
+C  17x17 Assembly
+C  Fuel Rod in Zone 1
+1  1  6.87812e-2     -1      u=2  imp:n=1 vol=192.287 $fuel
+3  2  4.5854e-2    1 -2      u=2  imp:n=1 vol=66.43   $clad
+4  3  7.1594e-2      2       u=2  imp:n=1 vol=370.82  $wat
+6  4  6.87812e-2    -1       u=3  imp:n=1 vol=192.287 $fuel
+7  5  4.5854e-2    1 -2      u=3  imp:n=1 vol=66.43   $clad
+8  6  7.1594e-2      2       u=3  imp:n=1 vol=370.82  $wat
+10  0           -3 4 -5 6    u=1 lat=1 imp:n=1 fill=0:1 0:0 0:0 2 3
+11  0           9 -10 11 -12 -7 8 imp:n=1      fill=1  
+12  0           -9:10:-11:12:7:-8 imp:n=0
+  
+C  Fuel Cylinder
+1  c/z  0.65665  0.65665  0.4095
+C  Cladding
+2  c/z  0.65665  0.65665  0.4750
+C  Cell
+3  px  1.3133
+4 px  0.0
+5 py  1.3133
+6 py  0.0
+C  Boundary
+*7  pz   365.0
+*8  pz   0.0
+*9  px 0.0001
+*10 px 2.6265
+*11 py 0.0001
+*12 py 1.313
+
+C  Control Cards
+kcode  10 1.0 5 40
+ksrc  0.65665 0.65665 150.0 1.96995 0.65665 150.0 
+BURN  TIME=500
+      MAT=1,-4
+      POWER=1.0 
+      PFRAC=1.0
+      AFMIN=1e-11 1e-5
+      OMIT=1,8,6014,7016,8018,9018,90234,91232,95240,95244
+           4,8,6014,7016,8018,9018,90234,91232,95240,95244           
+      BOPT=1.0, -4
+      MATVOL=190 190
+C  Material Cards
+m1  
+      8016.60c   2.0
+      92235.60c  0.1 
+      92238.60c  0.90  
+m2    40000.60c -1.0              
+m3     1001.60c  2.0 
+       8016.60c  1.0
+mt3 lwtr.01t
+m4  
+      8016.60c   2.0
+      92235.60c  0.1 
+      92238.60c  0.90 
+m5    40000.60c -1.0              
+m6     1001.60c  2.0 
+       8016.60c  1.0
+mt6 lwtr.01t
+prdmp 2j -1
+dbcn    29j  2j  0  0  5j  1
+c          21 unused
+c                 29 MCNPX Compatibility
+c                        32 Internal Bremstrahlung (temporary)
+c                           33 Ion STP smoothing
+c                                  39 S(a,b) smoothing

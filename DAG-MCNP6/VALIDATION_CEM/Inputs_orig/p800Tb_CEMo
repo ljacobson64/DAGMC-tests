@@ -1,0 +1,25 @@
+MCNP6 test: p + Tb159 by CEM03.03 at 800 MeV, nevtype=66
+C Medical Ac-225 production for alpha cancer therapy
+  1  1  1.0   -1 2 -3
+  2  0        -4 (1:-2:3)
+  3  0         4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  -1.0
+  3  pz  1.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+  m1   65159 1.0
+  sdef erg = 800 par = H dir = 1 pos = 0 0 0 vec 0 0 1
+  imp:h 1 1 0
+  phys:h 1000
+  mode   h
+LCA  8j 1    $ use CEM03.03, nevtype = 66                   !!!
+  tropt genxs inxc95  nreact on  nescat off
+c ---------------------------------------------------------------
+  print 40 110 95
+  nps 10000000
+c  prdmp 2j -1
+

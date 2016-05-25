@@ -1,0 +1,23 @@
+godiva
+1    1  -18.74  -1
+2    0           1 -2
+3    0           2
+ 
+1    so 8.741
+2    so 100 
+
+kcode 1000 1.0 10 20
+sdef rad=d1 pos 0 0 0
+si1 0 8.741
+imp:n 1 1 0
+m1    92235 -94.73  92238 -5.27
+f4:n 1
+fm4 -1 1 -6 -7
+sd4 1
+f2:n 2
+fy5:n 0 99.9 0
+print 10 110 179
+prdmp 2j -1 j -1
+mplot kc 1 cop kc 2 cop kc 3 cop kc 16
+c         
+

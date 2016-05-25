@@ -1,0 +1,35 @@
+Test case 5 - spontanous gamma emission and time specification with -7
+1  1  -1.6   -1  imp:p=1
+2  0          1  imp:p=0
+
+1  so  10.0
+
+mode p #
+m1   1001 -.002
+     7016 -1e-6
+     8016 -.527
+     11023 -.021
+     13027 -.061
+     14028 -.345
+     19000 -.029
+     26056 -.016
+sdef par=d1 erg=0 pos=0 0 0 tme=fpar=d2
+si1   L  sp    27060
+sp1      1      1
+ds2  S  3  4
+sp3  -7  10
+si4  H 0  100 
+sp4    0  1  
+nps  1000
+phys:p 4j 1  j  
+act   NONFISS=p dg=line
+t0    0 19i 100
+f11:p 1
+e11   0 999i 10
+sd11  1
+f14:p 1
+e14   0 999i 10
+prdmp 2j -1
+print
+c dbcn  20j  j  7j  1  2j  0  0  9j  0
+  dbcn  20j  j  7j  0  2j  0  0  9j  0

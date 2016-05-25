@@ -1,0 +1,42 @@
+Test #85: CEM03 transport test. Compare with problem 128.
+c     1600 MeV pi- in carbon
+c     cell cards
+ 1    0         -1  +4
+ 2    1 -2.25   +1  -12  -3
+ 10   0         +12 -14 -3
+ 12   1 -2.25   +14 -15 -3
+ 13   0         +15 -2  -3
+ 14   0         +2
+ 15   0         +3  +1  -2
+ 16   0         -4
+
+c     surface cards
+ 1     px   0
+ 2     px   35
+ 3     cx   200
+ 4     px   -15
+ 12    px   10
+ 14    px   20
+ 15    px   30
+
+ m1     6012.40c 1
+ area   1.256637e+05 1r 1.0 1r 1.256637e+05 2r
+ sdef   sur = 1 erg = 1600 par = * dir = 1 pos = 0 0 0 rad=d1
+ si1    2
+ imp:*  1 4r 0 0 0
+ phys:* 2000
+ tropt  nreact=on
+ mode   n h / * | ! d t s a
+  dbcn  41j  -1.  5j  0    $ Do not override thread-safe checks
+ e0     2.0 29ilog 2000.
+ f2:*   2
+ f12:/  2
+ f22:|  2
+ f32:!  2
+ f42:n  2
+phys:n  7j  20.  $  Compare with problem 128.
+ print  10 126 130 140
+ nps    10000
+ prdmp  2j -1
+ lca    8j 1 j   6
+ lea    0

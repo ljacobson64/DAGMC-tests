@@ -1,0 +1,30 @@
+p31sdfj problem 3 done with fill and u, like but trcl--prob31tr
+c sdef in cell 11 in both cell 3 and 7 (like but geom)
+11 1 -18.7 -1    u=1    imp:n=1
+12 2 -1    1 -2  u=1    imp:n=1
+13 3 -2.7  2     u=1    imp:n=1
+3 0       -3     fill=1 imp:n=1
+7 like 3 but trcl=(30 0 0)
+40 0      #3 #7  -99    imp:n=1
+50 0      99            imp:n=0
+
+1 sph 0 0 0 5
+2 box -10 -10 -10  20 0 0  0 20 0  0 0 20
+3 rpp -12  12   -12 12   -12 12
+99 so 100
+
+m1  92235 -94.73  92238 -5.27
+m2 1001 2 8016 1
+m3 13027 1
+c add source uniform in volume in both small spheres, cell 11
+c
+sdef cel=d1  rad=d2
+si1  L  (11<3) (11<7)
+sp1  v
+si2  0  5
+nps 4000
+prdmp 2j -1
+dbcn  28j 0
+print
+f1:n (3.1 4i 3.6)
+totnu no

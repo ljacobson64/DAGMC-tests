@@ -1,0 +1,30 @@
+Illustrate *c ... specification bug.
+1    1  -1.85  -1  imp:n 1.
+2    0          1  imp:n 0.
+
+1    so  1.
+
+m1   4009   1.
+sdef
+c
+fc1   Good degree bins.
+f1:n  1
+*c1   0.  3i  1.000001
+fq1    c  e
+c
+fc11  Formerly Bad degree bins., now fixed  to confirm - print table 30
+f11:n 1
+*c11  0.  3i  1.
+fq11   c  e
+c
+fc21   Good degree bins.
+f21:n  1
+*c21   0.  3i  0.9999999
+fq21    c  e
+c
+c
+prdmp 2j -1
+print
+nps  1000
+
+

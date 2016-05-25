@@ -1,0 +1,46 @@
+Test heating tallies for 0.5 MeV electrons in water.
+1    1 -1.  10  -20  -100         imp:p,e 1.
+2    1 -1.  20  -30  -100         imp:p,e 1.
+3    1 -1.  30  -40  -100         imp:p,e 1.
+4    1 -1.  40  -50  -100         imp:p,e 1.
+5    1 -1.  50  -60  -100         imp:p,e 1.
+6    0   ( -10 : 60 : 100 ) -200  imp:p,e 1.
+7    0                       200  imp:p,e 0.
+
+10   pz  0.
+20   pz   .05
+30   pz   .1
+40   pz   .15
+50   pz   .2
+60   pz   .25
+100  cz   .1
+200  so    100.
+
+mode  p e
+sdef  pos 0. 0. -0.00001  vec 0. 0. 1. dir 1. par e erg 0.5
+dbcn  49j 2.
+cut:p 1.0e+10  0.01
+cut:e 1.0e+10  0.01
+m1    1000  2    8000  1
+c
+fc8  Total energy deposition by *F8 tally.
+*f8:p,e 1  2  3  4  5
+fq8     e  f
+c
+fc6   Total energy deposition by +F6 tally.
++f6   1  2  3  4  5
+t6    .0005  .001  .0015  .002  .0025  .003  .0035  .004  .0045  .005
+      1.  1.0e+10  t
+fm6   1.57079632679e-03
+fq6   t f
+c
+fc16  Energy deposition by F16:E tally.
+f16:e 1  2  3  4  5
+t16   .001 .002 .003 .004 .005 .006 .007 .008 .009 .01 1.  1.0e+10 t
+fm16  1.57079632679e-03
+fq16  t f
+c
+prdmp 2j -1 $ j 1000
+print
+nps   10000
+

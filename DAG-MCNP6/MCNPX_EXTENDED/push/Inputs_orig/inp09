@@ -1,0 +1,17 @@
+Bigten, CSEWG-F20, 1d model: U(N) reflected uranium sphere
+ 1    1  0.04757  -1         imp:n=1
+ 2    2  0.04807  +1 -2      imp:n=1
+ 3    0           +2         imp:n=0
+
+ 1    so  30.48
+ 2    so  45.72
+
+ m1   92234 0.00105  92235 0.10175 92238.48c 0.8972 nlib 49c
+ m2   92235 0.00208  92238.48c 0.99792 nlib 49c
+ totnu
+ kcode 1000 1.0 8 20
+ ksrc  0. 0. 0.
+ print
+ prdmp 2j -1
+c                         
+

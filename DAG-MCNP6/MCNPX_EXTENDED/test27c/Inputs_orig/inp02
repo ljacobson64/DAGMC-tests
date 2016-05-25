@@ -1,0 +1,49 @@
+Test problem for WS PTRAC option
+1 1 -1  -1 11 -12   imp:n=1
+2 2 -1  -2 12 -13   imp:n=1
+3 3 -1  -3 13 -14   imp:n=1
+4 4 -1  -4 14 -15 1 imp:n=1
+98 0   -99 #1 #2 #3 #4 imp:n=1
+99 0    99             imp:n=0
+
+1 cz 1
+2 cz 2
+3 cz 3
+4 cz 4
+11 pz 0
+12 pz 1
+13 pz 2
+14 pz 3
+15 pz 4
+99 so 100
+
+sdef par=| erg=200 vec=0 0 1 axs=0 0 1 dir=1 rad=d1 pos 0 0 -1
+si1 0 5
+sp1 -21 1
+m1 1001 2 8016 1
+m2 26056 1
+m3 13027 1
+m4 74184 1
+print
+mode |
+phys:| 200
+c idum 2
+c      coinc col
+ptrac  coinc
+       tally= 426 326 226 126
+c       file=aov
+c       value= 1e-1 1e-1 1e-1 1e-1
+c       file=asc
+c       value= 1e-30 1e-30 1e-30 1e-30
+c ptrac  file=asc filter=1e9,1e10,erg tally= 126 226 326 426
+c        value= 1e-30 1e-30 1e-30 1e-30
+nps 50
+f4:| 1
+f1:| 1
+f326:| 3
+f426:| 4
+f126:| 1
+f226:| 2
+tropt  mcscat gaussian
+dbcn  26j  1  j  0
+prdmp 2j -1

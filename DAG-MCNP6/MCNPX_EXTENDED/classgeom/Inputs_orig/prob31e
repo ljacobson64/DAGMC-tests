@@ -1,0 +1,25 @@
+prob31tr problem 3 done with fill and u, like but trcl--prob31tr
+11 1 -18.7 -1    u=1    imp:n=1
+12 2 -1    1 -2  u=1    imp:n=1
+13 3 -2.7  2     u=1    imp:n=1
+3 0       -3     fill=1 imp:n=1
+7 like 3 but trcl=(30 0 0)
+40 0      #3 #7  -99    imp:n=1
+50 0      99            imp:n=0
+
+1 sph 0 0 0 5
+2 box -10 -10 -10  20 0 0  0 20 0  0 0 20
+3 rpp -12  12   -12 12   -12 12
+99 so 100
+
+m1  92235 -94.73  92238 -5.27
+m2 1001 2 8016 1
+m3 13027 1
+sdef
+nps 50000
+nonu
+prdmp 2j -1 j -1
+dbcn  28j 0
+f2:n 3.1 4i 3.6
+print 128
+

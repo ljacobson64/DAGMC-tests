@@ -1,0 +1,11 @@
+Nested reads
+1 1 -10.0 -1 imp:n=1
+2 2 -3.0 1 -2 imp:n=1
+3 3 -3.0 2 -3 imp:n=1
+4 0 3 imp:n=0 
+
+read file=INP12RD1
+m3   92235.60c 1.0
+     8016.60c  1.0
+read file=inp12RD4
+c                         

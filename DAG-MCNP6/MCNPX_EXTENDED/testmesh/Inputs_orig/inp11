@@ -1,0 +1,86 @@
+Testing MFACT/MSHMF/DOSE
+1 1 -5.0 -1
+2 0 1
+
+1 RPP -2 2 -2 2 -2 2
+
+imp:n 1 0
+mode n
+sdef
+nps 20
+mphys on
+m1 92235.70c 0.5 92238.70c 0.5
+tmesh
+rmesh1:n Dose 1
+cora1 -2 2
+corb1 -2 2
+corc1 -2 2
+rmesh11:n flux mfact 1 1 0 1.0
+cora11 -2 2
+corb11 -2 2
+corc11 -2 2
+rmesh21:n flux mfact 1 2 0 1.0
+cora21 -2 2
+corb21 -2 2
+corc21 -2 2
+rmesh31:n pedep mfact 1 1 0 1.0
+cora31 -2 2
+corb31 -2 2
+corc31 -2 2
+rmesh41:n pedep mfact 1 1 1 1.0
+cora41 -2 2
+corb41 -2 2
+corc41 -2 2
+rmesh51:n Dose mfact 1 1 0 1.0
+cora51 -2 2
+corb51 -2 2
+corc51 -2 2
+rmesh61:n PEDEP
+cora61 -2 2
+corb61 -2 2
+corc61 -2 2
+rmesh71:n pedep mfact 1 2 1 1.0
+cora71 -2 2
+corb71 -2 2
+corc71 -2 2
+cmesh81:n pedep mfact 1 1 1 1.0
+cora81  0 2.83
+corb81 -2 2
+corc81  360
+smesh91:n pedep mfact 1 1 1 1.0
+cora91  0 2.83
+corb91  180
+corc91  360
+mshmf1 1e-6 1
+       1    2
+       14   3        
+endmd
+f4:n 1
+DE4 LOG 1e-6 1 14
+DF4 LOG 1 2 3
+f14:n 1
+DE14 LIN 1e-6 1 14
+DF14 LOG 1 2 3
+f24:n 1
+DE24 LOG 1e-6 1 14
+DF24 LIN 1 2 3
+f34:n 1
+DE34 LIN 1e-6 1 14
+DF34 LIN 1 2 3
+f6:n 1
+DE6 LOG 1e-6 1 14
+DF6 LOG 1 2 3
+f16:n 1
+DE16 LIN 1e-6 1 14
+DF16 LOG 1 2 3
+f26:n 1
+DE26 LOG 1e-6 1 14
+DF26 LIN 1 2 3
+f36:n 1
+DE36 LIN 1e-6 1 14
+DF36 LIN 1 2 3
+f46:N 1
+prdmp 2j -1
+print
+dbcn  26j  1  j  0 12j 1 2j 1
+

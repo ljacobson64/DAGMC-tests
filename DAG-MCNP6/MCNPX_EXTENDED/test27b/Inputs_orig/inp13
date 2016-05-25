@@ -1,0 +1,43 @@
+Like problem 04, but with ZA = 3006.
+1  1  -1   -1 imp:n=1
+2  0        1 imp:n=0
+
+1  rpp  -5 5 -5 5 -5 5
+
+m1  3006  1
+mode n h s d t a p #
+sdef par=n erg=0.000025 x=d1 y=d2 z=d3
+phys:n  6j 3
+prdmp 2j -1
+nps 1000
+cut:# j 1e-3
+cut:a j 1e-3
+si1 -5 5
+sp1 0 1
+si2 -5 5
+sp2 0 1
+si3 -5 5
+sp3 0 1
+tropt mcscat  gaussian
+f4:p  1
+e4 0 199i 1
+c
+f14:# 1
+ft14 res 3007
+e14 0 49i 3
+c
+f24:a 1
+e24 0 49i 3
+c
++f6  1
+sd6  1
+c
+f16:n  1
+sd16   1
+c
+f26:a  1
+sd26   1
+c
+f36:#  1
+sd36   1
+dbcn  20j  j  5j  1  j  0  2j  0  j

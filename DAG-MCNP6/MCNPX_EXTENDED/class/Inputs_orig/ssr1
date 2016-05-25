@@ -1,0 +1,24 @@
+godiva
+1    1  -18.74  -1
+2    0           1 -2
+3    0           2
+ 
+1    so 8.741
+2    so 100
+ 
+imp:n 1 1 0
+m1    92235 -94.73  92238 -5.27
+nps 10000
+ssr cel 1 psc 0
+totnu
+nonu
+f2:n 2
+f4:n 1
+fm4 -1 1 -6 -7
+sd4 1
+f5x:n 0 99.9 0
+print 10 110
+prdmp 2j -1 j -1
+mplot tally 2 tfc m cop tally 5 freq 1000
+c         
+

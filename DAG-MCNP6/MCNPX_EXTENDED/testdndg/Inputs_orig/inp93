@@ -1,0 +1,443 @@
+inp12 Test delayed-gamma lines. Photon source.
+c
+c  Beddingfield HEU disk to test new delayed-gamma line upgrades.
+c  Watt fission surface source started outside of HEU.
+c
+c  **********
+c  Cell cards
+c  **********
+    1    1 -19.0    -1  2  -3   imp:n=1   imp:p=1    $HEU
+    2    0          #1 -10 imp:n=1   imp:p=1    $Void
+    3    0          10 -11 imp:n=1   imp:p=1    $Void to Ge
+c  z    4   01 -5.323   11 -12 imp:n=1   imp:p=1    $Ge
+    4   00          11 -12 imp:n=1   imp:p=1    $Ge
+c
+c  Enclosing void
+c
+ 9000    0  12    imp:n=0  imp:p=0
+ 
+c  *************
+c  Surface cards
+c  *************
+    1    cz  2.54      $Radius 1 in.
+    2    pz -2.794e-2  $Thickness 0.022in.
+    3    pz  2.794e-2  $Thickness 0.022in.
+   10    so  2.70000   $Surface source.
+   11    so  3.00000
+   12    so  4.00000
+ 
+c  **************
+c  Material cards
+c  **************
+c  at percent per Fisher and Engle Phys Rev 1964.
+c  zma 92235.60c  0.9990  92238.60c   0.0010
+c  at percent per Beddington NIM 1998.
+c
+c  .60c lacks DN libraries. So using .60c causes models
+c  to be used, i.e., C90 will wind up being called.
+c
+m1    92235.60c  0.9315  92238.60c   0.0685 pnlib=.70u $Use new PN
+c
+c  .66c has DN libraries.
+c
+c  zm1    92235.66c  0.9315  92238.66c   0.0685
+c  zm2    92235.60c  0.9990  92238.60c   0.0010
+c  zm3    92235.60c  0.9990  92238.60c   0.0010
+c  zm4    92235.60c  0.9990  92238.60c   0.0010
+c
+c  Tests for residual-nuclide upgrades.
+c
+c  zm1    92235.60c  0.0990  92238.60c   0.1010 1001.60c 0.200 5010.60c 0.6
+c  zm1      4009.60c  1.0  $Be (n,2n) above 2 MeV. No delayed-g lines.
+c  zm1     4009.60c 0.5  8018.60c  0.5  $O-18 (n,p) N-17 delayed n,g emitter
+c  zm1     82208.60c  1.0  $Pb-208 large (n,2n) above 10 MeV
+c  zm2    92235.60c  0.0990  92238.60c   0.9010
+c  zm3    92235.60c  0.0990  92238.60c   0.9010
+c  zm4    92235.60c  0.0990  92238.60c   0.9010
+c
+c  Detector
+c
+m33   32070.65c 20.5  32072.65c  27.4  32073.65c  7.8
+      32074.65c 36.5  32076.65c   7.8      $at fracs
+c
+c  Use totnu for fixed-source fission problems to get
+c  both prompt and delayed neutrons (w/o only get prompt).
+c
+totnu
+c
+c  *************
+c  Physics cards
+c  *************
+c
+c  12/21/05. Use the following option to
+c            force 1st collision followed by escape to tally.
+c            Should achieve same effect as doing microsphere.
+c
+c  zLCA   7j -2
+c
+mode p n
+phys:n 3j  j
+phys:p 3j 1 j  j      $If running photon source, 3j 1 j -102!!!
+act  FISSION=n,p dg=line
+c  zptrac  write=all file=asc
+c
+c  Time cuttoff for transport to conform w/ the Fisher & Engle
+c  Phys Rev paper.
+c
+c  zcut:n 100.0e8
+c  zcut:p 100.0e8
+c
+c  Use the 3rd entry of the cut:n card to force analog capture.
+c
+cut:n j j 0.0
+cut:p j j 0 0
+c
+c  Set the delayed-gamma gspecl renormalization option.
+c
+idum 3 00 1390540 940380 970391 980391 1020411 980390 1030410 1040411
+           970390 1010400
+c  zidum 3 00 940380 940390 890370
+rdum -95
+c
+c   Fission spectrum neutron source from inside of sphere.
+c
+c  zsdef  par=n erg=d1 cel=1 rad=d2
+c  zsp1  -3
+c  zsdef  par=n erg=15.0 cel=1 rad=d2
+c  zsi2  l  0.0 0.2
+c  zsp2  -21  2
+c
+c   Fission spectrum neutron source from outside of sphere.
+c
+c  zsdef  par=n erg=d1 sur=10 nrm=-1
+c  zsp1  -3
+c
+c   Thermal neutron source from outside of sphere.
+c
+c  zsdef  par=n erg=2.5e-8 sur=10 nrm=-1
+c
+c  Photon source
+c
+c  zsdef  par=p erg=15.0 sur=10 nrm=-1
+sdef  par=p erg=12.0 cel=1
+nps  100
+print
+prdmp 100 100 -1 2 100
+c  znps  100000000
+c  zprint
+c  zprdmp 100000000 100000000 -1 2 100000000
+c
+c  Force collisions in cell 1 (and not in the others).
+c
+fcl:p   1 0 0 0 0
+c
+fc1     f1 delayed-neutron tally particles on surface 1
+f1:n    (1)
+t1    0.001 0.01 0.1 1.0  10.0  1.0e2 1.0e3 1.0e4 1.0e5 1.0e6 1.0e7
+      1.0e8 5.0e8 1.0e9 5.0e9 1.0e10 5.0e10 1.0e11 5.0e11
+      1.0e12 2.0e12 5.0e12 1.0e13
+e1    1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+fc11    f1 delayed-gamma tally particles on surface 1
+f11:p    (1)
+t11   0.001 0.01 0.1 1.0  10.0  1.0e2 1.0e3 1.0e4 1.0e5 1.0e6 1.0e7
+      1.0e8 5.0e8 1.0e9 5.0e9 1.0e10 5.0e10 1.0e11 5.0e11
+      1.0e12 2.0e12 5.0e12 1.0e13
+e11   1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+fc21    f1 delayed-gamma tally particles on surface 1
+f21:p    (1)
+t21   0.001 0.01 0.1 1.0  10.0  1.0e2 1.0e3 1.0e4 1.0e5 1.0e6 1.0e7
+      1.0e8 5.0e8 1.0e9 5.0e9 1.0e10 5.0e10 1.0e11 5.0e11
+      1.0e12 2.0e12 5.0e12 1.0e13
+e21   1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0
+      1.090 1.092 1.102 1.104 1.124 1.126
+      1.217 1.219 1.220 1.221 1.302 1.303
+      1.801 1.802
+      2.0 5.0 10.0
+c
+fc31    f1 fine-res delayed-gamma time spectrum on surface 1
+f31:p    (1)
+c  1e4 to 1e10 ev in 30 equally binned log chunks.
+c  The tally cosine tallies [-1,0], [0,1], all angles.
+c31   0 1 T
+t31   1e-2 30log 1e10
+c
+fc41    f1 fine-res delayed-gamma log energy spectrum on surface 1
+f41:p    (1)
+c  1.0e-8 to 20000 s in 99 equally binned log chunks
+c41   0 1 T
+e41   1.0e-8 99log 20000
+c
+fc51    f1 fine-res delayed-gamma line energy spectrum on surface 1
+f51:p    (1)
+c  0.0 to 10 MeV in 10000 equally binned lin chunks (1 keV res).
+c51   0 1 T
+e51   0.0 9999i 10
+c
+fc61    f1 fine-res delayed-gamma line energy spectrum on surface 1
+f61:p    (1)
+t61   1.0e4 1.0e10
+e61   0.0 9999i 10
+c
+fc71    f1 fine-res delayed-gamma line energy spectrum on surface 1
+f71:p    (1)
+t71   1.0e4 1.0e5 1.0e6 1.0e7 1.0e8 1.0e9 1.0e10 1.0e11 1.0e12 1.0e13
+      1.0e14 1.0e15 1.0e16 1.0e17 1.0e18
+e71   0.0 9999i 10
+c
+fc771    f1 100eV-res del-gamma line energy spectrum on surface 1
+f771:p    (1)
+t771   1.0e4 1.0e5 1.0e6 1.0e7 1.0e8 1.0e9 1.0e10 1.0e11 1.0e12 1.0e13
+       1.0e14 1.0e15 1.0e16 1.0e17 1.0e18
+e771   0.0 99999i 10
+c
+fc781    f1 1keV-res delayed-gamma line energy spectrum on surface 1
+f781:p    (1)
+t781   1.0e4 1.0e5 1.0e6 1.0e7 1.0e8 1.0e9 1.0e10 1.0e11 1.0e12 1.0e13
+       1.0e14 1.0e15 1.0e16 1.0e17 1.0e18
+e781   0.0 9999i 10
+c
+fc81    f1 Fisher & Engle delayed-gamma line energy spectrum on surface 1
+f81:p    (1)
+t81   0.2e8 0.5e8 1.0e8 2.0e8 4.0e8 5.5e8 10.0e8 13.0e8 35.0e8 45.0e8
+e81   0.1 0.2 0.3 0.4 0.6 0.75 0.95 1.15 1.5 1.8 2.15
+      2.6 3.1 3.7 4.2 4.9 5.6 6.4
+c
+fc801    f1 Bedd. 100eV-res del-gam line energy spectrum on surface 1
+f801:p    (1)
+t801   1.05e11 1.40e11
+e801   0.0 99999i 10
+c
+fc811    f1 Bedd. 200eV-res del-gam line energy spectrum on surface 1
+f811:p    (1)
+t811   1.05e11 1.40e11
+e811   0.0 49999i 10
+c
+fc821    f1 Bedd. 400eV-res del-gam line energy spectrum on surface 1
+f821:p    (1)
+t821   1.05e11 1.40e11
+e821   0.0 24999i 10
+c
+fc831    f1 Bedd. 600eV-res del-gam line energy spectrum on surface 1
+f831:p    (1)
+t831   1.05e11 1.40e11
+e831   0.0 16666i 10
+c
+fc841    f1 Bedd. 800eV-res del-gam line energy spectrum on surface 1
+f841:p    (1)
+t841   1.05e11 1.40e11
+e841   0.0 12499i 10
+c
+fc851    f1 Bedd. 1keV-res delayed-gam line energy spectrum on surface 1
+f851:p    (1)
+t851   1.05e11 1.40e11
+e851   0.0 9999i 10
+c
+fc861    f1 Bedd. 1.5keV-res del-gam line energy spectrum on surface 1
+f861:p    (1)
+t861   1.05e11 1.40e11
+e861   0.0 6666i 10
+c
+fc871    f1 Bedd. 2keV-res delayed-gam line energy spectrum on surface 1
+f871:p    (1)
+t871   1.05e11 1.40e11
+e871   0.0 4999i 10
+c  zc
+c  zfc804    f4 Bedd. 100eV-res del-gam line energy spectrum  in Ge
+c  zf804:p  (4)
+c  zft804 GEB 0.0028  0.0008  1.02
+c  zt804   1.05e11 1.40e11
+c  ze804   0.0 99999i 10
+c  zc
+c  zfc814    f8 Bedd. 200eV-res del-gam line energy spectrum  in Ge
+c  zf814:p    (4)
+c  zft814 GEB 0.0028  0.0008  1.02
+c  zt814   1.05e11 1.40e11
+c  ze814   0.0 49999i 10
+c  zc
+c  zfc824    f8 Bedd. 400eV-res del-gam line energy spectrum  in Ge
+c  zf824:p    (4)
+c  zft824 GEB 0.0028  0.0008  1.02
+c  zt824   1.05e11 1.40e11
+c  ze824   0.0 24999i 10
+c  zc
+c  zfc834    f8 Bedd. 600eV-res del-gam line energy spectrum  in Ge
+c  zf834:p    (4)
+c  zft834 GEB 0.0028  0.0008  1.02
+c  zt834   1.05e11 1.40e11
+c  ze834   0.0 16666i 10
+c  zc
+c  zfc844    f8 Bedd. 800eV-res del-gam line energy spectrum  in Ge
+c  zf844:p    (4)
+c  zft844 GEB 0.0028  0.0008  1.02
+c  zt844   1.05e11 1.40e11
+c  ze844   0.0 12499i 10
+c  zc
+c  zfc854    f8 Bedd. 1keV-res delayed-gam line energy spectrum  in Ge
+c  zf854:p    (4)
+c  zft854 GEB 0.0028  0.0008  1.02
+c  zt854   1.05e11 1.40e11
+c  ze854   0.0 9999i 10
+c  zc
+c  zfc864    f8 Bedd. 1.5keV-res del-gam line energy spectrum  in Ge
+c  zf864:p    (4)
+c  zft864 GEB 0.0028  0.0008  1.02
+c  zt864   1.05e11 1.40e11
+c  ze864   0.0 6666i 10
+c  zc
+c  zfc874    f8 Bedd. 2keV-res delayed-gam line energy spectrum  in Ge
+c  zf874:p    (4)
+c  zft874 GEB 0.0028  0.0008  1.02
+c  zt874   1.05e11 1.40e11
+c  ze874   0.0 4999i 10
+c  zc
+c  zfc808    f8 Bedd. 100eV-res del-gam line energy spectrum  in Ge
+c  zf808:p  (4)
+c  zft808 GEB 0.0028  0.0008  1.02
+c  zc  zt808   1.05e11 1.40e11
+c  ze808   0.0 99999i 10
+c  zc
+c  zfc818    f8 Bedd. 200eV-res del-gam line energy spectrum  in Ge
+c  zf818:p    (4)
+c  zft818 GEB 0.0028  0.0008  1.02
+c  zc  zt818   1.05e11 1.40e11
+c  ze818   0.0 49999i 10
+c  zc
+c  zfc828    f8 Bedd. 400eV-res del-gam line energy spectrum  in Ge
+c  zf828:p    (4)
+c  zft828 GEB 0.0028  0.0008  1.02
+c  zc  zt828   1.05e11 1.40e11
+c  ze828   0.0 24999i 10
+c  zc
+c  zfc838    f8 Bedd. 600eV-res del-gam line energy spectrum  in Ge
+c  zf838:p    (4)
+c  zft838 GEB 0.0028  0.0008  1.02
+c  zc  zt838   1.05e11 1.40e11
+c  ze838   0.0 16666i 10
+c  zc
+c  zfc848    f8 Bedd. 800eV-res del-gam line energy spectrum  in Ge
+c  zf848:p    (4)
+c  zft848 GEB 0.0028  0.0008  1.02
+c  zc  zt848   1.05e11 1.40e11
+c  ze848   0.0 12499i 10
+c  zc
+c  zfc858    f8 Bedd. 1keV-res delayed-gam line energy spectrum  in Ge
+c  zf858:p    (4)
+c  zft858 GEB 0.0028  0.0008  1.02
+c  zc  zt858   1.05e11 1.40e11
+c  ze858   0.0 9999i 10
+c  zc
+c  zfc868    f8 Bedd. 1.5keV-res del-gam line energy spectrum  in Ge
+c  zf868:p    (4)
+c  zft868 GEB 0.0028  0.0008  1.02
+c  zc  zt868   1.05e11 1.40e11
+c  ze868   0.0 6666i 10
+c  zc
+c  zfc878    f8 Bedd. 2keV-res delayed-gam line energy spectrum  in Ge
+c  zf878:p    (4)
+c  zft878 GEB 0.0028  0.0008  1.02
+c  zc  zt878   1.05e11 1.40e11
+c  ze878   0.0 4999i 10
+c
+fc101    f1 delayed-neutron tally particles on surface 1
+f101:n    (1)
+t101   0.001 0.01 0.1 1.0 2.0 5.0  10.0  20.0 50.0 1.0e2 2.0e2 5.0e2
+       1.0e3 2.0e3 5.0e3 1.0e4 2.0e4 5.0e4  1.0e5 2.0e5 5.0e5
+       1.0e6 2.0e6 5.0e6 1.0e7 2.0e7 5.0e7  1.0e8 2.0e8 5.0e8
+       1.0e9 2.0e9 5.0e9 1.0e10 2.0e10 5.0e10  1.0e11 2.0e11 5.0e11
+       1.0e12 2.0e12 5.0e12 1.0e13
+e101  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+fc111    f1 delayed-gamma tally particles on surface 1
+f111:p    (1)
+t111   0.001 0.01 0.1 1.0 2.0 5.0  10.0  20.0 50.0 1.0e2 2.0e2 5.0e2
+       1.0e3 2.0e3 5.0e3 1.0e4 2.0e4 5.0e4  1.0e5 2.0e5 5.0e5
+       1.0e6 2.0e6 5.0e6 1.0e7 2.0e7 5.0e7  1.0e8 2.0e8 5.0e8
+       1.0e9 2.0e9 5.0e9 1.0e10 2.0e10 5.0e10  1.0e11 2.0e11 5.0e11
+       1.0e12 2.0e12 5.0e12 1.0e13
+e111  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+c
+fc121    f1 delayed-neutron tally particles on surface 1
+f121:n    (1)
+t121   0.001 99log 1.0e13
+e121  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+fc131    f1 delayed-gamma tally particles on surface 1
+f131:p    (1)
+t131   0.001 99log 1.0e13
+e131  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+c
+fc141    f1 delayed-neutron tally particles on surface 1
+f141:n    (1)
+t141   0.001 499log 1.0e13
+e141  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+fc151    f1 delayed-gamma tally particles on surface 1
+f151:p    (1)
+t151   0.001 499log 1.0e13
+e151  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+c
+fc161    f1 delayed-neutron tally particles on surface 1
+f161:n    (1)
+t161   0.001 999log 1.0e13
+e161  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+fc171    f1 delayed-gamma tally particles on surface 1
+f171:p    (1)
+t171   0.001 999log 1.0e13
+e171  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+c
+fc4    f4 fine-res delayed-gamma time spectrum
+f4:p    (1)
+c  1e4 to 1e10 ev in 30 equally binned log chunks.
+t4   1e4 30log 1e10
+c
+fc14    f4 fine-res delayed-gamma log energy spectrum
+f14:p    (1)
+c  1.0e-8 to 20000 s in 99 equally binned log chunks
+e14   1.0e-8 99log 20000
+c
+fc24    f4 fine-res delayed-gamma line energy spectrum
+f24:p    (1)
+c  0.0 to 10 MeV in 10000 equally binned lin chunks
+e24   0.0 9999i 10
+c
+fc104    f4 delayed-neutron tally particles
+f104:n    (1)
+t104   0.001 0.01 0.1 1.0 2.0 5.0  10.0  20.0 50.0 1.0e2 2.0e2 5.0e2
+       1.0e3 2.0e3 5.0e3 1.0e4 2.0e4 5.0e4  1.0e5 2.0e5 5.0e5
+       1.0e6 2.0e6 5.0e6 1.0e7 2.0e7 5.0e7  1.0e8 2.0e8 5.0e8
+       1.0e9 2.0e9 5.0e9 1.0e10 2.0e10 5.0e10  1.0e11 2.0e11 5.0e11
+       1.0e12 2.0e12 5.0e12 1.0e13
+e104  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+fc114    f4 delayed-gamma tally particles
+f114:p    (1)
+t114   0.001 0.01 0.1 1.0 2.0 5.0  10.0  20.0 50.0 1.0e2 2.0e2 5.0e2
+       1.0e3 2.0e3 5.0e3 1.0e4 2.0e4 5.0e4  1.0e5 2.0e5 5.0e5
+       1.0e6 2.0e6 5.0e6 1.0e7 2.0e7 5.0e7  1.0e8 2.0e8 5.0e8
+       1.0e9 2.0e9 5.0e9 1.0e10 2.0e10 5.0e10  1.0e11 2.0e11 5.0e11
+       1.0e12 2.0e12 5.0e12 1.0e13
+e114  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+c
+fc124    f4 delayed-neutron tally particles
+f124:n    (1)
+t124   0.001 99log 1.0e13
+e124  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+fc134    f4 delayed-gamma tally particles
+f134:p    (1)
+t134   0.001 99log 1.0e13
+e134  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+c
+fc144    f4 delayed-neutron tally particles
+f144:n    (1)
+t144   0.001 499log 1.0e13
+e144  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+fc154    f4 delayed-gamma tally particles
+f154:p    (1)
+t154   0.001 499log 1.0e13
+e154  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+c
+fc164    f4 delayed-neutron tally particles
+f164:n    (1)
+t164   0.001 999log 1.0e13
+e164  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+fc174    f4 delayed-gamma tally particles
+f174:p    (1)
+t174   0.001 999log 1.0e13
+e174  1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0
+dbcn  20j  0  7j  1  2j  0  1

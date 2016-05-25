@@ -1,0 +1,45 @@
+To test how FM card works with Tmesh
+c by Jianwei Hu
+c cell cards
+1 1 -10.5 -1
+2 2 -1.0 1 -2
+3 0    2
+
+c surface cards
+c
+1 rpp -3 3 -3 3 -3 3
+2 rpp -5 5 -5 5 -5 5
+
+c data cards
+mode  n
+imp:n 1 1r 0
+sdef erg=d1 x=4 y=0 z=0
+sp1 -3 1.18 1.03419
+nps 1000
+prdmp 2j -1
+print
+c material cards
+m1 92235.66c 0.2  92238.66c 0.8
+m2 1001.66c  2  8016.66c  1 $fresh water
+mt2 lwtr.01t
+m3 94239.66c 1.0
+c tallies
+c fc14 f4 tally over cell 1
+f14:n 1
+fm14 -1 1 -6
+totnu   no
+TMESH
+RMESH11:n
+CORA11 -3    3
+CORB11 -3    3
+CORC11 -3    3
+RMESH21:n
+CORA21 -3    3
+CORB21 -3    3
+CORC21 -3    3
+ENDMD
+FM11 0.05 3  -1  $ it works with this line uncommented
+c FM21 -1 1  -6    $ it does not work with this line uncommented
+dbcn   29j  9j  1
+c           29 MCNPX Compatibility
+c                  39 S(a,b) smoothing 

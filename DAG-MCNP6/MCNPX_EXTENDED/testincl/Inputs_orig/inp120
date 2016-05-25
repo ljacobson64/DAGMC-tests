@@ -1,0 +1,35 @@
+Test of multiple source particles, sdef surface src.
+1 1 -3.0    -1
+2 2 -8.0    -2
+3 0          1 2
+
+1 rcc 0 0 0 0 6 0 7
+2 sx 15 7
+
+mode n h
+lca   2 1 0 23 1 1 0 1 2    $ INCL4
+lea   1 4 1  0 1 0 2 1      $ ABLA
+phys:n 301
+phys:h 401
+m1 6012 1 1001 2
+m2 26000 1
+print -160 -98 -41 -30 -40 -50 -60
+prdmp 2j -1 j -1
+imp:n 1 1 0
+nps 2000
+sdef par=fcel=d2 pos=fcel=d8 cel=d1 erg=fcel=d3
+ds8 L  0 3 0  15 0 0
+si1 L 1 2
+sp1   2 1
+sb1   1 2
+ds2 L h n
+ds3 L 400 300
+fq0  c f
+c0 0 9i 1. T
+f21:n 1.1 1.2 1.3  2
+tf21 4
+f11:h 1.1 1.2 1.3  2
+f4:n 1 2
+f14:h 1 2 
+dbcn  26j  1  j  0 12j  1 2j 1
+tropt  mcscat  gaussian

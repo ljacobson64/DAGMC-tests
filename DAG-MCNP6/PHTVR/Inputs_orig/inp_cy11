@@ -1,0 +1,32 @@
+PHTVR -- dxtran sphere with Russian Roulette
+1  21 -2.7   -11 12
+2  22 -10.0  -12
+3   0         11
+
+11 RCC 0 0 0 0 120 0 50
+12 SPH 0 100 0 5
+
+imp:p 1 1 0
+dxt:p 0 100 0 5.1 6
+mode p
+cut:p 2j 0 0
+m21    13027 1     $ aluminum
+m22    32000 1     $ germanium
+c
+sdef  erg 5 pos 0 .01 0
+f4:p 2
+f8:p 2
+e4 0 1e-5 .001 .1 3i .5 .52 .6 3i 1 1.025 1.5 7i 5.5
+e8 0 1e-5 .001 .1 3i .5 .52 .6 3i 1 1.025 1.5 7i 5.5
+*f101:p 12
+*f128:p 2
+e128 0 1e-10 20
+c101 0 1
+fq101 d e c
+fc101 photon energy crossing sphere surface
+fc128 energy deposited into sphere
+print -10 -20 -30 -40 -50 -60 -70 -72 -80 -85 -86 -90 -100 -102 -110
+       -120 -140 -161 -162 -170 -190 -200
+prdmp 2j -1
+nps 10000
+dbcn    42j   0  0

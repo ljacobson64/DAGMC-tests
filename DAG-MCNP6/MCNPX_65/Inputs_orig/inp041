@@ -1,0 +1,22 @@
+inp41 - test. f1=1, f4=50/( 4/3 pi 50**3) = 9.54930e-5
+c *%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%
+C MCNP5 rand card commented out
+c *%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%
+1 0 -1 imp:n=1
+2 0  1 imp:n=0
+
+1 so 50.
+
+nps 500000
+mode n
+sdef
+f1:n 1
+f4:n 1
+prdmp j -.1 -1 j 9999999
+c
+c   use new rn generator
+c *%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%
+c rand  gen 2  seed 12345  stride 1234       Random Number Generator commented out
+c *%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%
+c
+

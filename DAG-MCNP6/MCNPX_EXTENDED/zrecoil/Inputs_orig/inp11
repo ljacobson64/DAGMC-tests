@@ -1,0 +1,21 @@
+Test of light ion recoil
+1  1 -1.  -1
+2  0       1
+
+1 so 10
+
+mode n s
+imp:n,s 1 0
+phys:n 4j j j 1 150
+print -161 -162
+c tmp1 0 0
+m1 2003 1
+nps 50000
+f4:s 1
+f6:s 1
+e0 .001 49log 100
+sdef erg=.01
+cut:s j 1.e-3
+prdmp 2j -1 j 2000
+dbcn  26j  1
+tropt  mcscat gaussian

@@ -1,0 +1,49 @@
+Mixed element 4-part hemi model: 117 elements -- all types
+c
+c  Part #1: 40 elements (16 1st pents; 24 1st hexs)
+c  Part #2: 24 elements ( 6 2nd pents; 18 1st hexs)
+c  Part #3: 28 elements (28 1st tets)
+c  Part #4: 28 elements (25 2nd tets)
+c
+c  ---------------------------------
+c  - MCNP / REGRESSION Test Suite  -
+c  - Unstructured Mesh Problem #11 -
+c  - Roger Martz                   -
+c  -  8/19/2011                    -
+c  ---------------------------------
+c
+c CELL CARDS
+10   100  -10.74   0    u=2
+11   100  -10.74   0    u=2
+12   100  -10.74   0    u=2
+13   100  -10.74   0    u=2
+21     0           0    u=2
+22     0          -1    fill=2
+30     0           1 -2
+40     0           2
+
+c SURFACE CARDS
+1    so    33.
+2    so    40.
+
+c DATA CARDS
+m100  92235 -94.73  92238 -5.27
+totnu  no
+sdef pos=0 -35 0  vec=0 1 0  dir= 0.9
+c
+imp:n 1 1 1 1 1 1 1 0
+c
+embed2 meshgeo=abaqus
+       mgeoin=um1011.inp
+       meeout=inp1011u
+       gmvfile=inp1011g
+       filetype=ascii
+       background= 21
+       matcell  1  10  2  11  3  12  4  13
+c
+f1:n  2
+f4:n 10
+f14:n 11
+c
+nps 5000
+print

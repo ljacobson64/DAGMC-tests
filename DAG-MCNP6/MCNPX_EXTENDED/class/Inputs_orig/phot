@@ -1,0 +1,23 @@
+mcnp advanced class -- demo problem for mode p, ttb, and pe comparisons
+1    1 -19.2 1 -2 3 -4 5 -6
+2    0 #1
+ 
+1    pz 0
+2    pz 2
+3    px -100
+4    px 100
+5    py -100
+6    py 100
+ 
+mode p
+imp:p 1 0
+phys:p 4j 1
+m1   74000 1
+sdef erg=d1 sur=1 dir=1
+si1  .001 .01 .1 1 10
+sp1  c 0 .25 .5 .75 1
+f1:p 2
+nps  50000
+prdmp 2j -1 j -1
+dbcn   29j  13j   0
+ 

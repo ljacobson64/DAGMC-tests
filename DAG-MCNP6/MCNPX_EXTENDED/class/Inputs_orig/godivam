@@ -1,0 +1,17 @@
+message: srctp=srcgodm
+ 
+godiva : CSEWG-F5 
+1     1 0.04799  -1  
+2     0          +1  
+ 
+1     so 8.7410
+ 
+mode   n
+imp:n  1 0
+m1     92234.50c 0.010252 92235.50c 0.937695 92238.50c 0.052053
+kcode 1500 1 0 50
+totnu
+print
+prdmp 2j -1
+c                         
+ 

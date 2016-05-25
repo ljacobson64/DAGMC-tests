@@ -1,0 +1,40 @@
+   test  4 on page 58 of Gregg's LA-13098, mod to n
+    1   1 .02  -1   
+    2   2 .1   -2 1 3 4
+    3   0       2
+    4   2 .1   -3 5
+    5   2 .1   -4 6
+    6   2 .1   -5
+    7   2 .1   -6
+
+    1  so  10
+    2  so  20
+    3  s  -10 2r 2.1
+    4  s   10 2r 1.1
+    5  s  -10 2r 1.9
+    6  s   10 2r .9
+
+mode    n
+imp:n   1 1 0 1 1 1 1
+m1     26056.24c 1   1001.24c 3
+m2     26056.24c 1   3006 3
+pert1:n   cell=1 rho=.0235
+pert2:n   cell=1 rho=.0270
+pert3:n   cell=1 rho=.0350
+pert4:n   cell=1 rho=.0400
+pert5:n   cell=1 rho=.0400  rxn=1
+sdef     erg=14.01 cel=1
+e0    .01 1  14 15
+f6:n   1 2 6 7   $ heating tally
+sd6    1 1 1 1
+fc4    heating with tally 4
+f4:n   1
+sd4    1
+fm4   (-1 1  -4  1) 
+fq4    e f
+fq6    f e
+nps   100000
+print  -90 -98 -20 -80
+prdmp 2j -1 j 8000
+c                         
+

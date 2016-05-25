@@ -1,0 +1,27 @@
+Incompatible tally demo
+1    1 -8.2e-6  -100            imp:p=1
+2    0           100            imp:p=0
+
+100   so 1000.0
+
+mode p
+sdef pos=-1.0 0 0 par=2
+m1   8000  1.0
+c
+fc5  0.0cm 100x100 indirect
+fir5:p  100.0 0 0 0 0 0 0 -1 0 0
+c    f5:p  10. 10. 10. 0.
+fs5    -5.0 10i 5.0
+c5     -5.0 10i 5.0
+c
+fc4  photon energy average over a cell by track length estimate
+*f4:p   1
+c
+c     f8:p  1
+c     e8    0.  .0001  1. 2. 5. 8. 14.
+c     fs8   -5.0 100i 5.0
+c
+nps     10
+prdmp 2j -1
+print
+

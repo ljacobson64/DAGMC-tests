@@ -1,0 +1,25 @@
+Ua-1-0-SL
+c  CELL CARDS
+1  1    1.0  -1  2 -3  4  -5  6 $SEMI-INFINITE SLAB
+2  0          1:-2:3:-4:5:-6    $OUTSIDE WORLD
+
+c  SURFACE CARDS
+1  px  2.872934
+2  px -2.872934
+*3 py  50
+*4 py -50
+*5 pz  50
+*6 pz -50
+
+c  DATA CARDS
+imp:n   1  0
+kcode   20000  1.0  50  2050
+ksrc    0.0    0.0  0.0
+m1      92250.04m 1.0
+mgopt f 1
+phys:n  j 100
+prdmp   3j 2
+ f5:n 0.7182335 0 0 1e-3
+f15:n 1.436467  0 0 1e-3
+f25:n 2.1547005 0 0 1e-3
+f35:n 2.872934  0 0 1e-3

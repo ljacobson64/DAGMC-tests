@@ -1,0 +1,21 @@
+test exp. distributions
+1  0    -1    imp:n=1
+2  0     1    imp:n=0
+
+1  rcc 0 0 -2.5 0 0 5 1.0
+
+sdef pos=0 0 0 rad=d1 axs=0 0 1 ext=d2
+si1  0 1.0
+sp1  -21 1
+si2  -2.5 0 2.5
+sp2  -31 1
+tmesh
+rmesh2  n
+cora2  -1.01 20i 1.01
+corb2  -1.01     1.01
+corc2  -2.51 60i 2.51
+endmd
+print
+nps 1000000
+prdmp 2j -1
+dbcn    29j  2j  0  0

@@ -1,0 +1,30 @@
+   Tungsten
+1    1 -19.3      -1       imp:n=1
+2    0             1       imp:n=0
+
+1    RCC 0 0 0   0 0 20   5
+
+mode  n h
+sdef  sur=1.3 vec=0 0 1 dir=1 erg=200 par h
+nps   1000
+prdmp 2j -1 2
+print
+m1 74180 .0014 74182 .2641 74183 .1440 74184 .3064 74186 .2841
+      nlib=24c
+e0    1 200log 200
+f11:n 1.3 1.2
+fq11  e f
+f21:h 1.3 1.2
+fq21  e f
+f4:n   1
+f14:h  1
+f6:n   1
+f16:h  1
++f26   1
+cut:n j 10
+cut:h j 10
+phys:n 201 6j 0
+phys:h 201  j 0
+dbcn  26j  1  j  0 12j  1 2j 1
+lca    8j  1
+tropt  mcscat  gaussian

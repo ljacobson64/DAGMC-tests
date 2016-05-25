@@ -1,0 +1,60 @@
+RIA target test                    
+1 1 5e-2  -3  -99
+2 0  3  -99
+99 0  99
+
+1  pz 0.0
+2  pz 1.0                                                       
+3  cx 1.5
+99 so 100.0                                                           
+                                                          
+mode # n a t d s h 
+m1  3006  1
+phys:# 100000
+phys:n 10000 
+phys:h 10000
+phys:a 500
+phys:t 500
+phys:d 500
+phys:s 500
+lca  8j 1 1
+imp:# 1 1 0
+imp:n 1 1 0
+sdef par=92238 erg=95200 pos 0 0 -2 rad=d1 axs 0 0 1 vec 0 0 1 dir 1
+si1   0 0.2
+sp1   -21 1
+nps 500
+prdmp 2J -1
+e0 0.0 99i 104000.0 
+c cut:# j 10 
+f4:# 2 
+sd4  1
+f1:n 3
+e1 1 49i 100000
+f11:h 3
+e11 1 49i 100000
+f21:a 3
+e21 1 99i 1000
+f31:d 3
+e31 1 99i 1000
+f41:t 3
+e41 1 99i 1000
+f51:s 3
+e51 1 99i 1000
+f61:# 3
+e61 1 99i 100000
+print 
+c tmesh
+c rmesh31:# flux
+c cora31 -2.5 2.5
+c corb31 -2.5 400i 2.5
+c corc31 -1 400i 4
+c rmesh3
+c cora3 -5 5
+c corb3 -5 200i 5
+c corc3 -10 200i 10
+c endmd                                          
+c histp
+c dbcn  20j  j  5j  1  j  1  2j  0  j  8j  1 2j 1
+  dbcn  20j  j  5j  1  j  0  2j  0  j  8j  1 2j 1
+tropt mcscat=gaussian

@@ -1,0 +1,28 @@
+        small neutron test mcnp input file, inpau8
+    1   0  -1
+    2   1 .01    1   -2
+    3   0  2
+ 
+    1   px  -20.
+    2   px   20.
+ 
+mode     n
+imp:n    0. 1. 0.
+sdef     erg=d1         vec=1 0 0 dir=1
+si1      .0003801 .0003802
+sp1       0.     1.
+print    110
+m1       94239.49c 1.
+nonu
+fc4        flux tally in cell 2
+f4:n     2
+e4        1.e-6 1.e-5 360.e-6 381.e-6  15.
+sd4     1.
+fc2       flux at right boundary
+f2:n     2
+e2        1.e-6 1.e-5 360.e-6 381.e-6  15.
+sd2     1.
+nps     250000 
+prdmp 2j -1 j 16000
+c                         
+

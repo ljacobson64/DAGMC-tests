@@ -1,0 +1,28 @@
+MCNP6 test: p + Tb159 by Bertini+Dresner+RAL at 800 MeV,
+C Medical Ac-225 production for alpha cancer therapy
+  1  1  1.0   -1 2 -3
+  2  0        -4 (1:-2:3)
+  3  0         4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  -1.0
+  3  pz  1.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+  m1   65159 1.0
+  sdef erg = 800 par = h dir = 1 pos = 0 0 0 vec 0 0 1
+  imp:h 1 1 0
+  phys:h 1000
+  mode   h
+  lca 2 1 5j -1
+  lea 2j 0
+c  LCA  8j 0    $ use Bertini+Dresner+RAL                  !!!
+  tropt genxs inxc95  nreact on  nescat off
+c  tropt genxs inxc95
+c ---------------------------------------------------------------
+  print 40 110 95
+  nps 10000000
+c  prdmp 2j -1
+ dbcn  28j 1

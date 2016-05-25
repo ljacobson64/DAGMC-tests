@@ -1,0 +1,41 @@
+c    a test problem for el3w bnum biasing and bbrem together
+c => a 1mm thick W cyclinder
+c
+1     1 -19.3  1  -2  -99
+999   0       -1 : 2 : 99
+
+c
+  1   pz 0
+  2   pz .1
+ 99   cz 10
+
+m1  74000 1 plib 02 elib 03
+c
+c
+c     importance regions
+imp:p 1 0
+imp:e 1 0
+c
+c
+mode   p  e
+c
+sdef   pos=0 0 0 sur=1 erg=85 wgt=1 tme=0 par=3 dir=1
+c
+elpt:p  0.1 0
+elpt:e  1 0
+phys:e 5j 10  $ 10-fold bremsstrahlung splitting
+phys:p 4j 1
+c dbcn 17j 0 4j 1 j j j j j 1  13j  0
+  dbcn 17j 0 4j 1 j j j j j 0  13j  0
+bbrem 1. 1. 46i 10. 1
+c
+nps    10000
+c
+f11:p 2
+e11 .1 1000i 85
+c
+c => note to Ken: my user tally routine simply writes the particle's phase
+c    space information to a (very large) file, for subsequent analysis.
+c
+print
+prdmp 2j -1

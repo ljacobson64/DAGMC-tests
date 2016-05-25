@@ -1,0 +1,25 @@
+Godiva with 3He coincidence
+21 1 -18.74 -10
+22 2  -1     10 -11
+23 0         11
+
+10 so 8.741
+11 so 10
+
+imp:n 1 1 0
+fmult method=5
+kcode 500 1.0 5 35
+ksrc  0. 0. 0.
+m1    92235 -94.73  92238 -5.27
+m2 2003 1
+f108:n 22
+ft108 cap 2003
+f208:n 21
+ft208 cap 92238
+f218:n 21
+ft218 cap 92235
+print -161 -162
+f1:n 10 11
+prdmp 2j -1 j -1
+c             
+

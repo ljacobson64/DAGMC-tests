@@ -1,0 +1,33 @@
+Test positron source. Default cutoffs, single-event transport.
+2    1  -1.2  -2        imp:p,e 1
+1    2 -19.66 -1        imp:e,p=1
+3    0         1 2 -3   imp:p,e 1
+4    0         3        imp:p,e 0
+
+1    so  0.008
+2    sx  1.  0.001
+3    so  10.
+
+mode    p e
+c
+sdef    erg 1.  par f
+m1       6000.12p   1
+m2      74000.12p   1
+f21:p   1
+e21     1.25893e-03  28ilog  1.
+f31:e   1
+e31     1.25893e-03  28ilog  1.
+ft31    elc 3
+fq31    e u
+f26:p   1
+sd26    1
+*f8:p,e 1
++f18:e  1
+print
+prdmp   2j -1
+nps     300
+phys:e  14j 100.
+cut:p   j   0.001
+cut:e   j   0.001
+dbcn  17j   2
+

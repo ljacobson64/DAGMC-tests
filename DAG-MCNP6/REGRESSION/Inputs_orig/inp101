@@ -1,0 +1,24 @@
+output bug: "angle [mu]" should be "energy"
+1  0      -1 imp:n=1
+2  0       1 imp:n=0
+
+1 so 10.
+
+mode n
+nps 1000
+sdef
+f1:n 1
+e1 25 50.
+c1 0. 1.
+fq1 e c
+f11:n 1
+e11 25 50.
+c11 0. 1.
+fq11 c e
+f21:n 1
+e21 25 50.
+*c21 0. 10. 90
+fq21 c e
+print
+prdmp 2j -1
+

@@ -1,0 +1,19 @@
+Test neutron cutoff (40 MeV) in mix-and-match region
+1  1  -10   -1 imp:n=1
+2  0         1 imp:n=0
+
+1 so 1
+
+sdef par=n erg=200
+phys:n 200 6j 40
+mphys on
+cut:n j 40
+m1 8016.70c 2 92238.70c 1
+print
+mode n
+nps 100
+prdmp 2j -1
+totnu no
+dbcn  41j  -1
+lea     0
+tropt  nreact=remove

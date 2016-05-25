@@ -1,0 +1,19 @@
+test memory reduction
+c  cell card cube
+1    1 -0.6  -1 imp:n=1
+2    0  1 imp:n=0
+
+c  surface cards
+1    sph 0 0 0 1
+
+mode n p
+m1    1001 2 8016 1
+phys:n 19.5 3j j j 1 20
+phys:p 4j 1
+sdef  par=n erg=19 pos=0 0 0
+f1:n  1
+e1  1 13log 1000
+nps   10000
+print -160 -161 -162
+prdmp 2j -1
+c                         

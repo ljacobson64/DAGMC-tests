@@ -1,0 +1,32 @@
+test of rectangular image problem
+1    0 -1          imp:p=1
+2    0 -2          imp:p=1
+3    0 -3          imp:p=1
+4    0 -4          imp:p 1
+5    1 -7.85 1 2 3 4 -5  imp:p=1
+6    0  5 -6       imp:p=1
+7    0  6          imp:p=0
+
+1    sy 4 2
+2    sz 4 1.5
+3    sy -4 0.5
+4    sz -4 1
+5    so 8.
+6    so 1000
+
+mode p
+sdef  erg=6 pos=-100 0 0
+m1   26000 1.
+c
+fir5:p  100 0 0 0 -100 0 0 0 1000 0
+fs5    -16.1 10i 16.1
+c5     -16.1 10i 16.1
+c
+*fir35:p  100 0 0 0 -100 0 0 0 1000 0
+fs35    -16.1 10i 16.1
+c35    -16.1 10i 16.1
+fq0 s c
+c
+notrn
+nps   100 10
+print

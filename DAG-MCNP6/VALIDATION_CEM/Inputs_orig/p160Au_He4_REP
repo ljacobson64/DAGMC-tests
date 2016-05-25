@@ -1,0 +1,73 @@
+MCNP6 test with CEM03.03: 160 MeV p+Au197 -> He4 spectra
+c d^2sigma/dT/dOmega [mb/sr/MeV] at 20, 40, 60, 100, and 140 deg (+/- 3 deg)
+c to compare with Cowley's et al. measurements (Phys. Rev. C54 (1996) 778)
+c and results by CEM03.03 and other models used as stand alone codes,
+c as presented at the IAEA Benchmark of Spallation Models, 2009-2010
+1   1  -10   -501      imp:a=1
+2   0         501  -502  imp:a=1
+99  0         502      imp:a=0
+
+501   so 0.01
+502   so 1
+c
+c  tally surfaces
+c
+17     kz    0    0.093471249     1  $ tan(17.0 deg)^2
+23     kz    0    0.180178869     1  $ tan(23.0 deg)^2
+37     kz    0    0.567843706     1  $ tan(37.0 deg)^2
+43     kz    0    0.869584385     1  $ tan(43.0 deg)^2
+57     kz    0    2.371184107     1  $ tan(57.0 deg)^2
+63     kz    0    3.851839996     1  $ tan(63.0 deg)^2
+97     kz    0    66.33037874    -1  $ tan(97.0 deg)^2
+103    kz    0    18.76168325    -1  $ tan(103.0 deg)^2
+137    kz    0    0.869584385    -1  $ tan(137.0 deg)^2
+143    kz    0    0.567843706    -1  $ tan(143.0 deg)^2
+
+mode n h d t s a
+m1  79197 1
+lca 0 6j -2 1    $ CEM03.03, no transport, only the 1st inelastic, no elastic
+c nps 10000
+nps 4e7
+sdef par=h erg=160. vec=0 0 1 dir 1
+phys:h 170 j 0 j j j j
+phys:n 170
+phys:a 170
+phys:d 170
+phys:t 170
+phys:s 170
+c
+f1:a  502
+c define the "segments" for He4 at 20, 40, 60, 100, and 140 (+/- 3) deg
+fs1 -17 -23 -37 -43 -57 -63 97 103 137 143 T
+c
+c The following Segment Divisor card is needed to get 1/sr for He4 spectra
+sd1   0.49948  $ 2pi(cos0 -cos17.0)
+      0.22494  $ 2pi(cos17.0 - cos23.0)
+      0.76573  $ 2pi(cos23.0 - cos37.0)
+      0.42274  $ 2pi(cos37.0 - cos43.0)
+      1.17316  $ 2pi(cos43.0 - cos57.0)
+      0.56956  $ 2pi(cos57.0 - cos63.0)
+      3.61823  $ 2pi(cos63.0 - cos97.0)
+      0.64768  $ 2pi(cos97.0 - cos103.0)
+      3.18182  $ 2pi(cos103.0 - cos137.0)
+      0.42274  $ 2pi(cos137.0 - cos143.0)
+      1.26521  $ 2pi(cos143.0 - cos180.0)
+      12.56637 $ 4pi
+c
+c     Boundaries of the He4 energy bins: 0-2 MeV; 2-4 MeV, ...
+c     tabulated exactly as used by CEM03.03 as stand alone code
+e0    2     4     6     8     10    12    14    16    18    20
+      22    24    26    28    30    32    34    36    38    40
+      42    44    46    48    50    52    54    56    58    60
+      62    64    66    68    70    72    74    76    78    80
+      82    84    86    88    90    92    94    96    98    100
+      102   104   106   108   110   112   114   116   118   120
+      122   124   126   128   130   132   134   136   138   140
+      142   144   146   148   150   152   154   156   158   160
+      162   164   166   168   170
+c
+em1 833.875 84r $ multiply to sig_inelastic = 1667.75 mb, as predicted by
+c                 CEM03.03 as a stand alone code, then divided by 2 (the
+c                 values of each energy bin in MeV). This is needed
+c                 to get the spectra in [mb/sr/MeV]; we do this for every E-bin
+dbcn  28j 1

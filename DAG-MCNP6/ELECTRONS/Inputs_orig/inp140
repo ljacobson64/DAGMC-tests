@@ -1,0 +1,28 @@
+Test phl and f6:e dependence on DBCN(18).
+1 1 -1 -1 imp:n=1
+2 0  1 imp:n=0
+
+1 so 1
+
+sdef par=e erg=5
+mode e
+c turn off doppler broadening
+phys:p j j j j 0
+prdmp  2j  -1 j 1000
+print
+nps 20000
+m1 1001 2 8016 1
+f8:e 1
+e8 0 99i 10
+c
+f18:n 1
+e18 0 99i 10
+ft18  phl  1 6 1 0
+c
+*f28:e 1
+c
+f6:e 1
+sd6 1
+c
+dbcn 7j 63681 9j   0
+

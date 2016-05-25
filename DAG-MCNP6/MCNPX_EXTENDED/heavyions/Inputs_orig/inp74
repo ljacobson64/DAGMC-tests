@@ -1,0 +1,62 @@
+c       =============================================
+c       Input file for  MCNPX.
+c       Iron ions on a water phantom to determine relationship
+c       between depth dose and range.
+c       Disk type source with a radius of 0.5 cm.
+c
+c       ================Cell Cards=====================
+1        2  -1.0               -1               $ water cube   
+2        1  -0.0012   1  -2                $ air volume (water for air)
+3        0                        2                $ outside transport/scoring volume
+
+c         ===============Surface Cards==================
+1        rpp -15 15 -15 15 0 40.0                    $ water box
+2        rcc 0 0 -20  0 0 80 50                         $ transport/scoring volume
+3        pz -1                                                      $ source surface
+
+c        ==================Material Cards===============
+m1     7014.24h 0.781 8016.24h 0.219                                    $ air
+m2     1001.24h 0.667 8016.24h 0.333                                   $water
+c                             
+c        =============================================
+mode # h a n
+phys:#  60000
+phys:h 60000 j j j j j 0.1                                          $do not transport protons below 0.1 MeV
+phys:n 60000 j 0 j j j 1
+act
+imp:#  1  1  0
+imp:h  1  1  0
+imp:a  1  1  0
+imp:n  1  1  0
+c lca j 0 j j 0                                                                  $ for Isabel model
+c lca 7j j 3                                                                          $ for LAQGSM
+lca 7j j 1 1    $ CEM (icem)
+tropt mcscat=gaussian
+c       ================Source Defintion=================
+c sdef   par=26056 erg=d2 sur = 3 dir=1 vec=0 0 1 pos 0 0 -1 rad=d1
+sdef   par=d3 erg=d2 sur = 3 dir=1 vec=0 0 1 pos 0 0 -1 rad=d1
+si1       0 0.5
+sp1     -21
+si2       L 54224.00 54251.00 54278.00                $ small energy spread
+sp2     0.25 0.5 0.25
+si3       L  26054 26056    
+sp3            1    1
+nps    50
+prdmp 2J -1
+c
+c dbcn  20j  j  5j  1  j  1  2j  0  j  8j  1 2j 1
+  dbcn  20j  j  5j  1  j  0  2j  0  j  8j  1 2j 1
+print 85 126
+f6:#  1
+c ft6 zad 10000 20000 26000
+c       ==================== Tally Definition==============
+tmesh
+rmesh1:# flux
+cora1  -7.0  7.0
+corb1  -7.0  7.0
+corc1   0.0  400i  40.0
+rmesh3 total
+cora3  -7.0  7.0
+corb3  -7.0  7.0
+corc3   0.0  400i  40.0 
+endmd

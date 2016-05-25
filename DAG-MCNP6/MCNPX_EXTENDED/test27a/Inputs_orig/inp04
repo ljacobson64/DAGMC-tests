@@ -1,0 +1,38 @@
+Tally tagging (GWM): Test radiography tally with tagging                                             
+10001  1  -19.3   -1         imp:p=1 imp:e=1                                    
+10002  2  -11.4   -2 +3      imp:p=1 imp:e=0                                    
+10003  0             -3      imp:p=1 imp:e=0                                    
+10004  2  -11.4      -5      imp:p=1 imp:e=1                                    
+10005  0           5  7   -4 imp:p=1 imp:e=1                                    
+10006  0           1 2 4  -6 imp:p=1 imp:e=1                                    
+10007  0                   6 imp:p=0 imp:e=0                                    
+10008  2  -11.4      -7      imp:p=1 imp:e=1                                    
+
+1  rcc -100 0 0 .2 0 0 5.0                                                      
+2  rcc 0 0 0  10 0 0 15.0                                                       
+3  rcc 0 0 0  10 0 0 2.0                                                        
+4  rcc 50 0 0 5 0 0 2.0                                                         
+5  sph 52 0 0 0.25                                                              
+6  sph 0 0 0  300.0                                                             
+7  sph 52 0 1.25 0.25                                                           
+
+mode p e                                                                        
+phys:p 4j 1
+m1 74180 .13 74182 26.3 74183 14.3 74184 30.67 74186 28.6                       
+m2 82204 1.4 82206 24.1 82207 22.1 82208 52.4                                   
+m3 1001  200  8016 99.762 8017 .038 8018 .200                                   
+sdef par=3 erg=10 pos=-101 0 0 axs=1 0 0 ext=0 rad=d1                           
+     vec=1 0 0 dir=1                                                            
+si1  0 0.1                                                                      
+sp1  -21 1                                                                      
+tir5:p  100 0 0  0  50 0 0  0 50 0                                              
+c5      -5 9i 5                                                                
+fs5     -5 9i 5                                                                
+fq5     u s c                                                                   
+ft5     TAG 3                                                                   
+fu5     1000100000.00000 1e10                                                   
+f1:e    1.2                                                                     
+nps     100                                                                                                                              
+print
+prdmp 2j -1
+dbcn  17j  0  2j  0  7j  0  2j  0  j  9j  0

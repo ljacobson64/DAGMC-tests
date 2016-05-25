@@ -1,0 +1,26 @@
+sdef3j source on sphere with ccc
+c soran example
+1 0 -1
+2 0 1 -2 -3
+3 0 1  2 -3
+4 0 3
+
+1 so 1
+2 py 0
+3 so 2
+
+sdef sur=1 ccc=d1 dir fccc d2
+si1 l 2 3
+sp1 d 1 2
+ds2 s 3 4
+si3 h .5 1
+sp3 d 0 1
+si4 h .9 1
+sp4 d 0 1
+nps 100000
+imp:n 1 1 1 0
+print
+prdmp 2j -1 j -1
+dbcn  28j 0
+f1:n 3
+

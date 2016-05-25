@@ -1,0 +1,44 @@
+f6_ex with different wgt
+1     1 -1E-03  -1 imp:n 1
+615     0  1 -666  imp:n=1
+666   0            666 imp:n=0
+
+1   rcc   100 0 -50 0 0 100 5.0
+666  so   1e5
+
+C Problem Card
+C
+c MODE N P
+MODE N h d s t a e p
+m1     2003.66c 1.
+sdef par=1 erg=d1 vec=0 0 1 dir=d2
+sp1  -3 1.025 2.926 $ cf252 source
+sb2  -31 2
+c
+f4:n    1
+fm4:n   -1 1 103
+sd4  1
+c
+f6:n,h,d,t,s,a,e,p 1
+c
+f8:n  1
+ft8   phl 1 6 1 0
+e8 0 1e-3 2e-3 49i 1 9i 10 100
+c
+f16:h,d,t,s,a,e 1
+c
+f18:n  1
+ft18   phl 1 16 1 0
+e18 0 1e-3 2e-3 49i 1 9i 10 100
+c
+CUT:P  J  0.030 0 0
+cut:h,d,t,s,a j 0 0 0
+cut:n  2j 0 0
+phys:n 100e4 100 4j 2
+phys:e  100 6j 0
+phys:p  100
+phys:h,d,t,s,a 100
+tropt  mcscat  gaussian
+prdmp  2J -1 J 64000
+dbcn  26j  1  j  0
+nps 1000000

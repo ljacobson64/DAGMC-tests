@@ -1,0 +1,21 @@
+Background Neutron Source for Sphere--> SA/2.995
+1 0 -1
+2 0 1 -2
+3 0 2
+
+1 so 1
+2 so 100
+
+sdef rad=d1 wgt=41957.83 par=-bn loc=80.0 -50.0 2.5 
+si1 0 100
+sp1 -21 2
+f4:n 1
+e4 1e-9 99log 1e3
+nps 1e6
+imp:n,p,h 1 1 0
+phys:n 300
+phys:p 1000
+phys:h 1000
+print 
+prdmp 2j -1 j -1
+mode n p h

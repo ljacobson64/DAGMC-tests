@@ -1,0 +1,29 @@
+Test of f8 tally
+1  21 -2.7   -11 12
+2  22 -10.0  -12
+3   0         11
+
+11 RCC 0 0 0 0 120 0 50
+12 SPH 0 100 0 5
+
+imp:p 1 1 0
+mode p
+c cut:p  2j 0 0
+var rr=off
+m21    13027 1     $ aluminum
+m22    32000 1     $ germanium
+print -10 -20 -30 -40 -50 -60 -70 -72 -80 -85 -86 -90 -100 -102 -110
+       -120 -140 -161 -162 -170 -190 -200
+c
+sdef  erg 5 pos 0 .01 0
+nps 100000
+dbcn 22j 1 16j 0 2j 0 $ force MCNP6 PHTVR for analog cases
+f8:p 2
+e8 0 1e-5 .001 .1 3i .5 .52 .6 3i 1 1.025 1.5 7i 5.5
+prdmp 2j -1 j -1
+f1:p 12
+e0 0 1e-5 .001 .1 3i .5 .52 .6 3i 1 1.025 1.5 7i 5.5
+fq1 d e c
+cf1 2
+c1 0 1 t
+

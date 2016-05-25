@@ -1,0 +1,101 @@
+Background Source for Cube with scx, 
+c par=d4, and air over land--> wgt=SA_of_air/3.6819549
+1 1 -0.00120698 -1
+2 1 -0.00120698 1 -2
+3 2 -1.4000 -3
+4 0 3 2
+
+1 sph 6000 6000 6000 1
+2 rpp 0 12000 0 12000 0 12000
+3 rpp 0 12000 0 12000 -100 0
+
+sdef x=fpar=d1 y=fpar=d2 z=fpar=d3 wgt=2.34656e8 par=d4 erg=fpar=d6 
+        loc=40.0 -110.0 0.0
+ds1 s 11 111
+si11 1e-4 11999.999
+sp11 0 1
+si111 L 6000
+sp111 1
+ds2 s 12 112
+si12 1e-4 11999.999
+sp12 0 1
+si112 L 6000
+sp112 1
+ds3 s 13 113
+si13 1e-4 11999.999
+sp13 0 1
+si113 L 6000
+sp113 1
+si4 L -bn n
+sp4 50 50 
+ds6 s 0 7
+si7 h 1 2 3
+sp7   0 2 3
+f4:n 1
+f14:p 1
+e4 1e-9 299log 1e3
+e14 1e-9 299log 1e3
+f24:n 1
+ft24 scx 4
+nps 1e5
+imp:n,p,h,a,/,d,t,s,k,|,z 1 1 1 0
+phys:p 1000
+mode n p h a / d t s k | z
+c
+c PHYSICS CARDs
+phys:n 1e6 j j j j j 1.0 $ n up to 1000 GeV, Mix&Match, recoils
+c
+c default phys:h uses models at all energies.
+phys:h 1e6  j  -1  j  0  j  1.0 $ h up to 1000 GeV, mix&match, all h recoils
+c  Mix & Match for protons up to 150 MeV. Vavilov straggling control.
+c  protons produce  1.0  light-ion recoils per elastic scatter.
+c  proton lower E cutoff = 6 MeV
+cut:h  j  6.0 0 0           $ ******
+c
+phys:/ 1e6 3j 0  $ pions up to 1000 GeV, Vavilov straggling control.
+cut:n,p,a,/  2j 0 0
+c
+c  MODEL CARDS
+c
+c  ******************************* Use CEM/LAQGSM ***************
+lca  2  1  1  23  1  1  0  1  1  1 $ CEM/LAQGSM lahet physics option parameters
+c lca  2  1  1  23  1  1  0  1  0  0 $ Bertini lahet physics option parameters
+c
+c  ielas ipreq iexisa ichoic jcoul nexite npidk noact cem ilaq !!!!
+c  defaults are 2  1  1  23  1  1  0  1  0  0
+c  cem = 1 -> Use cascade exiton model up to transition energies
+c  ******************************* Use CEM/LAQGSM ***************
+c
+c transition energies between models
+lcb  1000. 1000.    750. 750.    800. 800.      -1 -1
+c  nucleon CEM->LAQGSM, pion CEM->LAQGSM, antinucl&kaons Isabel->LAQGSM,
+c  and 2 Bertini parameters
+c  defaults are 3490. 3490. 2490. 2490. 800. 800. -1 -1  ?????
+c  lea - no lea card -> use default inc parameters
+c  leb - no leb card -> use default level density parameters
+m1   1001   -.001360   $ H in sea level Air, cells 100 - 104
+     7014   -.729981   $ N
+     8016   -.256290   $ O
+     18000  -.012374   $ Ar
+m2   $ Wet porus soil
+      8016 -.58457
+c    14000 -.20547
+     14028 -.18944
+     14029 -.00962
+     14030 -.00634
+     13027 -.06026
+c    26000 -.03706
+     26054 -.00217
+     26056 -.03400
+     26057 -.00079
+     26058 -.00010
+      1001 -.03013
+     20000 -.02691
+     11023 -.02098
+     19000 -.01920
+     12000 -.01549
+     19040 -2e-6 $ 2 ppm
+     90232 -5e-6 $ 5 ppm
+     92238 -2e-6 $ 2 ppm
+prdmp 2j -1 j -1
+print

@@ -1,0 +1,16 @@
+400 MeV protons on Au197 elastic cross section calculation
+c Uses dbcn(29) = zero.
+11  12 -11.34  -40
+31  0           40
+
+40  so  1.0
+
+m12  79197 1
+sdef erg = 400 par = h dir = 1 pos = 0 0 0  vec = 0 0 1
+imp:h  1 0
+phys:h 401
+mode h 
+lca 10j 66
+nps 250000
+prdmp 2j -1 
+tropt  nreact off  nescat on genxs inxs024

@@ -1,0 +1,31 @@
+Embedded Sources (JSH): SDEF
+1 0 -1 u=1
+2 0  1 u=1
+3 0 -2 fill=1
+4 0  2
+
+1 so .001
+2 rpp -1 1 -1 1 -1 1
+
+mode p
+imp:p 1 1 1 0
+sdef erg d21 cel=d11 tme=(d1<d2<d3)
+si1 0 1 2
+sp1 0 1 0
+si2 0 10 16
+sp2 0  1  0
+si3 -16  32
+sp3   0   1
+si11 L (1<3)
+sp11 1
+si21 L 100
+sp21     1
+nps 1.000D+06
+f1:p 1
+t1   -20 54i 35
+fq1 t e
+print 10 170 126 130
+prdmp 2J -1 j 64000 
+dbcn  20j  0  7j  0  2j  0  0
+
+

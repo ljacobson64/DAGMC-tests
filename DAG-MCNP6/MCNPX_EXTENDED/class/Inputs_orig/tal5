@@ -1,0 +1,29 @@
+Tally Problem, Advanced Class
+1 5 -20.0  -1
+2 0         1 -2
+3 0         2
+
+1 RCC 0 0 0  0 0 1  4
+2 RPP -5 5 -5 5 0 2
+
+mode n p
+nps 100000
+prdmp 2j -1 j -1
+imp:n,p 1 1 0
+sdef axs 0 0 1  rad d1  vec 0 0 1  dir 1  sur=1.3
+si1 5
+m5 92238 1
+phys:p j 1 2j 1
+totnu
+print 110 170
+c ------------ Exercise 5 --------------------------
+  f5:p 0 0 1.9 0  3 4 1 0
+  dd5  -.005 30 .1 300
+  fq5 f d
+  f25z:p 1 4.999 0
+  fq25 u d
+  ft25 inc
+  fu25 0 1 2 1000 t
+  dd25 .1 100
+dbcn   29j  13j   0
+

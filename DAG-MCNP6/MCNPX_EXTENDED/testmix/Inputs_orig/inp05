@@ -1,0 +1,22 @@
+Test of mix match
+1 1 -1.0 -1
+2 2 -1.0 -2
+3 0       1 2
+
+1 so 1
+2 sph 0 0 10 1
+
+imp:n 1 1 0
+sdef erg=d1
+si1 1 49log 200
+sp1 0 1 49r
+f1:n 1 2
+e1  1 49log 200
+m1 6000.24c 1
+m2 9019 1
+nps 10000
+print
+prdmp 2j -1
+mphys on
+dbcn   29j  12j  1 2j 1
+lca    8j  1

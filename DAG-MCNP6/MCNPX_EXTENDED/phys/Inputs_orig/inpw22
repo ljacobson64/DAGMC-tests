@@ -1,0 +1,71 @@
+Adam Libal periodic boundary with unused surfaces.
+c Hex infinite number. pvc. ksh-1
+10 0 11 1 -2 -3 4 -5 6 30 -40                  imp:n 1 $ outside emb 8a
+20 2 -2.30 1 -2 -3 4 -5 6 60 -30               imp:n 1 $ concrete floor
+30 3 -1.00 1 -2 -3 4 -5 6 40 -50               imp:n 1 $ water
+35 4 -7.92 12 -13                          u=1 imp:n 1 $ emb 8a steel
+37 4 -7.92 -14                             u=1 imp:n 1 $ emb 8a steel
+38 4 -7.92 -15 16 -10 (13:17)              u=1 imp:n 1 $ emb 8a steel
+40 5 -2.871 ((-16 17):-12) -10 19          u=1 imp:n 1 $ emb 8a UO2
+41 0 13 -280 15 300                        u=1 imp:n 1 $ emb 8a vacuum
+42 0 290 -10 15 300                        u=1 imp:n 1 $ emb 8a vacuum
+45 0 -12 -20                               u=1 imp:n 1 $ emb 8a vacuum
+47 5 -1.35 280 -290 15 300                 u=1 imp:n 1 $ emb 8a pvc
+50 4 -7.92 10                              u=1 imp:n 1 $ emb 8a steel
+60 0 -11 fill 1                                imp:n 1 $ emb 8a
+70 0 (-1:2:3:-4:5:-6:-60:50)                   imp:n 0 $ void
+
+1 -2 px -31.15                                  $ face 1 refl
+2 -1 px 31.15                                   $ face 2 refl
+3 -4 p 1  1.73205 0 62.3                        $ face 3 refl
+4 -3 p 1  1.73205 0 -62.3                       $ face 4 refl
+5 -6 p 1 -1.73205 0 62.3                        $ face 5 refl
+6 -5 p 1 -1.73205 0 -62.3                       $ face 6 refl
+10 rcc 0 0 10.1 0 0 49.8 12.4                   $ emb 8a inner wall
+11 rcc 0 0 10 0 0 50 12.5                       $ emb 8a outer wall
+12 rcc 0 0 10.1 0 0 45 10.4                     $ emb 8a inside r
+13 rcc 0 0 10.1 0 0 45 10.5                     $ emb 8a outside r
+14 rcc 0 0 10.3 0 0 0.1 10.4                    $ emb 8a inside plate
+15 kz 32.56051 0.217443 1                       $ cone part emb 8a
+16 kz 32.79714 0.217443 1                       $ cone part emb 8a
+17 pz 55.1                                      $ cone bottom
+19 pz 10.4                                      $ emb 8a internal floor top
+20 pz 10.3                                      $ emb 8a internal floor bottom
+30 pz 0                                         $ concrete floor top
+40 pz 70                                        $ water reflector above bottom
+50 pz 100                                       $ water reflector above top
+60 pz -50                                       $ concrete floor bottom
+106 rcc 0 0 10.4 0 0 49.5 8.0                   $ emb 8a zone r1
+107 rcc 0 0 10.4 0 0 49.5 8.6                   $ emb 8a zone r2
+108 rcc 0 0 10.4 0 0 49.5 9.2                   $ emb 8a zone r3
+109 rcc 0 0 10.4 0 0 49.5 9.8                   $ emb 8a zone r4
+111 cz 0.127                                    $ fuel rod
+230 rpp -0.289 0.289 -0.289 0.289 0 1000        $ lattice 0 to r1
+240 rpp -0.234 0.234 -0.234 0.234 0 1000        $ lattice r1 to r2
+250 rpp -0.203 0.203 -0.203 0.203 0 1000        $ lattice r2 to r3
+260 rpp -0.174 0.174 -0.174 0.174 0 1000        $ lattice r3 to r4
+270 rpp -0.139 0.139 -0.139 0.139 0 1000        $ lattice r4 to r5
+280 cz  10.7                                    $ pvc inner wall
+290 cz  11.9                                    $ pvc outer wall
+300 pz 10.1                                     $ pvc bottom
+
+kcode 100 1 10 40
+ksrc 0 0 35
+m2 1001.50c -0.0026 8016.50c -0.499 14000.50c -0.4335
+      6000.50c -0.0565 13027.50c -0.0052
+      26000.50c -0.0032                                   $ concrete KSH-1
+m3 1001.50c 2 8016.50c 1                                 $ water
+mt3 lwtr
+m4 26000.50c -0.722 28000.50c -0.09 24000.50c -0.17
+      25055.50c -0.01 14000.50c -0.008                    $ steel KSH-1
+m5   92235.50c  -0.04407
+      92238.50c  -0.83737
+       8016.50c  -0.11856                                 $ Fuel pin
+m6   6000.50c -43.6 1001.50c -5.9 17000.50c -50.5        $ pvc normal KSH-1
+print
+prdmp 2j -1
+c dbcn 28j 1 9j  1
+  dbcn 28j 0 9j  1
+c         29 MCNPX Compatibility
+c              39 S(a,b) smoothing 
+

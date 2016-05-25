@@ -1,0 +1,15 @@
+Test Kalbach-87 with next-event estimator
+1  1  -1e-3   -1 imp:n=1
+2  0           1 imp:n=0
+
+1 rcc  0 0 -1  0 0 50000 1
+
+m1 8016.70c 1
+sdef par=n erg=15 pos=0.1 0.1 0.1 vec= 0 0 1 dir=1 ara=1
+c
+f5:n  0 0 0 5
+dd5 0 1
+c    1 2 3 4 5 6 7 8
+dbcn j 1 1 2 j j j 49897658
+prdmp j j -1
+nps 1

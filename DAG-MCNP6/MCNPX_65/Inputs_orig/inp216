@@ -1,0 +1,20 @@
+MCNPX test problem htp116
+c 1000 MeV protons on a spherical Pb208 target of 1 cm radius.
+c Tallies of proton, photon and neutron current.
+11  12 -11.34  -40
+31  0           40
+
+40  so  1.0
+
+dbcn    28j 0  12j  1
+m12  79197 1
+sdef erg = 1000 par = n dir = 1 pos = 0 0 0  vec = 0 0 1
+imp:n  1 0
+phys:n 1001
+mode n
+lca   2 1 5j -1  1
+lea   2j 0
+nps 2500
+prdmp 2j -1 j -1
+histp
+tropt  genxs inxs216

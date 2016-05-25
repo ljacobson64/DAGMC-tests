@@ -1,0 +1,39 @@
+Proton mesh tally test
+1 1 -1.0 -1 imp:h 1
+2 0       1 imp:h 0
+
+1 rcc 0 0 0   0 0 30  20
+
+mode h
+sdef pos 0 0 .1 erg=300
+phys:h 300
+m1 1001 2 8016 1
+nps 10000
+print -161 -162
+prdmp 2j -1
+tropt  mcscat=gaussian
+tmesh
+c
+rmesh1:h 
+cora1 -20 20
+corb1 -20 9i 0 19i 20
+corc1 0 4i 10 9i 20 8i 30
+c
+rmesh3
+cora3 -20 19i 20
+corb3 -20 20
+corc3 0 19i 30
+c
+cmesh11:h
+cora11 0 19i 20
+corb11 0 29i 30
+corc11 360
+c
+cmesh13
+cora13 0 9i 20
+corb13 0 14i 30
+corc13 360
+endmd
+c
+dbcn  26j  1  j  0 12j  1 2j 1
+lca    8j  1

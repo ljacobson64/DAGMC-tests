@@ -1,0 +1,42 @@
+Cross sections 'point' method, uranium
+1 18 -18.239 -1   imp:n,p,h=1
+2 0         1 -2  imp:n,p,h=1
+3 0            2  imp:n,p,h=0
+
+1 so .01
+2 so      100.0
+
+mode n p h / z | d t s a
+sdef par=h erg=800.0 vec 0 0 1 dir 1
+lca 7j -2 1
+c phys:n 800 j j -101 j 1     $ delayed analog sampling models $Old, MCNPX
+phys:n 800 j j -101 j      $ delayed analog sampling models
+cut:n j j 0 0
+phys:p j j j -1 j -101      $ analog photonuclear & multigoup delayed gammas
+cut:p j j 0 0
+phys:h 800
+phys:/ 400
+phys:| 400
+phys:d 100
+phys:t 100
+phys:s 100
+phys:a 100
+act nonfiss=all
+c
+print
+c nps 2100000000
+c nps 10000000
+nps 50000000
+prdmp j 5000000 1 2 5000000
+c
+c   HEU + NB, density = 18.239 gm/cc
+m18
+       plib=04p  nlib=70c hlib=25h  pnlib=71u elib =03e
+       92235 .93 92238 .07
+mx18:n   j j
+mx18:p   j j
+mx18:h   model model
+DBCN 28j 1
+c
+read file tally_u.dat
+

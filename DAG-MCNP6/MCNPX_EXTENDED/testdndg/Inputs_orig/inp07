@@ -1,0 +1,85 @@
+This is a test problem                             $ title card MUST be present
+c  define the cells: cell number, material number, mat dens, surface, importance
+1   1 -18.95           -1       imp:n,p=1          $ sphere of HEU
+2   4 -0.001205      1 -2       imp:n,p=1          $ air outside sphere
+3   0                   2       imp:n,p=0          $ outer universe – stop here
+
+c surfaces:  surface number, surface type, surface parameters
+1 s   0.0 0.0 0.0    6.803735
+2 so  10000.0
+
+c  define how to run the problem and get answers
+mode n p e 
+mphys on
+rand hist=89
+sdef par=n erg=14.7 pos 0.0 0.0 -20.0 vec 0 0 1 dir=1   $  define the source
+phys:n j j j j j j j         $ turn on multigroup delayed neutrons. use exact fission sampling
+phys:p j j j -1 j  j         $ turn on photonuclear and multigroup delayed photons  
+fmult method=3 shift=1 data=3
+dbcn 9j 1e12
+act nonfiss p dg=lines dn=model
+cut:n j j 0 0                   $ turn on analog tracking
+cut:p j j 0 0                   $ turn on analog tracking
+cut:e j 1.0 0 0                $ set minimum electron energy to 1.0 MeV
+c
+nps 3                         $ how many source particles to run
+prdmp j 10000 -1 2 10000     
+c
+c  materials cards
+m1   nlib=70c pnlib=70u hlib=24h
+       92235.70c .93 92238.70c .07   $ isotope.library  fraction (>0 numerical, <0 weight)
+c
+c Dry Atmosphere 
+c    (corrected with rev2)
+c    (formal dry air description per JSE in rev 3)
+m4    plib=04p  nlib=70c hlib=24h  pnlib=70u elib =03e     
+       1001     2.51091e-7   1002     3.76692e-11
+       2003     3.60560e-12  2004     2.63182e-6
+       6012     1.88758e-4   6013     2.09943e-6      
+       7014     7.81427e-1   7015     2.90202e-3
+       8016     2.10271e-1   8017     8.43108e-5   8018     4.21554e-4
+      10020.42c 8.27538e-6  10020.42c 2.46944e-8  10020.42c 8.46013e-7
+      18000.42c 1.58089e-5  18000.42c 2.95538e-6  18000.42c 4.67231e-3
+      36078     2.00400e-9  36080     1.28829e-8  36082     6.64184e-8
+      36083     6.58458e-8  36084     3.26366e-7  36086     9.90550e-8
+      54124     4.36963e-11 54126     3.93267e-11 54128     8.34599e-10
+      54129     1.15358e-8  54130     1.79155e-9  54131     9.26362e-9
+      54132     1.17543e-8  54134     4.54442e-9  54136     3.88897e-9
+mx4:n  j j
+       j j
+       6000 6000
+       j j
+       j j 8016
+       j j j
+       j j j
+       j j j j j j
+       j j j j j j j j j
+mx4:p  0 j
+       model model
+       j j
+       j j  
+       j j j
+       model model model
+       18036 18038 18040
+       model model model model model model
+       model model model model model model model model model
+mx4:h  j j
+       model model
+       j 6012 
+       j 7014
+       j model model
+       model model model
+       model model model
+       model model model
+       model model model
+       model model model
+       model model model
+       model model model
+c
+c  tallies
+F4:n 1                             $ flux tally
+E4 1e-8 99log 20.0                $ energy bins for tally #4
+T4 1.0 99log 1e15
+F1:p  1                            $ current tally
+E1 0.0 199i 20.0                  $ energy bins for tally #1
+     $ anything can go after a blank line at the end, and will not be processed.

@@ -1,0 +1,39 @@
+LLNL spontaneous fission multiplicity and prompt gammas
+1 101 -20   -1
+2 0          1
+
+1 sph 0 0 0 .01
+
+imp:n 1 0
+mode n p
+nps 1000000
+prdmp 2J -1 3 64000
+cut:n 2J 0 0
+print -10 -30 -85 -86
+m101 98250 1 94238 1 94240 1 96248 1 94242 1
+phys:n 3J j 
+act
+phys:p 4j 1
+sdef par=sf
+fmult 96248  width=1.115000  watt=0.847833  4.169330  sfyield=200
+fmult 98250  width=1.115000  watt=0.847833  4.169330  sfyield=200
+fmult method=5
+c
+f11:n 1
+e11 1e-11 15iLog 1e-4 200iLOG 20 30
+t11 1e4 1e30
+c
+f31:n 1
+t31 1 3ilog 1e4 50ilog 1e11 1e12 1e15 1e20
+fq31 t f
+c
+f211:p 1
+e211 1e-4 200iLOG 20 30
+t211 1e4 1e30
+c
+f231:p 1
+t231 1 3ilog 1e4 50ilog 1e11 1e12 1e15 1e20
+fq231 t f
+c
++F306 1
+c  dbcn 28j 1          

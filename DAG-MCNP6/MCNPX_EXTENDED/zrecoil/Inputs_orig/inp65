@@ -1,0 +1,55 @@
+Multiple source particles. No promotion. ELC special tallies.
+1 0    -1
+2 0    -2
+3 0    1 2 -3
+4 0    3
+
+1 so 5
+2 sx 15 5
+3 so 100
+
+mode h g
+print
+prdmp 2j -1
+imp:h 1 1 1 0
+nps 10000
+sdef cel=fpar=d14 par=d11 pos fpar d12 erg fpar d13
+si11 L h -h
+sp11   2 1
+sb11   1 2
+ds12 L 0 0 0 15 0 0
+ds13 L 2 3
+ds14 L 1 2
+c
+f4:h  1 2
+c
+f14:h 1 2
+fq14 u f
+ft14 elc 2
+c
+f24:h 1 2
+fq24 u f
+ft24 elc 3
+c
+f34:g 1 2
+c
+f44:g 1 2
+fq44 u f
+ft44 elc 2
+c
+f54:g 1 2
+fq54 u f
+ft54 elc 3
+c
+f64:h,g 1 2
+c
+f74:h,g 1 2
+fq74 u f
+ft74 elc 2
+c
+f84:h,g 1 2
+fq84 u f
+ft84 elc 3
+c
+dbcn   29j
+

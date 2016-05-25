@@ -1,0 +1,47 @@
+Multiple source particles. No antiparticle promotion. (cf. problem 52)
+1 0    -1
+2 0    -2
+3 0    1 2
+
+1 so 5
+2 sx 15 5
+
+mode n h q g
+print -160
+prdmp 2j -1
+imp:n 1 1 0
+nps 10000
+sdef cel=fpar=d14 par=d11 pos fpar d12 erg fpar d13
+si11 L -h -n
+sp11   2 1
+sb11   1 2
+ds12 L 0 0 0 15 0 0
+ds13 L 2 3
+ds14 L 1 2
+c
+f21:n 1 2
+fq21 f c
+tf21 2
+c
+f11:h 1 2
+fq11 u f
+ft11 elc 3
+c
+f41:q 1 2
+fq41 f c
+tf41 2
+c
+f31:g 1 2
+fq31 u f
+ft31 elc 3
+c
+f61:n,q 1 2
+fq61 f c
+tf61 2
+c
+f51:h,g 1 2
+fq51 u f
+ft51 elc 3
+c
+dbcn   29j
+

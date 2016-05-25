@@ -1,0 +1,25 @@
+message: fatal
+
+Test mx cards that tracks MCNPX240
+1  1 -1.  -1
+2  0       1
+
+1 so 10
+
+mode n h p
+imp:p,n,h 1 0
+sdef erg=14 par=h
+phys:p 3j 1 1
+print -161 -162
+m1      1002 1   1003.6 1 6000 1   20000 1  nlib .24c
+mx1:n   1002     1003     j        j
+mx1:h   model    2r                -1
+mpn1    6012     0        6012     20040
+nps 1000
+f4:n 1
+f14:h 1
+f24:p 1
+prdmp 2j -1
+dbcn  26j  1  j  0 12j  1 2j 1
+lca    8j  1
+tropt  mcscat  gaussian

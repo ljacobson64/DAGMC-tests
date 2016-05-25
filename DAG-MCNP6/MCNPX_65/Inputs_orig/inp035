@@ -1,0 +1,31 @@
+test of volume source and pinhole image tallies
+c *%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%
+C MCNP5 fip card replaced with equivalent MCNPX pi card
+c *%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%
+1    1 -7.85 -1
+2    0  1  -2
+3    0  2
+
+1    so 10
+2    so 1000
+
+sdef   pos 0 0 0 rad d1 erg 1.
+si1    9 10
+m1   26000 1.
+c *%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%
+c *fip5:n ---> *pi5:n   radiography tally changed to MCNPX equivalent
+c fip15:n ---> pi15:n
+c *%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%*%
+*pi5:n  100 0 0 0 0 0 0 1000 0.1 100
+pi15:n 100 0 0 0 0 0 0 1000 0.1 100
+fs15   -11 50i 11
+c5    -11 50i 11
+fs5   -11 50i 11
+c15    -11 50i 11
+talnp
+nps   200000
+imp:n   1 1 0
+prdmp   2j -1 j -1
+print
+c
+

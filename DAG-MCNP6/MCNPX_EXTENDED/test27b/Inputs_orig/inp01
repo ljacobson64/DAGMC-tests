@@ -1,0 +1,146 @@
+200 MeV Water. Uwe Titt, MD Anderson. 27A Heavy ion bug. X-3:09-16 12/17/08
+c ************************************************************
+c *                                                          *
+c * This setup is for synchronizing MCNPX with GEANT4        *
+c *                                                          *
+c * UT, 06/16/2008                                           *
+c * first setup: Bragg Peak in Water, 200 MeV (monoE), 10x10 *
+c * aperture at 10 cm upstream of water phantom              *
+c *                                                          *
+c ************************************************************
+c
+c **********************
+c ****  CELL CARDS  ****
+c **********************
+c
+ 2000  700  -8.3800  -2000  2001    imp:h,n,p,e,d,t,s,a,#=1    $ brass collimator
+ 2001  102  -0.0012  -2001          imp:h,n,p,e,d,t,s,a,#=1    $ air in collimator
+c
+ 3000 100 -1.00  -3000              imp:h,n,p,e,d,t,s,a,#=10   $ water phantom     -------- imp 10
+c
+8000 0 8000                         imp:h,n,p,e,d,t,s,a,#=0    $ outside universe (void)
+8001 102 -0.0012 -8000                                         $ inside universe (air)
+                 #2000                                         $ excluding collimator (brass)
+                 #2001                                         $ excluding air in collimator (air)
+                 #3000              imp:h,n,p,e,d,t,s,a,#=1    $ excluding water phantom (water)
+c
+
+c ****************************
+c *****  SURFACE CARDS   *****
+c ****************************
+c
+ 2000  RPP  -15.00  15.00  -15.00  15.00  10.00 18.00   $ outside edge of collimator
+ 2001  RPP  -5.00  5.00  -5.00  5.00  10.00 18.00       $ inside edge of collimator
+ 8000 rcc 0 0 -100 0 0 200 100                          $ universe
+ 3000 rpp -25 25  -25 25  -50 0                         $ water phantom
+c
+
+c *********************
+c ****  DATA CARDS ****
+c *********************
+c
+c Material     = Water  (liquid)
+c Recipe ID    = 0093
+c Source       = 092
+c Density      =  1.00000
+c No. Ingred.  = 002
+ m100    1000.24h -0.111907
+         8000.24h -0.888093
+c
+c Material     = Brass
+c Recipe ID    = 0211
+c Source       = 092
+c Density      =  8.38000
+c No. Ingred.  = 004
+ m700   26000.24h -0.000010
+        29000.24h -0.605379
+        30000.24h -0.394591
+        82000.24h -0.000020
+c
+c Material     = ICRU 49 material ID 104  (air)
+c Recipe ID    = 0095
+c Source       = 092
+c Density      =  0.00120
+c No. Ingred.  = 004
+ m102    6000.24h -0.000124
+         7000.24h -0.755266
+         8000.24h -0.231786
+        18000.24h -0.012824
+c
+c ----------------------------------------------------------------
+ SDEF ERG=100 DIR=1 VEC=0 0 -1 PAR=9 sur=2000.5 x=d1 y=d2 z=20.0
+ SI1 H -5.5 5.5
+ SP1 D  0 1
+ SI2 H -5.5 5.5
+ SP2 D  0 1
+c
+c ----------------------------------------------------------------
+ MODE h n p e d t s a #     $ All particles transported
+ PHYS:H 205.0000 0 -1 J 0 J 1
+ PHYS:# 205.0000 0 -1 J 0 J 1
+ PHYS:P 4j 1
+ CUT:h,d,t,s,a,# 1.e30 0
+c
+c ----------------------------------------------------------------
+c mesh tally setup:
+c 13: lateral profile at z = 5 cm
+c 23: lateral profile at z = 10 cm
+c 33: lateral profile at z = 15 cm
+c 43: lateral profile at z = 20 cm
+c 53: lateral profile at z = 25 cm
+c 73: Integral PDD r=10cm dz = 1.0 cm
+c 83: Integral PDD r=10cm dz = 0.1 cm
+c 93: Integral PDD r= 1cm dz = 1.0 cm
+c 103:Integral PDD r= 1cm dz = 0.1 cm
+c
+c tmesh
+c  RMESH13 total
+c   CORA13 -20.00 399i 20.00
+c   CORB13 -00.05       0.05
+c   CORC13 -05.50      -4.50
+c  RMESH23 total
+c   CORA23 -20.00 399i 20.00
+c   CORB23 -00.05       0.05
+c   CORC23 -10.50      -9.50
+c  RMESH33 total
+c   CORA33 -20.00 399i 20.00
+c   CORB33 -00.05       0.05
+c   CORC33 -15.50     -14.50
+c  RMESH43 total
+c   CORA43 -20.00 399i 20.00
+c   CORB43 -00.05       0.05
+c   CORC43 -20.50     -19.50
+c  RMESH53 total
+c   CORA53 -20.00 399i 20.00
+c   CORB53 -00.05       0.05
+c   CORC53 -25.50     -24.50
+c  RMESH63 total
+c   CORA63 -20 399i 20
+c   CORB63 -20 399i 20
+c   CORC63  -1  0.001
+c  CMESH73 total
+c   CORA73 0 10
+c   CORB73 -35.0001 349i 0.0001
+c   CORC73 360
+c  CMESH83 total
+c   CORA83 0 10
+c   CORB83 -35.0001 34i   0.0001
+c   CORC83 360
+c  CMESH93 total
+c   CORA93 0 1
+c   CORB93 -35.0001 349i 0.0001
+c   CORC93 360
+c  CMESH103 total
+c   CORA103 0 1
+c   CORB103 -35.0001 34i   0.0001
+c   CORC103 360
+c endmd
+c
+lca    8j  1
+c
+c PRINT           $ print all info into outp file
+ prdmp j j -1 4  $ print and dump cycle
+c
+ NPS 1000
+dbcn 7j 1302439  9j  0  8j  1  j  0  2j  0  0  8j  1  0 j 1
+tropt mcscat  gaussian

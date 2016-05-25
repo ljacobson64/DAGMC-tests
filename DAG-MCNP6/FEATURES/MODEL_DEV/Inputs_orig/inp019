@@ -1,0 +1,27 @@
+C-12 photo-pion production with x-s tallies (600 MeV)
+c ---------------------------------------------------------------
+c Uses LAQGSM and dbcn(29)==0
+c ---------------------------------------------------------------
+c  cell cards
+1  1 -2.1   -1    imp:p=1
+2  0         1    imp:p=0
+ 
+c  surface cards
+1  so 20
+ 
+c  physics cards
+m1     6012 1     $ graphite
+mode p
+phys:p 3j 1 $ Turn on photonuclear
+phys:n 610
+mphys on
+lca    7j -1 0 1 $ First interaction only
+c  source cards
+c  wgt=10 to account for 10 source energies
+sdef   erg=600 par=p vec=1 0 0 dir=1
+c  control cards
+print
+nps    2500
+prdmp  2j -1
+dbcn   28j 0 $ For MCNP6
+tropt  genxs inxs019

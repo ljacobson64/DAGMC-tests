@@ -1,0 +1,25 @@
+MCNP6 using CEM03.03 test of pion spectra from 730 MeV p + C12
+C for applications of interest to Andrea Palounek of ISR-6
+  1  1  1.0   -1 2 -3
+  2  0        -4 (1:-2:3)
+  3  0         4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  -1.0
+  3  pz  1.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+  m1   6012 1.0
+  sdef erg = 730 par = H dir = 1 pos = 0 0 0 vec 0 0 1
+  imp:h 1 1 0
+  phys:h 800
+  mode   h
+  tropt genxs xpc12s  nreact on  nescat off
+c ---------------------------------------------------------------
+  print 40 110 95
+c  nps 10000
+  nps 10000000
+  prdmp 2j -1
+

@@ -1,0 +1,37 @@
+Two thin shell spherical [pos+rad], flux and source mesh tallies
+c          gamma sources: Tc99m bottom, S38 top.
+10  100   -11.4     -4 3       imp:p=1   $ Lead Shield
+20    0             -3 1 2     imp:p=1   $ Void
+30  200   -1.12     -1         imp:p=1   $ Poly sphere at origin
+40  200   -1.12     -2         imp:p=1   $ Poly sphere at y=3
+50    0              4         imp:p=0   $ Exterior
+
+1 SO                  1.0              $ Sphere at origin with 1 cm rad
+2 S   0.0  2.0  0.0   1.0              $ Sphere at 0.,2.,0. with 1. cm rad
+3 RCC   0. -1. 0.     0.  4. 0.    3.0 $ Right circular cylinder
+4 RCC   0. -4. 0.     0. 10. 0.    8.0 $ Right circular cylinder
+
+sdef erg=D45
+     POS=FERG=D20                $ POS distribution for different centers of spheres
+     RAD=1.0  SUR=FERG=D46       $ Thin shell, Dependant Surface based on location
+c
+si45 L 0.14   1.88               $ 0.14 MeV corresponds to 0.0 cm, 1.88 MeV to 2.0 cm
+sp45   1.0    1.0                $ Equally probable
+ds20 L 0.0 0.0 0.0   0.0 2.0 0.0
+ds46 L  1      2                 $ Surface card numbers, depending on POS
+c
+m100  92238 1.0                                       $ Uranium Shield
+m200  1000 -0.09677   6000 -0.38710   8000 -0.51613   $ Polyethylene
+nps 1000
+c
+fmesh04:p   type=flux  geom=cyl  origin=0 -4 0   axs=0 1 0  vec=0 0 1
+           imesh=8    iints=10    jmesh=10     jints=10
+           kmesh=1    kints=10
+fmesh14:p   type=source  geom=cyl    origin=0 -1 0   axs=0 1 0  vec=0 0 1
+           imesh=3      iints=20      jmesh=4      jints=20
+           kmesh=1      kints=10      emesh=2      eints=2
+c
+mode p
+print 10 110 170
+prdmp  2j   -1
+

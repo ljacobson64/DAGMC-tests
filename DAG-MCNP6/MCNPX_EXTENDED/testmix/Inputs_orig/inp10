@@ -1,0 +1,24 @@
+Test mx cards.
+1  1 -1.  -1
+2  0       1
+
+1 so 10
+
+mode n h p
+imp:p,n,h 1 0
+sdef erg=14 par=h
+phys:p 3j 1 1
+phys:h 2j -1
+print -161 -162
+m1      1002 1   1003.6 1 6012 1   20040 1  nlib .24c
+mx1:n   j        model    6000     20000
+mx1:h   model    1001     j        j
+mpn1    6012     0        j        j
+nps 1000
+f4:n 1
+f14:h 1
+f24:p 1
+prdmp 2j -1
+dbcn  26j  1  j  0 12j  1 2j 1
+lca    8j  1
+tropt  mcscat  gaussian

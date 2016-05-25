@@ -1,0 +1,25 @@
+Test
+1 1 -1.0 -1 imp:n,h,p=1
+2 2 -1.0 1 -2 imp:n,h,p=1
+3 0 2 imp:n,h,p=0
+
+1 so 5
+2 so 7
+
+sdef par=d1 erg=2
+si1 L n p h
+sp1   1 1 1
+mode n p h
+nps 10
+m1   8016.60c 1.0
+     82206 10.0
+m2   1001 1.0
+     8016 1.0
+m0   nlib=.70c
+     hlib=.24h
+     pnlib=.24u
+phys:p j j j 1 j j
+print
+prdmp 2j -1
+dbcn  26j  1  j  0 12j  1
+tropt  mcscat  gaussian

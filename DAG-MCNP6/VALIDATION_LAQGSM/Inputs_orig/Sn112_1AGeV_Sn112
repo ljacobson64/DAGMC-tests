@@ -1,0 +1,33 @@
+MCNP6 test: 1 GeV/A Sn112 + Sn112 by LAQGSM03.03, nevtype=66
+  1  1  1.0   -1 2 -3
+  2  0        -4 (1:-2:3)
+  3  0         4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  -1.0
+  3  pz  1.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+dbcn 28j 1
+  m1 50112  1.0
+  sdef erg=112000 par=50112 dir=1 pos=0 0 0 vec 0 0 1
+  imp:n 1 1 0
+  imp:h 1 1 0
+  phys:g 200
+  phys:d 200
+  phys:h 200
+  phys:# 112100
+  mode  # n a t d s h
+LCA  2 1 5j -1 1j 1    $ use LAQGSM, nevtype = 66                   !!!
+lcb  0 0 0 0 0 0
+lea  2j 0
+  tropt genxs inxc69  nreact on  nescat off
+c  tropt genxs inxc69
+c ---------------------------------------------------------------
+  print 40 110 95
+c  nps 100
+  nps 1000000
+  prdmp 500000 200000 1
+

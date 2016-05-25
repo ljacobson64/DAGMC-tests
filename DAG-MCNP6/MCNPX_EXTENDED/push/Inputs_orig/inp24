@@ -1,0 +1,93 @@
+gamma  ray skyshine experiment  d hollowell 3/90
+c  new cell description using simplified geometry
+c
+ 1    1  -.001124           +7   -6     #31 $ air around source
+ 2    2  -2.6            -7   42 -26 #3     $ dirt down below
+ 3    0                     -7   +42   -31  $ void under source
+ 7    0    6:-42:26                         $ ROW
+31    0    7 30 -31 -32                     $ source silo
+ 
+ 6     so    100000.                $  an outer boundary to the problem
+ 7     pz     0.                    $  the ground/air interface
+26     kz   -22169.   20.346   +1   $  cone with xy plane radius 100000cm
+30     cz  117.75                   $  columation silo inner diameter
+31     cz  217.5                    $  columation silo outer diameter
+32     pz  229.                     $  plane at the top of the silo
+42     pz   -9.                     $  underground plane for photon imp.
+ 
+imp:p   1 1 0 0 0
+c
+c     material #1 is dry air, and #2 is dirt
+c
+m1    6012.02p .000125     7014.02p .686910
+      8016.02p .301248    18040.02p .011717
+m2    8016.02p  .46133    14028.02p  .28038
+     13027.02p  .08272    26056.02p  .05598
+     20040.02p  .04126    11023.02p  .02346
+c
+ mode p
+c
+c
+ sdef pos = 0. 0. 198.  erg = d1
+ sc1  for cobalt 60 photons
+ si1  l  1.173  1.322
+ sp1  d  1.     1.
+c
+c        the ring detectors are set up to give dose, which will
+c         later be understood in terms of dose/source strength
+c
+f75z:p   100. 70000.  99.
+fm75     4.541e-05  1 -5 -6
+c
+c     Note that MCNP will give flux as 1/cm**2, per source particle.
+c     To change this to a dose we use the flux multiplier card "FM".
+c     For a given # tally, the fm card fm#   rho  m  -5 -6" will
+c     produce a tally with dose units MeV/cm**3.   In this card "rho"
+c     is the number density (#/(cm*barn)) of the absorbing particles
+c     and "m" is the material number of the absorbing particles.  The
+c     -5 and -6 specify to include (respectively) the interaction
+c     cross section and the heating fraction.  This "fm" card provides
+c     results in MeV/cm**3 per history, and we want, for instance,
+c     [rad/history].  Since 1 rad = 100 erg/g  ,  we can convert the
+c     number produced by this "fm" card to [rad/history] by multiplying
+c     the tally result by
+c     {[1.602e-6(erg/MeV)] * [1(rad)/100(erg/g))] /
+c                                [mass density (g/cm**3)]}
+c     which is 1.43e-05 if the density is .0011 g/cm**3 ... this
+c     multiplicative factor takes Mev/cm**3/history to rad/history.
+c     In the case of Nason Shultis and Faw, they wanted an answer in
+c     microrad/hour/Ci (where Ci is source strength in curies).  For a
+c     666 Ci source, then, to convert from rad/history to microrad/hr/Ci
+c     we multiply further, by a factor:
+c     { [3.7e+10((history/sec)/(Ci))] * [666(Ci)] * [3600(sec/hr)] *
+c                       [1.e+06(microrad/rad)] }  /  [666(Ci)]
+c     which is 1.332e+20 ... this converts rad/history to microrad/
+c     hr/Ci.    We multiply these two factors together to get the
+c     multiplicative factor that converts the "fm" card's MeV/cm**3
+c     to microrad/hr/Ci,  this final multiplicative factor is 1.905e+15
+c
+c
+c          the low energy photons are not worth the bother
+c          since they are below the detector response function cutoff
+cut:p      1.e+33 0.0399
+c
+nps     28965
+ctme   100
+print
+prdmp   j j -1
+phys:p 2j 1 j 1
+wwp:p 5 3 5 0 -1
+wwg  75 0 0
+mesh  ref 0 0 198
+      origin 0.001 0.001 -9.001
+      axs 0 0 1
+      vec 1 0 0
+      geom cyl
+      imesh 117 217 40000 80000 120000
+      iints 5 5 5 5 5
+      jmesh 9 238 40000 80000 120000
+      jints 5 5 5 5 5
+      kmesh  1
+      kints 1
+dbcn   j j 1 10 24j 0  13j  0
+ 

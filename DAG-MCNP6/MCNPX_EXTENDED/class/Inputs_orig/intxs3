@@ -1,0 +1,17 @@
+intro to mcnp class -- xs and physics -- exercise #1 -- basic xs plotting
+1    1 -1 -1
+2    0 1
+ 
+1    so 5
+ 
+mode n
+sdef
+imp:n 1 0
+m1   92235.50c .2 92238.50c .8 1001.50c 2 8016.50c 1 6012.50c 1
+m2   92235.60c 1
+f4:n 1
+fm4  (1 1 (102) (-6)) (1 2 -6)
+nps 100000
+prdmp 2j -1 j -1 
+c                         
+totnu no

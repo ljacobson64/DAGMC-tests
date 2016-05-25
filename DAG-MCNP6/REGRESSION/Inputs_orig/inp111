@@ -1,0 +1,33 @@
+Godiva - with extra junk & big numbers
+99999991    87654321 -18.74  -88888881              imp:n=1
+99999992    87654321 -18.74   88888881 -88888882    imp:n=1
+99999993    0                 88888882              imp:n=0
+
+88888881    so 6.000
+88888882    so 8.741
+
+kcode 1000 1.0 20 55
+hsrc  4 -9 9    4 -9 9    4 -9 9
+rand  gen=2 seed=12345
+c
+sdef pos=0 0 0  rad=d321  cel=99999991 erg=d999
+sp321 -21 2
+si321  8.741
+sp999 -3
+c
+print
+ m87654321    92235 -94.73  92238 -5.27  1001 -1.e-10
+mt87654321  lwtr
+c
+f9991:n 88888881 88888882
+c
+f9994:n 99999991 99999992
+fm9994  -1. 87654321 -6
+sd9994 1 1
+prdmp j j -1 j 200
+c
+fmesh9874:n geom=xyz origin= -9 -9 -9
+      imesh=9 iints=3
+      jmesh=9 jints=3
+      kmesh=9 kints=3
+fm9874  -1 0 -6 -7

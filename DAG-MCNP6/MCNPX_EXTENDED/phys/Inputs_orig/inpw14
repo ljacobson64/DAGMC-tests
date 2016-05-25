@@ -1,0 +1,25 @@
+testprob32 -- simple neutron problem to test delayed treatment
+c     Simple sphere representation
+1     1 -18.6    -1
+2     0          +1
+ 
+1      so 4.7407
+ 
+mode   n
+imp:n  1 0
+sdef pos= 0 0 0 erg=d10
+sp10 -3 .968 2.29
+phys:n j j j j
+act  dnbias=15
+cut:n 180.+8 j j j
+totnu
+f4:n 1
+T4   0 100i 1 200i 200 1+8 180i 180.+8
+fq4 t f
+print
+c      Materials specified with atom densities
+m1     94239.61  1.00
+prdmp j j -1
+nps 1000
+c dbcn 28j 1
+ 

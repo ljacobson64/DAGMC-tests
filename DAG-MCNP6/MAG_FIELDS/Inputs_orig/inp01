@@ -1,0 +1,41 @@
+Electron beam hitting a target in a dipole field
+1 0 -1 -10
+2 1 -7.8 1 -2 -10
+3 0 2 -10 bflcl 2
+4 0 10
+
+1 pz .0001
+2 pz .01
+10 so 100
+101 so 50
+102 so 30
+103 so 10
+
+imp:e,p 1 1 1 0
+m1 26056 1
+print
+sdef dir = 1 vec 0 0 1 erg d1 par = p
+si1 .01 .1 1 10 100
+sp1 0 1 1 1 1
+phys:e 1000
+bfld2 const field .03 vec 0 1 0 maxstep 1 mxdeflc 100
+mode e p
+prdmp 2j -1 j 8000
+nps 100000
+f2:e 1
+fs2 101 102 103
+f12:e 2
+fs12 101 102 103
+f102:p 1
+fs102 101 102 103
+f112:p 2
+fs112 101 102 103
+fmesh14:e geom=xyz origin -100 -10 -100
+        imesh 100 iints 10 out=ik
+        jmesh  10 jints 1
+        kmesh 100 kints 10
+fmesh24:p geom=xyz origin -100 -10 -100
+        imesh 100 iints 10 out=ik
+        jmesh  10 jints 1
+        kmesh 100 kints 10
+

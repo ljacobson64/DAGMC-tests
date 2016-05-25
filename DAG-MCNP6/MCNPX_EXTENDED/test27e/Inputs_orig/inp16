@@ -1,0 +1,23 @@
+test U-235 fission
+1  1  -1.0    -1  imp:n=1
+2  0           1  imp:n=0
+
+1  so  1.0
+
+mode n p h
+m1   92235 1
+sdef par=n  erg=22
+phys:n 7j 20
+ACT  FISSION=n,p DN=model DG=mg
+lca  7j -2  1
+f1:n  1
+t1    100 1e20
+e1    1e-3 99i 30
+f11:p 1
+t11   100 1e20
+e11   1e-3 99i 30
+print -10 -30 -85 -86 -160 -161 -162
+prdmp 2J -1
+nps  1000
+dbcn   29j  12j  1 2j 1
+totnu    no

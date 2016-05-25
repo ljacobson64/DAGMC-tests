@@ -1,0 +1,77 @@
+Tally Problem, Advanced Class
+1 5 -25.0  -1
+2 0         1 -2
+3 0         2
+
+1 RCC 0 0 0  0 0 1  4
+2 RPP -5 5 -5 5 0 2
+
+mode n p
+nps 100000
+imp:n,p 1 1 0
+sdef axs 0 0 1  rad d1  vec 0 0 1  dir 1  sur=1.3
+si1 5
+m5 92238 1
+phys:p j 1 2j 1
+totnu
+print 110 170
+prdmp 2j -1 j -1  
+c ------------ Exercise 1 --------------------------
+fc1 Cylinder top, box top, leaving box.
+f1:n 1.2 2.5 (2.1 2.2 2.3 2.4 2.5 1.3)
+fs1 -1.1 t
+cf1   1
+fq1   f s
+tf1   3
+fc2 Photon flux on box top.
+f2:p 2.5
+fs2 -1.1 t
+fq2 s f
+sd2 50.2654 49.7346 100
+fc11 Photons crossing each problem surface.
+f11:p 1.1 1.2 1.3 2.1 2.2 2.3 2.4 2.5
+fq11  f d
+cf11  1
+tf11  3
+c ------------ Exercise 2 ---------------------------
+f6:n 1
+f7:n 1
+f16:p 1
+f26:n,p 1
+*f8:p 1
+sd8 1005.31
+c ------------ Exercise 3 --------------------------
+fq0 m f
+fc14  Total and fission heating.
+f14:n 1
+fm14  (-.04 5 -1 -4) (.00252973 5 -1 -4) &
+ (-.04 5 -6 -8) (.00252973 5 -6 -8)
+fc24 Track length estimate of criticality.
+f24:n 1
+fm24 (-1 5 -6 -7) (.0632433 5 -6 -7)
+sd24 1
+fc34 Photon production.
+f34:n 1
+fm34 (-1 5 -5) (.0632433 5 -5) 
+sd34 1
+fc44 Neutron collisions and absorption.
+f44:n 1
+fm44 (-1 5 -1) (.0632433 5 -1) (-1 5 -2) (.0632433 5 -2)
+sd44 1
+fc54 Fission and (n,xn) energy losses.
+*f54:n 1
+fm54 (-1 5 -6) (.0632433 5 -6) &
+ (-1 5 16:17) (.0632433 5 16:17)
+sd54 1
+fc104 Photon heating.
+f104:p 1
+fm104 (-.04 5 -5 -6) (.00252973 5 -5 -6)
+fc114 Photon photoelectric, pair production, and total collisions.
+f114:p 1
+fm114 (-1 5 (-3) (-4) (-5)) (.0632433 5 (-3) (-4) (-5))
+sd114 1
+c ------------ Exercise 4 --------------------------
+pert1:n,p cell 1  rho -20.0 method  1
+pert2:n,p cell 1  rho -20.0 method -1
+dbcn   29j  13j   0
+

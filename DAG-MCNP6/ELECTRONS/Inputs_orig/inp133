@@ -1,0 +1,45 @@
+15-MeV electrons on .001872840333829 cm W. 1 cell = 1 substep. dbcn(18)==0.
+1           1  -19.2  1  -998  -999   imp:p=1.  imp:e=1.
+2           0        -1 : 998 : 999   imp:p=0.  imp:e=0.
+
+1           pz    0.0
+998         pz    0.001872840333829
+999         cz  100.0
+
+mode p  e
+c      Turn off K-Xrays, knock-on electrons, and photon-induced electrons.
+phys:e 15.0 5j 0. 0. 0.
+m1   74000 1
+sdef par=e erg=15.0 sur=1 pos 0. 0. 0. dir=1.
+c
+fc1  Angular distribution of transmitted photons.
+f1:p 998
+fq1  c e
+*c1  0. 89i 90.
+c
+fc11  Energy spectrum of transmitted photons.
+f11:p 998
+e11  .1 148i 15.
+c
+fc21  Total energy of escaping photons.
+*f21:p 1 998
+fq21   e f
+c
+fc31 Angular distribution of transmitted electrons.
+f31:e 998
+fq31 c e
+*c31 0. 89i 90.
+c
+fc41  Energy spectrum of transmitted electrons.
+f41:e 998
+e41  .1 148i 15.
+c
+fc51  Total energy of escaping electrons.
+*f51:e 1 998
+fq51   e f
+c
+prdmp 2j -1  j  10000
+nps    100000
+dbcn   16j   j   0.
+print
+

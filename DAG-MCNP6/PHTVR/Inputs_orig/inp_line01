@@ -1,0 +1,82 @@
+DXTRAN collinear test
+    1     3     -12 -1  $ source cell
+    2     1    -1.7 -2
+    3     1    -0.7 -3
+    4     1    -0.7 -4
+    5     1    -1.7 -5
+    6     1    -1.7 -6
+   10     5  -0.003 1 2 3 4 5 6 -100 vol=1e6
+  100     0         100
+
+    1        so 1e-006
+    2        sy 60 10
+    3        sy -30 10
+    4        sy 30 15
+    5        sy -60 18
+    6        sz 60 20
+  100        so 500
+
+mode  p e
+m1    92238.                1  $MAT
+m2    1001.                 2  $MAT
+      8016.                 1
+m3    82208.                1  $MAT
+m4    13027.                1  $MAT
+m5    1001.                 4  $MAT
+      8016.                 2 82208.                1
+imp:p   1 6r         0             $ 1, 100
+imp:e   1 6r         0             $ 1, 100
+phys:p j 1
+sdef erg .0011 par=f
+f1:p 1
+c1 0 1
+e1  1e-3 19ilog 1e-1 .2 .3 .4 .5 .6 1
+f11:e 1
+c11 0 1
+e11 1e-4 19ilog 1e-2  .2 .3 .4 .5 .6 1
+*f101:p  2 3 4 5 6 1 100 T
+e101 1e-4 19ilog 1e-2 .2 .3 .4 .5 .6 1
+*f21:p 3
+sf21 2
+e21 1e-4 19ilog 1e-2 .2 .3 .4 .5 .6 1
+c   track lenght tallies
+f4:p 2
+f14:p 3
+f24:p 4
+f34:p 5
+f44:p 6
+f54:p 10
+e4 1e-3 5ilog 1e-2 11i 1.2
+e14 1e-3 5ilog 1e-2 11i 1.2
+e24 1e-3 5ilog 1e-2 11i 1.2
+e34 1e-3 5ilog 1e-2 11i 1.2
+e44 1e-3 5ilog 1e-2 11i 1.2
+e54 1e-3 5ilog 1e-2 11i 1.2
+c    F8 tallies
+f8:p 2
+f18:p 3
+f28:p 4
+f38:p 5
+f48:p 6
+f58:p 10
+f68:p 1
+e8 0 1e-8 9e-4 9ilog 1e-2 19i 1.2
+e18 0 1e-8 9e-4 9ilog 1e-2 19i 1.2
+e28 0 1e-8 9e-4 9ilog 1e-2 19i 1.2
+e38 0 1e-8 9e-4 9ilog 1e-2 19i 1.2
+e48 0 1e-8 9e-4 9ilog 1e-2 19i 1.2
+e58 0 1e-8 9e-4 9ilog 1e-2 19i 1.2
+e68 0 1e-8 9e-4 9ilog 1e-2 19i 1.2
+c   *F8 tallies
+*f108:p 2 3 4 5 6 10 1 T
+c   +F8 tallies
++f208:p 2  3 4 5 6 10 1 T
+prdmp 2j -1
+nps 10000
+print -10 -20 -30 -40 -50 -60 -70 -72 -80 -85 -86 -90 -100 -102 -110
+       -120 -140 -161 -162 -170 -190 -200
+dxt:p 0 60 0 10.01 10.1   0 -30 0 10.01 10.1   0 30 0  15.01 15.1
+        0 -60 0  18.01 18.1   0 0 60 20.01 20.1    2 .0000005
+c    For backward compatability, set the first calculation of the
+c  point detector average contribution at nps =  200
+dbcn    17j  0  21j   0  j  j  0  23j   200

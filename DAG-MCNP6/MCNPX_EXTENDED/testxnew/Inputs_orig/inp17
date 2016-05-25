@@ -1,0 +1,16 @@
+Test of spontaneous fission.
+1  1 -1.  -1
+2  0       1
+
+1 so .0001
+
+imp:n 1 0
+sdef par=sf
+print -161 -162
+m1 98252 1
+nps 10000
+f1:n 1
+e1 .001 3LoG 10
+prdmp 2j -1 j -1
+c                         
+

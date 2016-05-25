@@ -1,0 +1,64 @@
+streaming through vacuum with time-dependent mesh tallies in various formats
+10     0           -1        imp:n=1
+20     0             #10          imp:n=0
+
+1    rpp    0 5000    -2500 2500  -2500 2500
+
+nps    1e4
+sdef   x=1.e-6  y=d1  z=d2    vec=1 0 0   dir=1   erg=d3
+si1    -2500   2500
+sp1    0    1
+si2    -2500   2500
+sp2    0    1
+si3    l   1   4
+sp3    0.75   1
+c
+m100      1001    2         8016     1
+c
+fmesh004:n    geom=xyz    origin=0 -2500 -2500    out=col
+              imesh=5000  iints=100
+              jmesh=2500  jints=1
+              kmesh=2500  kints=1
+              emesh=2 5   eints=1 1
+              tmesh=0 250    tints=1 100   tnorm=yes
+c
+fmesh104:n    geom=xyz    origin=0 -2500 -2500    out=ij
+              imesh=5000  iints=100
+              jmesh=2500  jints=1
+              kmesh=2500  kints=1
+              emesh=2 5   eints=1 1
+              tmesh=0 250    tints=1 100   tnorm=yes
+c
+fmesh204:n    geom=xyz    origin=0 -2500 -2500    out=ik
+              imesh=5000  iints=100
+              jmesh=2500  jints=1
+              kmesh=2500  kints=1
+              emesh=2 5   eints=1 1
+              tmesh=0 250    tints=1 100   tnorm=yes
+c
+fmesh304:n    geom=xyz    origin=0 -2500 -2500    out=jk
+              imesh=5000  iints=100
+              jmesh=2500  jints=1
+              kmesh=2500  kints=1
+              emesh=2 5   eints=1 1
+              tmesh=0 250    tints=1 100   tnorm=yes
+c
+fmesh404:n    geom=xyz    origin=0 -2500 -2500    out=cf
+              imesh=5000  iints=100
+              jmesh=2500  jints=1
+              kmesh=2500  kints=1
+              emesh=2 5   eints=1 1
+              tmesh=0 250    tints=1 100   tnorm=yes
+c
+fmesh504:n    geom=xyz    origin=0 -2500 -2500    out=none
+              imesh=5000  iints=100
+              jmesh=2500  jints=1
+              kmesh=2500  kints=1
+              emesh=2 5   eints=1 1
+              tmesh=0 250    tints=1 100   tnorm=yes
+c
+cut:n   250.0
+print
+rand    gen=2
+prdmp   2j   -1
+

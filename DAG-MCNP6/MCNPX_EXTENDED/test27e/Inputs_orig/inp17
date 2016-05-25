@@ -1,0 +1,26 @@
+test pn reactions– 2 GeV p into Fe (use LAQGSM for E > 1.2 GeV)
+1  1  -1.0    -1  imp:n=1
+2  0           1  imp:n=0 
+
+1  so  1.0 
+
+mode n p h
+m1   26056 1
+mx1:p model
+sdef par=p  erg=2000
+phys:p 3j 1
+phys:n 2010
+ACT  FISSION=n,p DN=model DG=mg
+lca  7j -2
+f1:n  1
+t1    100 1e20
+e1    1e-3 49i 30
+f11:p 1
+t11   100 1e20
+e11   1e-3 49i 30
+f21:h 1
+print -10 -30 -85 -86 -160 -161 -162
+prdmp 2J -1
+nps  100
+dbcn   29j  12j  1
+totnu     no

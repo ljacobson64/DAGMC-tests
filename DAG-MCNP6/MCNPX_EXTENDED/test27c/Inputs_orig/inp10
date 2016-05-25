@@ -1,0 +1,25 @@
+Test of LLNL fission mult
+1   1  -20  -1 imp:n=1
+99  0  1  imp:n=0
+
+1  so  .001
+
+m1   92235  1
+sdef erg= 2.53e-8
+print
+fmult method=5
+cut:n  j j 0
+lca 7j -2
+nps  500
+mode n p
+f1:p  1
+sd1   1
+totnu no
+f11:n  1
+sd11   1
+e0 0 99i 10
+c
++f6   1
+sd6   1
+prdmp 2j -1
+c                         

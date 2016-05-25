@@ -1,0 +1,20 @@
+Tally tagging (GWM): Test
+1  1   -1.0    -1   imp:n=1
+2  0            1   imp:n=0
+
+1  so 1.
+
+m1   92234 1 nlib=.70c
+mode n p
+mphys on
+sdef erg=10 par=n
+lca  7j -2 1
+f1:p 1
+e1   0.001 9log 12.0
+ft1  TAG 1
+fu1  92234.00018 92234.00019 92234.00020 92234.00021 92234.00000
+fq1  e u
+print
+nps  3.0D+04
+prdmp 2j -1 j 2000
+dbcn  20j  0  7j  0  2j  0  0  8j  1 2j 1

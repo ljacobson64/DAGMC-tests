@@ -1,0 +1,35 @@
+DOPPLERP above ff table, transport + detectors, non-hydrogen, mcplib12.
+1     1 -2.33  -1       imp:p=1.
+2     0         1  -2   imp:p=1.
+3     0         2       imp:p=0.
+
+1     so    .01
+2     so  10.01
+
+mode    p
+fcl:p   1  0  0
+sdef    pos 0. 0. -1. vec 0. 0. 1. dir 1. par=2 erg=0.259183 ara 1.
+m1      14000.12p  1.
+c
+e0      0.003 199log  0.259183
+c
+fc1     Angular bins 2 and 3 are above and within the table, respectively.
+f1:p    2
+c        up to 55,   up to 45,   up to 35,  forward.
+c1      .573576436  .707106781  .819152044  1.
+ft1     frv  0. 0. 1.
+fq1     e  c
+c
+fc5     Detectors 1 and 2 are above and within the table, respectively.
+f5:p    0.  7.193398   6.9465837 0.
+        0.  6.9465837  7.193398  0.
+fq5     e  f
+c    For backward compatability, set the first calculation of the
+c  point detector average contribution at nps =  200
+dbcn    42j  0  8j  1  1  13j  200
+print
+phys:p j 1 1   $ no bremsstrahlung and no coherent scattering.
+cut:p  j 0.003 $ no fluorescence photons.
+prdmp  2j -1 j 8000
+nps    100000
+

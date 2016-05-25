@@ -1,0 +1,45 @@
+test 3-way coincidence
+1  1  -19.    -1         imp:n=1
+2  2  -1.e-3  -2         imp:n=1
+3  2  -1.e-3  -3         imp:n=1
+4  2  -1.e-3  -4         imp:n=1
+5  3  -1.0    -5 2       imp:n=1
+6  3  -1.0    -6 3       imp:n=1
+7  3  -1.0    -7 4       imp:n=1
+8  0          -8 1 5 6 7 imp:n=1
+9  0           8         imp:n=0
+
+1  so  0.5
+2  rcc  4.0  0        -10  0 0 20  1.27
+3  rcc -2.0  3.464102 -10  0 0 20  1.27
+4  rcc -2.0 -3.464102 -10  0 0 20  1.27
+5  rcc  4.0  0        -10  0 0 20  3.27
+6  rcc -2.0  3.464102 -10  0 0 20  3.27
+7  rcc -2.0 -3.464102 -10  0 0 20  3.27
+8  so  100
+
+mode n h t s
+m1   94239 1
+m2    2003 1
+m3    1001 2 6012 1
+phys:n 6j 2
+fmult1 method=3 shift=1 data=3
+cut:h,t,s j 0.001
+sdef  par=n  erg=1e-8
+f16:h  2 3 4
+f26:t  2 3 4
+f36:s  2 3 4
+f8:h,t,s  (2 3 4)
+ft8   phl 3 16 1 26 1 36 1
+          3 16 2 26 2 36 2
+          3 16 3 26 3 36 3
+e8    0  20.0 NT
+fu8   0  20.0 NT
+c8    0  20.0 NT
+fq8   c u e
+print
+nps  100000
+prdmp 2j -1 j 8000
+dbcn  26j  1  j  0 12j  1 2j 1
+totnu  no
+tropt  mcscat  gaussian

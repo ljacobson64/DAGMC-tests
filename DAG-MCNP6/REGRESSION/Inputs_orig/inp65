@@ -1,0 +1,32 @@
+Options: mcscat=fnal2 eloss=strag1 nreact=atten nescat=on
+   1  1  -1.85     -1 2 -3
+  2  0            -4 (1:-2:3)
+  3  0             4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  0.0
+  3  pz  1.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+  m1   4009 1.0
+  sdef sur = 2 erg = 1000 par = H dir = 1 pos = 0 0 0
+  imp:h 1 1 0
+  dbcn  41j  -1.  5j  0.   $ DO NOT OVERRIDE THREAD-SAFE CHECKING
+  phys:h 1000
+  tropt  mcscat=fnal2 eloss=strag1 nreact=atten nescat=on
+  mode   h
+c ---------------------------------------------------------------
+  f1:h  3
+  fq1   e c
+  e1    980.0  399i  1000.0
+c
+  f11:h  3
+  fq11   c e
+ *c11    0 799i 11.4592
+c ---------------------------------------------------------------
+  print
+  nps 50000
+  prdmp 2j -1 1 5000
+  cut:h  j 0.001

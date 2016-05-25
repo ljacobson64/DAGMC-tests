@@ -1,0 +1,24 @@
+Electron source, test Auger production.
+1 1 -19.35   -1
+2 0        1 -2
+3 0        2
+
+1 so   1
+2 so   3
+
+dbcn  17j  0  10j  j  13j  0
+c     dbcn  17j  0
+m1 74000.04p  1.
+mode p e
+imp:p 1 1 0
+imp:e 1 1 0
+sdef par e  erg 20
+c
+nps 500
+prdmp 2j  -1
+print
+phys:e  7j 0.
+f4:e    1  2
+e4      .003 .01 .03 .1 .3 1. 3. 10. 20.
+fq4     e  f
+

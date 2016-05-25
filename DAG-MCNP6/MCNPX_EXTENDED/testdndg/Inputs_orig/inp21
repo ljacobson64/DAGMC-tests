@@ -1,0 +1,32 @@
+Test case 1 - Spontanous gamma emission - distributed particle source
+1  1  -1.6   -1  imp:p=1
+2  0          1  imp:p=0
+
+1  so  10.0
+
+mode p # 
+m1   1001 -.002
+     8016 -.527
+     11023 -.021
+     13027 -.061
+     14028 -.345
+     19000 -.029
+     26056 -.016
+     27057 -.0000595    $ use material source
+     27060 -.00040      $ use material source
+     55137 -.0010       $ use material source
+sdef par=d1 erg=0 pos=0 0 0 
+si1   L  7016    sp
+sp1       1      1 
+nps  100
+phys:p 4j 1  j  
+act  NONFISS=p dg=line
+f11:p 1
+e11   0 999i 10
+sd11  1
+f14:p 1
+e14   0 999i 10
+prdmp 2j -1
+print
+c dbcn  20j  j  7j  1  2j  0  0  9j  0
+  dbcn  20j  j  7j  0  2j  0  0  9j  0

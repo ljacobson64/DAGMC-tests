@@ -1,0 +1,38 @@
+test of ft8 cap, sdef par=sf
+21 1 -19 -10
+22 2  -1  10 -11
+23 0      11
+
+10 so 5
+11 so 6
+
+mode s t d h n
+imp:n,h,d,t,s 1 1 0
+phys:n 6j 1
+fmult1 method=3 shift=1 data=3
+phys:h 6j .5
+cut:h j .001
+cut:d j .001
+cut:t j .001
+cut:s j .001
+sdef par n erg=250
+lca   2 1 0 23 1 1 0 1 2    $ INCL4
+lea   1 4 1  0 1 0 2 1      $ ABLA
+m1 92235 .5 92238 .5
+m2 1001 1 1002 1 1003 1 2003 1  3006 1  5010 .1
+nps 500
+print -161 -162
+prdmp 2j -1 j -1
+f4:n 22
+f14:h 21 22
+f8:n 22
+ft8 cap 2003
+f18:n 22
+ft18 cap 3006
+f28:n 22
+ft28 cap 5010
+f38:n 22
+ft38 cap 3006 5010 2003
+dbcn  26j  1  j  0 12j  1 2j 1
+totnu no
+tropt  mcscat  gaussian

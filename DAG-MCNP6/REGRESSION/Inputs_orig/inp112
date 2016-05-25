@@ -1,0 +1,29 @@
+Godiva - with extra junk & big numbers
+12341    87654321 -18.74  -999    imp:n=1
+12342 like 12341 but trcl=(20 0 0)
+12343 like 12341 but trcl=(40 0 0)
+12344 like 12341 but u=99999990
+99999992    0 #12341 #12342 #12343 #12344  imp:n=0
+
+999    so 8.741
+
+kcode 1000 1.0  5 55
+hsrc  4 -9 9    4 -9 9    4 -9 9
+rand  gen=2 seed=12345
+c
+ksrc  0. 0. 0.
+print
+m87654321    92235 -94.73  92238 -5.27
+              1001 -1.e-10
+mt87654321  lwtr
+c
+f9994:n 12341
+fm9994  -1. 87654321 -6
+sd9994 1
+prdmp j j -1 j 200
+c
+fmesh9874:n geom=xyz origin= -9 -9 -9
+      imesh=9 iints=3
+      jmesh=9 jints=3
+      kmesh=9 kints=3
+fm9874  -1 0 -6 -7

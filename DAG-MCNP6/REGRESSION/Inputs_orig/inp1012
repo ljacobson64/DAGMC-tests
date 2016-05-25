@@ -1,0 +1,64 @@
+slabmixed01mg: 20x20x100; 2 parts; mixed el types; volume source
+c
+c  ---------------------------------
+c  - MCNP / REGRESSION Test Suite  -
+c  - Unstructured Mesh Problem #12 -
+c  - Roger Martz                   -
+c  - 10/20/2011                    -
+c  ---------------------------------
+c
+20  0             0     u=2   $ background
+11  1   4.921e-5  0     u=2
+12  1   4.921e-5  0     u=2
+13  1   4.921e-5  0     u=2
+10  2   -0.50     0     u=2
+c
+30  0           -99     fill=2
+40  0            99
+
+99  sph   0.  0. 50. 100.
+
+c ** Modified materials for regression test library **
+c  air
+m1   8016 -75.6
+c  pseudo-concrete
+m2   1001 -0.02  8016 -0.60
+c
+sdef   pos= volumer   erg=2
+c
+mode n
+imp:n  1  1  1  1  1  1  0
+c
+embed2 meshgeo=abaqus
+       mgeoin=um1012.inp
+       meeout=inp1012u
+       gmvfile=inp1012g
+       background= 20
+       matcell=  1 10  2 11  3 12  4 13
+c
+c
+embee4:n  embed=2
+embtb4  1e+39
+embtm4  1.0
+embeb4  1e+10
+embem4  1.0
+c
+embee6:n  embed=2
+embtb6  1e+39
+embtm6  1.0
+embeb6  1e+10
+embem6  1.0
+c
+fmesh4:n  geom=  xyz  origin= -10. -10. 0.
+          imesh=  10  iints=2
+          jmesh=  10  jints=2
+          kmesh= 100  kints=10
+c
+f14:n 11 12 13
+f24:n 10
+c
+cut:n J 1.0e-6
+nps 100000
+dbcn  41j  1.
+print
+prdmp 10000000 10000000  -1 j 8000

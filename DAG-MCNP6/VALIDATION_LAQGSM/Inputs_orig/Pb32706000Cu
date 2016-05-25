@@ -1,0 +1,33 @@
+MCNP6 test: 158 GeV/A Pb207 + Cu64 by LAQGSM03.03, nevtype=66
+  1  1  1.0   -1 2 -3
+  2  0        -4 (1:-2:3)
+  3  0         4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  -1.0
+  3  pz  1.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+dbcn 28j 1
+  m1 29064  1.0
+  sdef erg=32706000 par=82207 dir=1 pos=0 0 0 vec 0 0 1
+  imp:n 1 1 0
+  imp:h 1 1 0
+  phys:g 158008
+  phys:d 158008
+  phys:h 158008
+  phys:# 32706008
+  mode  # n a t d s h
+LCA  2 1 5j -1 1j 1    $ use LAQGSM, nevtype = 66                   !!!
+lcb  0 0 0 0 0 0
+lea  2j 0
+c  tropt genxs inxc70  nreact on  nescat off
+  tropt genxs inxc70
+c ---------------------------------------------------------------
+  print 40 110 95
+  nps 10
+c  nps 10000
+  prdmp 2j -1
+

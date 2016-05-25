@@ -1,0 +1,37 @@
+Test LET tally and new dose equivalent tally
+1   1  -1   -1   imp:n=1
+2   0        1   imp:n=0
+
+1  so 100
+
+m1  8016 1 1001 2
+mode #
+phys:# 11000
+cut:# j 1
+sdef par=26056 erg=d1
+si1 200 10000
+sp1 0 1
+nps 1000
+lca    8j  1
+prdmp 2j -1
+tropt mcscat  gaussian
+f4:#  1
+e4 1e-2 499i 420
+ft4 let
+c
+f34:#  1
+e34 1 9log 10000
+ft34 res 3 28
+fq34  u e f
+c
+fc6 Total dose [Gy]
++f6  1
+sd6  4.18879e6
+fm6   1.6021e-10
+c
+fc16 Total dose equivalent [Sv]
++f16  1
+sd16  4.18879e6
+df16  ic=99 iu=1 fac=-3  $ Use the new NASA/Q_ICRP-60(S(E,p))
+fm16   1.6021e-10
+dbcn    29j  2j  0  0

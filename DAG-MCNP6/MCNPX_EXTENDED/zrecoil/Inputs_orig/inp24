@@ -1,0 +1,25 @@
+test of coincidence capture
+21 1 -19 -10
+22 2  -1  10 -11
+23 0      11
+
+10 so 5
+11 so 6
+
+imp:n 1 1 0
+sdef par -sf
+m1 94238 .3 94240 .4 94242 .3
+m2 2003 1  3006 1  5010 .1
+nps 1000
+print -160
+prdmp 2j -1
+f8:n 22
+ft8 cap 2003
+f18:n 22
+ft18 cap 3006
+f28:n 22
+ft28 cap 5010
+f38:n 22
+ft38 cap 3006 5010 2003
+ptrac event cap file asc
+totnu no

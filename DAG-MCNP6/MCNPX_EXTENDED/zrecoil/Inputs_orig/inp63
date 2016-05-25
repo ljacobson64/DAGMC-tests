@@ -1,0 +1,22 @@
+Test of ft8 phl option: f8 = f6 + f16 pulse
+5 1 -20.   -1   imp:n=1
+6 1 -20.   -2 1 imp:n=1
+9 0         2   imp:n=0
+
+1 so 2
+2 so 4
+
+sdef
+m1 26056 1
+nps 2000
+cut:n 2j 0 0
+print
+F8:n 5
+fq8 e u
+FT8  PHL 1 6 1   1 16 1
+E8   0 19i 2 7i 10 15 
+fu8  0 .1 20log 15
+F6:n 5
+f16:n 6
+prdmp 2j -1
+

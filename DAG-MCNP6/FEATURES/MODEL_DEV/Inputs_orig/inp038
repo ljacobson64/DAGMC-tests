@@ -1,0 +1,101 @@
+High-energy zoo of particles in iron. proton source.
+1  1 -7.8 -1 imp:n,q,h,l,+,-,x,y,o,g,/,z,k,%,^,b,_,~,c,w,@,d,t,s,a,*,?=1
+99 0       1 imp:n,q,h,l,+,-,x,y,o,g,/,z,k,%,^,b,_,~,c,w,@,d,t,s,a,*,?=0
+
+1  so 10
+
+m1    26056  1
+mode  n q h l + - x y o g / z k % ^ b _ ~ c w @ d t s a * ?
+sdef  par=h  erg=1.0e+06
+phys:n  1e6
+phys:h  1e6
+c
+nps     250
+prdmp   2j  -1
+lca     9j   1  $ defaults, except that ilaq = 1
+c
+e0 1.0e3 48ilog 1.0e6 T
+c
+fc14   neutron cell flux tally.
+f14:n  1
+c
+fc54   Aneutron cell flux tally.
+f54:q  1
+c
+fc94   proton cell flux tally.
+f94:h  1
+c
+fc104  lambda0 cell flux tally.
+f104:l 1
+c
+fc114  sigma_plus cell flux tally.
+f114:+ 1
+c
+fc124  sigma_minus cell flux tally.
+f124:- 1
+c
+fc134  xi0 cell flux tally.
+f134:x 1
+c
+fc144  xi_minus cell flux tally.
+f144:y 1
+c
+fc154  omega_minus cell flux tally.
+f154:o 1
+c
+fc194  Aproton cell flux tally.
+f194:g 1
+c
+fc204  pi_plus cell flux tally.
+f204:/ 1
+c
+fc214  pi_zero cell flux tally.
+f214:z 1
+c
+fc224  k_plus cell flux tally.
+f224:k 1
+c
+fc234  k0_short cell flux tally.
+f234:% 1
+c
+fc244  k0_long cell flux tally.
+f244:^ 1
+c
+fc254  Alambda0 cell flux tally.
+f254:b 1
+c
+fc264  Asigma_plus cell flux tally.
+f264:_ 1
+c
+fc274  Asigma_minus cell flux tally.
+f274:~ 1
+c
+fc284  Axi0 cell flux tally.
+f284:c 1
+c
+fc294  xi_plus cell flux tally.
+f294:w 1
+c
+fc304  Aomega_minus cell flux tally.
+f304:@ 1
+c
+fc314  deuteron cell flux tally.
+f314:d 1
+c
+fc324  triton cell flux tally.
+f324:t 1
+c
+fc334  helion cell flux tally.
+f334:s 1
+c
+fc344  alpha cell flux tally.
+f344:a 1
+c
+fc354  pi_minus cell flux tally.
+f354:* 1
+c
+fc364  k_minus cell flux tally.
+f364:? 1
+c
+print
+

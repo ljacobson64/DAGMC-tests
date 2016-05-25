@@ -1,0 +1,28 @@
+Tally tagging (GWM): Test activation by neutrons
+1  1   -1.0   -1    imp:n=1
+2  0          +1    imp:n=0
+
+1 sph 0 0 0  30
+
+mode n p
+cut:n   2j 0 0
+phys:p  3j j 1 j
+act   NONFISS=p dg=line
+sdef erg=14 par=n
+m1    8016.66c .5 8017.66c .5
+nps  5E+04
+f21:p 1
+ft21  tag 1
+fu21  0.0  1.0
+      8016.0 8017.0
+t21   10 9log 1e15
+fq21  t u
+f31:p 1
+ft31  tag 1
+fu31  0.0  1.0
+      8016.0 8017.0
+t31   100 1e15
+e31   0 49i 10
+fq31  t e u
+prdmp 2j -1 j 2000
+dbcn  20j  0  7j  0  2j  0  0  9j  0

@@ -1,0 +1,26 @@
+photonuclear physics
+1   1  -2.7       -1
+2   0          1  -2
+3   0          2
+
+1  so   40
+2  so  200
+
+m1  13027  1
+mode n p
+sdef par=p erg=100
+phys:p j 1 j 1
+cut:n 2j 1.e-20 1.e-21
+print
+nps 10000
+prdmp 2j -1
+imp:n,p 1 1 0
+f11:n  1
+f21:p  1
+f14:n  1
+f24:p  1
+f5:n 0 0 100 0
+c    For backward compatability, set the first calculation of the
+c  point detector average contribution at nps =  200
+dbcn   j j 1 2  62j   200
+phys:n  7j  100000.  $  Set CUT_N(3).

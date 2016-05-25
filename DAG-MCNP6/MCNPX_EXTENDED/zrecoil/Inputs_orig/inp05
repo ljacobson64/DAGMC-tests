@@ -1,0 +1,26 @@
+message: fatal
+
+test of variance reduction.
+21 3  -7 -10
+22 1 -19  10 -11
+23 2  -1  11 -12
+24 0      12
+
+10 so 3
+11 so 5
+12 so 6
+
+imp:n 1 2 3 0
+fmult method=3 shift=1 data=3
+sdef 
+m1 92235 .5 92238 .5
+m2 2003 1
+m3 6000 1
+f18:n 23
+ft18 cap 2003
+f38:n 21
+ft38 cap 6000
+nps 20000
+print -161 -162
+prdmp 2j -1 j -1
+totnu no

@@ -1,0 +1,37 @@
+ macrobody test with box in box walls and center box, tb1
+    1  1 -0.1    -10                $ center low density water box
+    2  3 -0.2    -20   10.6         $ below water box
+    3  0         -20   10.5         $ above water box
+    4  0   -20.1 -20.2 -20.3 -20.4 -10.5 -10.6
+            (10.1:10.2:10.3:10.4)   $ side of water box 
+   11  2 -8.0    -30   20           $ 1st wall delta
+   12  2 -8.0    -40   30           $ 2nd wall delta
+   13  2 -8.0    -50   40           $ 3rd wall delta
+   14  2 -8.0    -60   50           $ 4th wall delta
+   15  2 -8.0    -70   60           $ 5th wall delta
+   16  2 -8.0    -80   70           $ 6th wall delta
+   17  2 -8.0    -90   80           $ 7th wall delta
+   18  0               90           $ outside world
+
+   10  rpp  -50  50   -50  50   -50  50 $ center cube
+   20  rpp -150 150  -150 150  -100 300 $ inner side of wall
+   30  rpp -165 165  -165 165  -115 315 $ 1st delta through wall
+   40  rpp -180 180  -180 180  -130 330 $ 2nd delta through wall
+   50  rpp -195 195  -195 195  -145 345 $ 3rd delta through wall
+   60  rpp -210 210  -210 210  -160 360 $ 4th delta through wall
+   70  rpp -225 225  -225 225  -175 375 $ 5th delta through wall
+   80  rpp -240 240  -240 240  -190 390 $ 6th delta through wall
+   90  rpp -255 255  -255 255  -205 405 $ 7th delta through wall 
+
+mode    n
+imp:n   1 4r 2 4 8 16 32 64 0
+sdef
+c      idum    1
+print
+nps   5000    
+m1     1001.50c -0.1119   8016.50c -0.8881
+m2    26000.55c -1.0      5010.50c -0.01
+m3    14000.50c -1.0
+prdmp 2j -1
+c                         
+

@@ -1,0 +1,24 @@
+High-energy electron/photon problem:  2 Gev down to 500 MeV.
+c      2 GeV E-max;  all condensed history.
+1      1   -5.320  -1           imp:p,e  1.
+2      0            1           imp:p,e  0.
+
+1      so       10.
+
+mode   p e
+m1     31000  1  33000  1  plib=12p elib 03e
+sdef    pos 0 0 0  vec 0 0 1  dir 1  erg 2000.  par 3
+cut:p j 500
+cut:e j 500
+phys:e  2000.
+dbcn    49j  2.
+*f8:p,e   1
++f6       1
+sd6       1.
+*f11:p,e   1
+c
+c
+prdmp  2j -1
+print
+nps   10000
+

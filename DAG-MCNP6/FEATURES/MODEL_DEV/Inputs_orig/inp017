@@ -1,0 +1,39 @@
+C-12 photo-pion production with x-s tallies (600 MeV)
+c  cell cards
+1  1 -2.1   -1    imp:p=1
+2  0         1    imp:p=0
+ 
+c  surface cards
+1  so 20
+ 
+c  physics cards
+m1     6012 1     $ graphite
+mx1:p    model
+mode   p h n / z
+phys:p 3j 1 $ Turn on photonuclear
+phys:n 610
+lca    7j -2 1 $ First interaction only
+c  source cards
+c  wgt=10 to account for 10 source energies
+sdef   erg=600 par=p vec=1 0 0 dir=1 wgt=10
+c  control cards
+print
+nps    2500
+prdmp  2j -1
+dbcn   26j 1 j 0 $ For MCNP6
+c  tally cards
+fc1    pion- prod. x-s (barns)
+f1:/   1
+fm1    .1600 $ 0.32 barns/s (pion1 ~1/2)
+c
+fc11   pion- prod. angle ave. (barns/sr/Mev)
+f11:/  1
+e11    0 99i 500
+fm11   .0127 $ 0.32 barms/4pi/2
+c
+fc21   pion- prod. dbl-diff.  (barns/sr/Mev)
+f21:/  1
+e21    0 99i 500
+c21    -0.9 8i 0.0 9i 1.0 $ 20 cosine bins
+ft21   FRV 1 0 0
+fm21   .2540 $ 0.32 barns*20/4pi/2

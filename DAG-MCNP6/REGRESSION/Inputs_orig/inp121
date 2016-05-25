@@ -1,0 +1,17 @@
+Test of mode N P with large weight and default pwt entry
+1    1 -1 -1
+2    0  1
+
+1    so 10
+
+mode   n p
+imp:n  1 0
+sdef   wgt=1.0e+20
+m1     1001 2 8016 1
+f1:p   1
+e1     1 49i 3.5 5 10 20
+nps    1000
+c      pwt    1  0
+print
+prdmp  2j -1
+

@@ -1,0 +1,27 @@
+This is a test of the ACE Law 61 routines.
+1   1   -8.9       -11    imp:n=1
+2   0              -21    imp:n=1
+3   0              -22    imp:n=1
+4   0     11 21 22 -31    imp:n=1
+9   0               31    imp:n=0
+ 
+11  so    0.1
+21  sz    1.5  1.0
+22  sz   -1.5  1.0
+31  so   10.0
+ 
+sdef
+m1     28061.24c   1
+awtab 28061 60.4
+f1:n   11
+f214:n  2
+f224:n  3
+f315:n  0 0 0.5 0
+f325:n  0 0 1.0 0
+f335:n  0 0 1.5 0
+dxt:n   0 0 1.5 1.0 1.0
+e0      0.1  14.1
+nps     50000
+prdmp 2j -1
+c dbcn 28j 1
+totnu no

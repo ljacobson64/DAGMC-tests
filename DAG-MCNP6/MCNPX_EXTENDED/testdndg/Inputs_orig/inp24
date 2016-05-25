@@ -1,0 +1,36 @@
+Test case 4 - Spontanous gamma emission with heavy ion transport
+1  1  -1.6   -1  imp:p=1
+2  0          1  imp:p=0
+
+1  so  10.0
+
+mode p # n h 
+m1   1001 -.002
+     8016 -.527
+     11023 -.021
+     13027 -.061
+     14028 -.345
+     19000 -.029
+     26056 -.016
+     27057 -.0000595    $ use material source
+     27060 -.00040      $ use material source
+     55137 -.0010       $ use material source
+sdef par=d1 erg=fpar=d2 pos=0 0 0 
+si1   L  7016   7016
+sp1       1      1 
+ds2  L    0      1000
+nps  100
+phys:# 1100
+phys:p 4j 1  j  
+act  NONFISS=p dg=line
+mphys on
+f11:p 1
+e11   0 999i 10
+sd11  1
+f4:#  1
+e4  0 199i 1000
+prdmp 2j -1
+print
+c dbcn  20j  j  5j  1  j  1  2j  0  j  8j  1
+  dbcn  20j  j  5j  1  j  0  2j  0  j  8j  1
+tropt   mcscat gaussian

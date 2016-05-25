@@ -1,0 +1,23 @@
+CONTINUE
+c
+c  ---------------------------------
+c  - MCNP / REGRESSION Test Suite  -
+c  - Unstructured Mesh Problem #09 -
+c  - Roger Martz                   -
+c  - 12/07/2010                    -
+c  ---------------------------------
+c
+embed2 meshgeo=abaqus
+       mgeoin=um1009.inp
+       meein=inp1008u
+       meeout=inp1009u
+       gmvfile=inp1009g
+       filetype=ascii
+       background= 20
+       matcell= 1 11  2 12  3 13  4 14  5 15  6 16  7 17  8 18
+c
+kcode 3000 1 10 30 90000
+prdmp 2J -1 J 4000
+
+
+

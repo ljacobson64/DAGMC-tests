@@ -1,0 +1,27 @@
+LLNL spontaneous fission
+1 101 -0.1  -1
+2 0          1
+
+1 sph 0 0 0 .001
+
+imp:n 1 0
+nps 1000000
+prdmp 2J -1 3 64000
+cut:n 2J 0 0
+print -10 -30 -85 -86
+m101 90232 1
+phys:n 3J j 
+act
+fmult 90232 width=0 method=5
+phys:p 4j 1
+sdef par=sf
+c
+f11:n 1
+e11 1e-11 15iLog 1e-4 200iLOG 20 30
+c
++F306 1
+nonu
+mode n p
+f21:p 1
+e21 .001 200ilog 20
+c  dbcn 28j 1

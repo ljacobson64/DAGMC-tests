@@ -1,0 +1,34 @@
+Test #110: CEM03 transport test, promote antiparticles. Compare 84.
+c 5 GeV protons stopping in U238
+  1  1  -18.68    -1 2 -3
+  2  0            -4 (1:-2:3)
+  3  0             4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  0.0
+  3  pz  10.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+  m1     92238 1
+  sdef   sur = 2 erg = 5000 par = H dir = 1 pos = 0 0 0
+  imp:h  1 1 0
+  tropt  nreact=on
+  phys:h 5000
+  phys:n 5000  6j  20.
+  mode   n h / * z d t s a
+  totnu  no
+  e0     0.5 39ilog 5000.
+  f4:n   1
+  f14:h  1
+  f24:/  1
+  f34:a  1
+  f44:*  1
+  f54:/,*  1
+  lea    0
+  print  10 126 130 140
+  nps    100
+  prdmp  2j -1
+  dbcn   26j   1  14j  -1.
+  lca    8j 1 j   6

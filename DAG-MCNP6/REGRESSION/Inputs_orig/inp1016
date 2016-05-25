@@ -1,0 +1,56 @@
+proton gap; 2 parts, concentric, 1st order hexs
+c
+c  ---------------------------------
+c  - MCNP / REGRESSION Test Suite  -
+c  - Unstructured Mesh Problem #16 -
+c  - Roger Martz                   -
+c  -  7/10/2012                    -
+c  ---------------------------------
+c
+11  1   -2.03   0      u=2
+12  1   -2.03   0      u=2
+13  1   -2.03   0      u=2
+20  0           0      u=2
+30  0         -99      fill=2
+40  0          99
+
+99  sph   0.  0. 0. 15.
+
+c
+m1     74180 0.001300  74182 0.263000  74183 0.143000
+       74184 0.306700  74186 0.286000
+c
+sdef   pos= 0 0 5    erg=20000   nrm= -1  par=H
+       rad=15        sur=99      wgt= 706.8583471
+c
+c sdef pos= 0 0 -5  erg= 2 vec= 0 0 1  dir= .99
+c
+imp:h  1  1  1  1  1  0
+c
+embed2 meshgeo=abaqus
+       mgeoin=um1016.inp
+       meeout=inp1016u
+       gmvfile=inp1016g
+       filetype=ascii
+       background= 20
+       matcell= -1 11  -2 12  -3 13
+c
+c
+embee4:h  embed=1
+embtb4  1e+39
+embtm4  1.0
+embeb4  1e+10
+embem4  1.0
+c
+f14:h  11 12 13 T
+c
+tropt eloss off
+c                    E-loss      Striganov    Int==Atten    Elastic on
+phys:h 23080  3j   j     5j    j            1
+mode   h
+cut:h J 10000
+c
+nps 100000
+print
+void
+prdmp J J J J 10000

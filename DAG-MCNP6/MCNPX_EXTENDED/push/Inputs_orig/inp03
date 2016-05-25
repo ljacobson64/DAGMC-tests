@@ -1,0 +1,41 @@
+   test problem 4 on page 58 of Gregg's LA-13098
+    1   1 .02  -1   
+    2   2 .1   -2 1 3 4
+    3   0       2
+    4   2 .1   -3 5
+    5   2 .1   -4 6
+    6   2 .1   -5
+    7   2 .1   -6
+
+    1  so  10
+    2  so  20
+    3  s  -10 2r 2.1
+    4  s   10 2r 1.1
+    5  s  -10 2r 1.9
+    6  s   10 2r .9
+
+mode    p
+imp:p   1 1 0 1 1 1 1
+m1     92000 1   1000 3
+m2     92000 1   3000 3
+pert1:p   cell=1 rho=.0235
+pert2:p   cell=1 rho=.0270
+pert3:p   cell=1 rho=.0350
+pert4:p   cell=1 rho=.0400
+pert5:p   cell=1 rho=.0400 rxn=-5
+sdef     erg=3  cel=1
+e0    .01 .1 1 5
+f6:p   1 2 6 7   $ heating tally
+sd6    1 1 1 1
+fc4    heating with tally 4
+f4:p   1
+sd4    1
+fm4   (-1 1  -5 -6) 
+fq4    e f
+fq6    f e
+nps   100000
+print  -90 -98 -20 -80
+prdmp   2j -1 j 8000
+phys:p   j  1  2j  1
+dbcn   29j  13j   0
+

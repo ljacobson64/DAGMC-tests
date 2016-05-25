@@ -1,0 +1,16 @@
+PUa-1-0-IN
+c  CELL CARDS
+1  1    1.0    -1    $INFINITE SPHERE
+2  0            1
+
+c  SURFACE CARDS
+*1  so  1.0
+
+c  DATA CARDS
+imp:n   1  0
+kcode   20000  1.5  50  2050
+ksrc    0.0    0.0  0.0
+m1      92250.01m 1.0
+mgopt f 1
+phys:n  j 100
+prdmp   3j 2

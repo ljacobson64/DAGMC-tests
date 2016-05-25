@@ -1,0 +1,66 @@
+simple cube with 1st order tets
+c  Karen Kelley
+c  12/16/2009
+c
+c  1 part; 1x1x1 (1 cm^3); 569 1st order tets
+c  pathological case of source near a vertex causing
+c  tracking issues, essentially, through the vertex
+c  to elements not on the nearest neighbor list
+c
+c  ---------------------------------
+c  - MCNP / REGRESSION Test Suite  -
+c  - Unstructured Mesh Problem #10 -
+c  - Roger Martz                   -
+c  - 12/16/2010                    -
+c  ---------------------------------
+c
+c ---cell cards---
+11   1  4.7984e-02  0         u=2
+20   0              0         u=2
+100  0             -100    fill=2
+999  0              100
+
+c ---surface cards---
+100  so 30.0
+
+c ---material cards---
+c   Material 1: HEU (Godiva)
+c   atom density:  4.7984e-02 at/b-cm
+m1   92235  4.4994e-02
+     92238  2.4984e-03
+     92234  4.9184e-04
+c
+c ---tally cards---
+f4:n 11
+c
+f16:n   11
+f26:p   11
+f36:n,p 11
+c
+embee14:n   embed=2
+c
+embee36:n,p embed=2
+embtb36     0.00001  0.0001 0.001 0.003 0.01 0.05 0.3 0.9 1.0  2.0
+embeb36     0.01  0.1  0.5  2.0  10.0
+c
+c ---source, etc cards---
+sdef x=0.50001 y=0.50001 z=0.50001 erg=14
+totnu  no
+nps 24000
+c
+c rand card must have this history number.
+rand seed=1315 hist=31931734
+c
+prdmp 1e8 1e8 -1 J 2000
+c
+mode n p
+imp:n 1 2r 0
+imp:p 1 2r 0
+c
+embed2 meshgeo=abaqus   mgeoin=um1010.inp  filetype=ascii
+       meeout=inp1010u
+       gmvfile=inp1010g
+       background=20
+       matcell= 1 11
+c
+print

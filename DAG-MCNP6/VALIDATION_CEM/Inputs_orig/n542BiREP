@@ -1,0 +1,123 @@
+MCNP6 test with CEM03.03: 542 MeV n+Bi209 -> p, d, and t spectra
+c d^2sigma/dT/dOmega [mb/sr/MeV] at 54, 68, 90, 121, and 164 deg (+/- 3 deg)
+c to compare with Franz's et al. measurements (Nucl. Phys. A 510 (19906) 774)
+c and results by CEM03.03 and INCL4.5+ABLA07 as stand alone codes
+c as well as by MCNPX 2.6.0 using Bertini+Dresner (default) option
+c as presented at the IAEA Benchmark of Spallation Models, 2009-2010
+1   1  -10   -501      imp:a=1
+2   0         501  -502  imp:a=1
+99  0         502      imp:a=0
+
+501   so 0.01
+502   so 1
+c
+c  tally surfaces
+c
+51     kz    0    1.524970987     1  $ tan(51.0 deg)^2
+57     kz    0    2.371184107     1  $ tan(57.0 deg)^2
+65     kz    0    4.598909932     1  $ tan(65.0 deg)^2
+71     kz    0    8.434440822     1  $ tan(71.0 deg)^2
+87     kz    0    364.0897773     1  $ tan(87.0 deg)^2
+93     kz    0    364.0897773    -1  $ tan(93.0 deg)^2
+118    kz    0    3.537132037    -1  $ tan(118.0 deg)^2
+124    kz    0    2.197987025    -1  $ tan(124.0 deg)^2
+161    kz    0    0.118561505    -1  $ tan(161.0 deg)^2
+167    kz    0    0.053300121    -1  $ tan(167.0 deg)^2
+
+mode n h d t s a / z *
+m1  83209 1
+lca 0 6j -2 1    $ CEM03.03, no transport, only 1st inelastic, no elastic cols.
+nps 10000
+c nps 4e7
+sdef par=n erg=542. vec=0 0 1 dir 1
+phys:h 560 j 0 j j j j
+phys:n 560
+phys:a 560
+phys:d 560
+phys:t 560
+phys:s 560
+phys:/ 560
+phys:z 560
+phys:* 560
+c
+f1:h  502
+c define the "segments" for protons at 54, 68, 90, 121, and 164 (+/- 3) deg
+fs1 -51 -57 -65 -71 -87 93 118 124 161 167 T
+c
+c The following Segment Divisor card is needed to get 1/sr for proton spectra
+sd1   2.32290  $ 2pi(cos0 - cos51.0)
+      0.53207  $ 2pi(cos51.0 - cos57.0)
+      0.76668  $ 2pi(cos57.0 - cos65.0)
+      0.60978  $ 2pi(cos65.0 - cos71.0)
+      1.71677  $ 2pi(cos71.0 - cos87.0)
+      0.65767  $ 2pi(cos87.0 - cos93.0)
+      2.62094  $ 2pi(cos93.0 - cos118.0)
+      0.56374  $ 2pi(cos118.0 - cos124.0)
+      2.42736  $ 2pi(cos124.0 - cos161.0)
+      0.18128  $ 2pi(cos161.0 - cos167.0)
+      0.16104  $ 2pi(cos167.0 - cos180.0)
+      12.56637 $ 4pi
+c
+c     Boundaries of the energy bins: 0-2 MeV; 2-4 MeV, ...
+c     tabulated exactly as used by CEM03.03 as stand alone code
+e0    2     4     6     8     10    12    14    16    18    20
+      22    24    26    28    30    32    34    36    38    40
+      50    60    70    80    90    100   110   120   130   140
+      150   160   170   180   190   200   210   220   230   240
+      260   280   300   320   340   360   380   400   420   440
+      460   480   500   520   540   560
+c
+em1 1040.445 19r 208.089 19r 104.0445 15r
+c  Multiply to sig_inelastic = 2080.89 mb, as predicted by CEM03.03 as a stand
+c  alone code, then divided by 2 [MeV] for the first 20 bins (the value of these
+c  energy bins in MeV), by 10 [MeV] for the next 20 bins, and by 20 [MeV] for the
+c  last 16 bins. This is needed to get the final spectra in [mb/sr/MeV]
+c
+f11:d  502
+c define the "segments" for deutrons at 54, 68, 90, 121, and 164 (+/- 3) deg
+fs11 -51 -57 -65 -71 -87 93 118 124 161 167 T
+c
+c The following Segment Divisor card is needed to get 1/sr for deuteron spectra
+sd11   2.32290  $ 2pi(cos0 - cos51.0)
+      0.53207  $ 2pi(cos51.0 - cos57.0)
+      0.76668  $ 2pi(cos57.0 - cos65.0)
+      0.60978  $ 2pi(cos65.0 - cos71.0)
+      1.71677  $ 2pi(cos71.0 - cos87.0)
+      0.65767  $ 2pi(cos87.0 - cos93.0)
+      2.62094  $ 2pi(cos93.0 - cos118.0)
+      0.56374  $ 2pi(cos118.0 - cos124.0)
+      2.42736  $ 2pi(cos124.0 - cos161.0)
+      0.18128  $ 2pi(cos161.0 - cos167.0)
+      0.16104  $ 2pi(cos167.0 - cos180.0)
+      12.56637 $ 4pi
+c
+em11 1040.445 19r 208.089 19r 104.0445 15r
+c  Multiply to sig_inelastic = 2080.89 mb, as predicted by CEM03.03 as a stand
+c  alone code, then divided by 2 [MeV] for the first 20 bins (the value of these
+c  energy bins in MeV), by 10 [MeV] for the next 20 bins, and by 20 [MeV] for the
+c  last 16 bins. This is needed to get the final spectra in [mb/sr/MeV]
+c
+f21:t  502
+c define the "segments" for tritium at 54, 68, 90, 121, and 164 (+/- 3) deg
+fs21 -51 -57 -65 -71 -87 93 118 124 161 167 T
+c
+c The following Segment Divisor card is needed to get 1/sr for tritium spectra
+sd21   2.32290  $ 2pi(cos0 - cos51.0)
+      0.53207  $ 2pi(cos51.0 - cos57.0)
+      0.76668  $ 2pi(cos57.0 - cos65.0)
+      0.60978  $ 2pi(cos65.0 - cos71.0)
+      1.71677  $ 2pi(cos71.0 - cos87.0)
+      0.65767  $ 2pi(cos87.0 - cos93.0)
+      2.62094  $ 2pi(cos93.0 - cos118.0)
+      0.56374  $ 2pi(cos118.0 - cos124.0)
+      2.42736  $ 2pi(cos124.0 - cos161.0)
+      0.18128  $ 2pi(cos161.0 - cos167.0)
+      0.16104  $ 2pi(cos167.0 - cos180.0)
+      12.56637 $ 4pi
+c
+em21 1040.445 19r 208.089 19r 104.0445 15r
+c  Multiply to sig_inelastic = 2080.89 mb, as predicted by CEM03.03 as a stand
+c  alone code, then divided by 2 [MeV] for the first 20 bins (the value of these
+c  energy bins in MeV), by 10 [MeV] for the next 20 bins, and by 20 [MeV] for the
+c  last 16 bins. This is needed to get the final spectra in [mb/sr/MeV]
+dbcn  28j 1

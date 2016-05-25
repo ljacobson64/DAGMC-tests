@@ -1,0 +1,15 @@
+   continue
+kcode 1000 1 10 40
+dd -1e-6
+fq5 d f
+lost 100
+ctme 1200
+c
+prdmp 100 100 -1
+print
+mplot tally 5 tfc m cop tally 2
+za
+zb
+zc
+c                           
+

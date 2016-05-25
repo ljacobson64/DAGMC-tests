@@ -1,0 +1,27 @@
+testprob 124 - keff sensitivity test problem
+1    1   0.09074403     -1       imp:n=1
+10   0                   1       imp:n=0
+
+1    so   38.50
+
+kcode   500   1.0  5   25
+ksrc   0  0  0
+m1   92235.  0.00013303   92238.  0.006437
+      1001.  0.039097      6012.  0.018797
+mt1   lwtr.
+ksen8  xs  iso = 92235 92238 1001 6012
+           mt  =  1 -2  2  4 -6 16 51 107
+ksen33 xs  iso = 92235 92235 92238
+           mt  = -7 452 455 456 -1018
+           erg = 1.e-10  48ilog  2.e1
+ksen1  xs  iso = 92235  mt = -1018
+           ein = 0.1 1 5 20   erg = 0 1 100
+ksen1001  xs  iso = 1001 lwtr   mt = -1002 -1004
+          ein = 0  1.e-8  1.e-6  0.1  1.0  20
+          erg = 1.e-10  10ilog  1.e1
+ksen3      xs  iso = 1001 92238   mt = -1001
+              cos = -1 19i 1  erg = 0 1 20  ein = 0 0.1 10
+ksen17   xs  iso = 1001 lwtr   mt = 1 -1 2 4 -3
+kopts blocksize=3
+prdmp  2j  -1
+

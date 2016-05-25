@@ -1,0 +1,26 @@
+MCNP6 test: n + Bi -> fission cross section by CEM03.03 at 1000 MeV, nevtype=66
+C To evaluate how MCNP6 with CEM describes preactinide fission cross sections
+  1  1  1.0   -1 2 -3
+  2  0        -4 (1:-2:3)
+  3  0         4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  -1.0
+  3  pz  1.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+  m1 83209 1.0
+  sdef erg = 1000 par = n dir = 1 pos = 0 0 0 vec 0 0 1
+  imp:n 1 1 0
+  phys:n 1010
+  mode   n
+LCA  8j 1    $ use CEM03.02, nevtype = 66                   !!!
+  tropt genxs inxs96  nreact on  nescat off
+c ---------------------------------------------------------------
+  print 40 110 95
+c  nps 1000
+  nps 100000
+  prdmp 2j -1
+

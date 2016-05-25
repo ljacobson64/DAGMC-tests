@@ -1,0 +1,17 @@
+fir tally test problem
+1    0 -1   imp:p 1
+2    0  1   imp:p 0
+
+1    so 10000
+
+mode p
+nps  100
+sdef
+fir5:p 0. 0. 240.1 0
+c       rotation is -30.*tan(angle)
+       -1.0476230848 0. 210. $ 2 degree about y
+       0 70. 0
+fs5 -15  4i 15 $ x
+c5  -20. 5i 20$ y
+prdmp 2j -1
+notrn

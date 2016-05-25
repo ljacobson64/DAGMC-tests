@@ -1,0 +1,20 @@
+test of light ion recoil - gwm
+1 1 -1 -1
+2 0  1
+
+1 RCC 0 0 0  0 0 10  5
+
+mode n s
+imp:n  1 0
+cut:s  j .01
+phys:n 4j j j 1 150
+sdef par=n pos=0 0 .1 vec=0 0 1 dir=1 erg=1
+m1  2003.60c 1
+nps 4000
+e0  0. 30i 1.
+f6:n  1
+f16:s 1
++f26   1
+prdmp 2j -1
+dbcn  26j  1
+tropt  mcscat gaussian

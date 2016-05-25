@@ -1,0 +1,41 @@
+Test DN PN
+1 1 -10 -1 imp:n=1
+2 0      1 imp:n=0
+
+1 so 1
+
+m1 92238 1
+totnu
+c    DATA CARDS
+mode   n p
+c        PHYSICS SECTION
+phys:p 100 0 0  1 1 j
+phys:n 100 2.5e-6 0 j
+act  fission=n,p dn=both dg=line
+c       Source Definition
+c
+sdef erg=D1 par=2 vec=1 0 0
+c SI1 L 0.80
+c SP1 D 1.00
+SI1 L 6.13 6.92 7.12
+SP1 D 0.43 0.14 0.43
+SI2 A  0.00     0.01
+SP2    1.00     1.00
+SI3 -0.00635 0.00635
+SP3 C 0 1
+c   direction assures that the neutrons hit the du
+SI4 H 0.995037 1
+SP4 C 0 1
+c
+c               TALLIES
+f21:n 1
+c ft21 frv 1 0 0
+c e21 2.5e-6 9i 10.0
+t21  100 1e11
+c t21 1. 10. 100. 1.e3 1.e4 1.e5 1.e6 1.e7 1.e8 1.e9 1.e10 1.e11
+c
+c
+stop nps 500 ctme 15
+print
+prdmp 2j -1
+c                         

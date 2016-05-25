@@ -1,0 +1,316 @@
+Modeling Delayed Neutron Emissions in RMC's DNC System
+c Winter 2012
+c
+c --------------GEOMETRY----------------
+c
+c He-3 Detectors
+c
+c   Detector 1
+   10  1000 -0.000511 -201 601 401          $Fill Gas
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+   11  2000    -7.92    201 -101 401        $S.S Container
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+c   Detector 2
+   20  1000 -0.000511 -202 602 402
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+   21  2000    -7.92    202 -102 402
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+c   Detector 3
+   30  1000 -0.000511 -203 603 403
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+   31  2000    -7.92    203 -103 403
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+c   Detector 4
+   40  1000 -0.000511 -204 604 404
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+   41  2000    -7.92    204 -104 404
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+c   Detector 5
+   50  1000 -0.000511 -205 605 405
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+   51  2000    -7.92    205 -105 405
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+c   Detector 6
+   60  1000 -0.000511 -206 606 406
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+   61  2000    -7.92    206 -106 406
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+c Active Fill Area of Detectors
+c
+  14  1000 -0.000511 -601 401
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+  24  1000 -0.000511 -602 402
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+  34  1000 -0.000511 -603 403
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+  44  1000 -0.000511 -604 404
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+  54  1000 -0.000511 -605 405
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+  64  1000 -0.000511 -606 406
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+c
+c Detector Anodes
+c
+   12    2000   -7.92            -401        $D1 anode
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   22     2000  -7.92            -402        $D2 anode
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   32     2000   -7.92           -403        $D3 anode
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   42     2000   -7.92           -404        $D4 anode
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   52     2000    -7.92          -405        $D5 anode
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   62     2000   -7.92           -406        $D6 anode
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+c Detector Tops
+c
+   13  2000      -7.92  -301 401       $D1 top
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   23  2000      -7.92  -302 402       $D2 top
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   33  2000      -7.92  -303 403       $D3 top
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   43  2000      -7.92  -304 404       $D4 top
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   53  2000      -7.92  -305 405      $D5 top
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   63  2000      -7.92  -306 406      $D6 top
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+c Outside Container
+c
+   37  2000      -7.92  -901 902                              $container outside
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   17  6000      -0.93  -902 -901 101 102 103 104 105
+                         106 301 302 303 304 305 306 801      $paraffin moderator
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   18  3000     -0.0013 -903 901 902 801 101 102 103 104 105 106
+                         301 302 303 304 803                  $air surrounding apparatus
+                         305 306
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   19     0              903                                  $geometry void
+       imp:n=0 imp:e=0 imp:h=0 imp:t=0 imp:p=0
+c
+c Poly tubing
+c
+   27  4000   -0.94     -801 802 -903  882                    $PE outer tubing
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   28  3000   -0.0013     -802 -903 507 508 509               $PE inner tubing
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   29  3000   -0.0013     -882 -903 507 508 509               $PE inner tubing
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c Pe vials
+   47  4000   -0.94     -507 508 509  510                     $large vial
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   48  3000   -0.0013        -508                             $bottom smaller vial
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   49  5000  -0.9977 -509                                     $top smaller vial solution
+       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c  59  3000  -0.0013        -510   509                        $air in top smaller vial
+c       imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   57  7000   -0.689   -803                                   $wooden stand
+        imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+   58  3000    -0.0013     -510
+         imp:n=1 imp:e=1 imp:h=1 imp:t=1 imp:p=1
+c
+
+c SURFACE CARDS
+c These surfaces are used for active part inside detectors
+  601       rcc 4 6.928 2.4939      0 0 31.115     2.45 $active area in detector 1
+  602       rcc 8 0 2.4939          0 0 31.115     2.45 $active area in detector 2
+  603       rcc 4 -6.928 2.4939     0 0 31.115     2.45 $active area in detector 3
+  604       rcc -4 -6.928 2.4939    0 0 31.115     2.45 $active area in detector 4
+  605       rcc -8 0 2.4939         0 0 31.115     2.45 $active area in detector 5
+  606       rcc -4 6.928 2.4939     0 0 31.115     2.45 $active area in detector 6
+c
+  101       rcc 4 6.928 0.5    0 0 36.195    2.54  $ detector 1 outside
+  102       rcc 8 0 0.5        0 0 36.195    2.54  $ detector 2 outside
+  103       rcc 4 -6.928 0.5   0 0 36.195    2.54  $ detector 3 outside
+  104       rcc -4 -6.928 0.5  0 0 36.195    2.54  $ detector 4 outside
+  105       rcc -8 0 0.5       0 0 36.195    2.54  $ detector 5 outside
+  106       rcc -4 6.928 0.5   0 0 36.195    2.54  $ detector 6 outside
+c
+c Inside the Detectors
+c
+c
+  201       rcc 4 6.928 0.5889   0 0 36.0172  2.4511  $ detector 1 fill
+  202       rcc 8 0 0.5889       0 0 36.0172  2.4511  $ detector 2 fill
+  203       rcc 4 -6.928 0.5889  0 0 36.0172  2.4511  $ detector 3 fill
+  204       rcc -4 -6.928 0.5889 0 0 36.0172  2.4511  $ detector 4 fill
+  205       rcc -8 0 0.5889      0 0 36.0172  2.4511  $ detector 5 fill
+  206       rcc -4 6.928 0.5889  0 0 36.0172  2.4511  $ detector 6 fill
+c
+c Detector Tops
+c
+  301       rcc 4 6.928 36.695    0 0 3.66  1.13  $ detector 1 top
+  302       rcc 8 0 36.695        0 0 3.66  1.13  $ detector 2 top
+  303       rcc 4 -6.928 36.695   0 0 3.66  1.13  $ detector 3 top
+  304       rcc -4 -6.928 36.695  0 0 3.66  1.13  $ detector 4 top
+  305       rcc -8 0 36.695       0 0 3.66  1.13  $ detector 5 top
+  306       rcc -4 6.928 36.695   0 0 3.66  1.13  $ detector 6 top
+c
+c
+c Detector Anode
+c need to find the actual thickness of the anode
+c Knoll original radius 0.008
+  401       rcc 4 6.928 0.55   0 0 35.9  0.008  $detector 1 anode
+  402       rcc 8 0 0.55       0 0 35.9  0.008  $detector 2 anode
+  403       rcc 4 -6.928 0.55  0 0 35.9  0.008  $detector 3 anode
+  404       rcc -4 -6.928 0.55 0 0 35.9  0.008  $detector 4 anode
+  405       rcc -8 0 0.55      0 0 35.9  0.008  $detector 5 anode
+  406       rcc -4 6.928 0.55  0 0 35.9  0.008  $detector 6 anode
+c
+  507       rcc 0 0 14.7       0 0 5.72  0.8509    $large vial outer
+  508       rcc 0 0 15.1       0 0 2.2   0.4826    $bottom small vial
+  509       rcc 0 0 17.3      0 0 1.38   0.4826    $top small vial solution
+  510       rcc 0 0 18.7       0 0  0.82 0.4826    $air in the top vial
+c
+c
+c Container & Paraffin
+  901       rcc 0 0 0          0 0 34    15        $container outside
+  902       rcc 0 0 0.5        0 0 33.5  14.5      $paraffin outside
+  903       rcc 0 0 -20        0 0 64    35        $air around container
+c
+c Sample Tubing
+  801       rcc 0 0 0.5        0 0 43    1.3       $PE tubing outer diameter bottom
+  882       rcc 0 0 20.42      0 0 22.58 0.8509
+  802       rcc 0 0 0.5        0 0 14.2    0.8509    $PE tubing inner diameter
+c still need to add in the outer big container
+c Wooden stand
+  803       rcc 0 0 -5         0  0 4.9    18      $wooden stand
+c
+
+c MATERIAL AND SOURCE CARDS
+c
+mode  n h t
+c
+phys:n 3j 1015 j j 2 -1
+c Large biasing in the number of delayed neutrons produced
+phys:h j j 0 8j
+c Mix and match tables and physics models for proton interactions
+c
+TOTNU
+dbcn 28j 1 3j 1 $DN on,
+c -------------------------------------------------------------------------
+c                          MATERIAL DEFINITIONS
+c
+c .70c for calculations at room temperature
+c negative fractions indicate wgt%
+c
+m1000    2003.70c              1  $He-3
+c
+m2000    24050.70c      -0.00793  $Steel, Stainless 304,
+         24052.70c     -0.159032
+         24053.70c     -0.018378
+         24054.70c     -0.004661
+         25055.70c         -0.02
+         26054.70c     -0.039605
+         26056.70c     -0.638496
+         26057.70c      -0.01488
+         26058.70c     -0.002019
+         28058.70c     -0.064024
+         28060.70c     -0.025321
+         28061.70c     -0.001115
+         28062.70c     -0.003599
+         28064.70c     -0.000942
+c
+m3000    7014.70c      -0.755636    $Air at sea level
+         8016.70c      -0.231475
+        18036.70c        -3.9e-5
+        18038.70c          -8e-6
+        18040.70c      -0.012842
+c
+m4000    1001.70c      -0.143716    $Polyethylene
+         6000.70c      -0.856284
+mt4000   poly.10t                   $S(alpha,beta)
+c
+m5000
+c $Plutonium-239, dissolved in HNO3/H20 mixture
+c Fissile mass of experimental runs has been increased 1000x
+c This has been accounted for in the corresponding experimental data
+         94239.70c       -0.88e-3
+         1001.70c        -0.107
+         8016.70c        -0.87912
+         7014.70c        -0.013
+mt5000  lwtr.10t                    $Light water scattering
+c
+m6000    1001.70c      -0.148605    $Paraffin
+         6000.70c      -0.851395
+mt6000   poly.10t
+c
+m7000    1001.70c      -0.057889    $wooden stand
+         6000.70c      -0.482667
+         8016.70c      -0.459440
+c data cards
+nps 1e8
+c
+c -----------------------------------
+c                      SOURCE DEFINITION
+c
+c This file is specifically tailored to 0.88 ug Pu-239 sample irradiated for 60s in a
+c thermal flux of 5.57e11 cm^-2 s^-1
+sdef pos=0 0 18.4 par=n cel=49
+     Rad=D2 Ext=D3 AXS 0 1 0
+     erg=0.0253e-6 wgt=3.68e13 tme=d1
+c
+c from 0 - 60s MCNP models the neutron flux in the SLOWPOKE-2 reactor.
+c
+c The paraffin is not present in the experiments and therefore a correction to the neutron
+c flux has been applied.
+c
+c A weight of 3.68e13 applied to the source yields the
+c measured neutron flux of 5.57e11 1/cm^2/s in vial
+c
+c                          Time (sh) in sixty 1s interval
+si1 H
+      0e8 1e8 2e8 3e8 4e8 5e8 6e8 7e8 8e8 9e8
+      10e8 11e8 12e8 13e8 14e8 15e8 16e8 17e8 18e8 19e8
+      20e8 21e8 22e8 23e8 24e8 25e8 26e8 27e8 28e8 29e8
+      30e8 31e8 32e8 33e8 34e8 35e8 36e8 37e8 38e8 39e8
+      40e8 41e8 42e8 43e8 44e8 45e8 46e8 47e8 48e8 49e8
+      50e8 51e8 52e8 53e8 54e8 55e8 56e8 57e8 58e8 59e8 60e8
+sp1
+      0 1 1 1 1 1 1 1 1 1
+      1 1 1 1 1 1 1 1 1 1
+      1 1 1 1 1 1 1 1 1 1
+      1 1 1 1 1 1 1 1 1 1
+      1 1 1 1 1 1 1 1 1 1
+      1 1 1 1 1 1 1 1 1 1 1
+c
+c Source defined inside the PE vial
+si2 H 0 0.4826
+sp2 -21 1
+si3 -1.1 1.1
+c                       PARTICLE TIME, WEIGHT and ENERGY CUT-OFFS
+cut:n 2400e8 j 0 0
+cut:h 2400e8 1e-3 1e-6
+cut:t 2400e8 1e-3 1e-6
+c
+F4:n 49
+T4: 0 179i 180e8 2400e8
+c The neutron flux in cell 49 should be 5.5 cm^-2 s^-1 for the first sixty seconds of the run
+c Energy Deposition in the detector as a function time
+F6:h,t (14 24 34 44 54 64)
+t6 60e8 179i 240e8 2400e8
+

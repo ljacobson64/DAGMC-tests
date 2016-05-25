@@ -1,0 +1,23 @@
+Test LLNL photofission secondaries
+1  1  -19.0     -1  imp:n=1
+2  0             1  imp:n=0
+
+1  so  1.0
+
+mode n p
+m1   92238 1  pnlib=.70u
+PHYS:P j 1 j -1 1 j 1
+sdef par=p erg=12
+LCA  7j -2
+print -85 -86 -161 -162
+prdmp 2j -1 j 64000
+nps   1000000
+f1:n  1
+e1    1e-6 59log 12
+f11:p 1
+e11   1e-3 59log 12
+ft11  tag 3
+fu11  -1 0.00004 92000.00003 92235.00005 92000.00005 92235.00018 1e10
+fq11  e u
+c  dbcn 28j 1
+totnu     no

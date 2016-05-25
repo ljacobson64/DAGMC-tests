@@ -1,0 +1,15 @@
+Test elemental residuals
+1 1 -1 -1 imp:n=1
+2 0     1 imp:n=0
+
+1  so  1
+
+sdef erg=14
+mode n
+phys:n 20
+f8:n 1
+ft8 res 2 7
+m1 6000 1
+nps 1000
+prdmp 2j -1
+c                         

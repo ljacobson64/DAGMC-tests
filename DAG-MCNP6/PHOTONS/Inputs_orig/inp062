@@ -1,0 +1,31 @@
+Test air problem. Default cutoffs, condensed history.
+1    1 -0.001     -1  imp:e,p=1
+2    1 -0.001  1  -2  imp:e,p=1
+3    1 -0.001  2  -3  imp:e,p=1
+4    1 -0.001  3  -4  imp:e,p=1
+5    1 -0.001  4  -5  imp:e,p=1
+6    0         5      imp:p,e 0
+
+1    so    10.
+2    so    20.
+3    so    40.
+4    so    80
+5    so   160.
+
+mode    p e
+c
+sdef    erg 0.186   par p
+m1      7000.12p  .8  8000.12p  .2  elib 03e
+f24:p    1  2  3  4  5
+e24      1.26812e-03  20ilog  .186
+fq24     e  f
+f34:e    1  2  3  4  5
+e34      1.26812e-03  20ilog  .186
+fq34     e  f
+print
+prdmp   2j -1 j 8000
+nps     100000
+cut:p   j   0.001     $  Photon cutoff at 1 keV.
+cut:e   j   0.001     $  Electron cutoff at 1 keV.
+dbcn  17j   2         $  dbcn(18)==2 needed for low-energy work.
+

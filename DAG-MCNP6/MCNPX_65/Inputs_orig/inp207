@@ -1,0 +1,86 @@
+Test heating and mesh heating tallies for electrons and photons.
+c This test problem combines mes(09 10 11 12)
+c
+c Cell Cards
+1 1 -19.35   -1
+2 0        1 -2
+3 0        2
+
+c
+c
+c Surface Cards
+1 so   1
+2 so   3
+
+c Data Cards
+dbcn  17j  2  10j  0  13j  0  6j  2
+c MATERIALS
+m1 74000.  1.
+c
+c IMPORTANCES
+mode p e
+imp:p 1 1 0
+imp:e 1 1 0
+c
+c SOURCE DEFINITION <mes09 mes10>
+sdef par -e erg 20  $  positron source.
+nps 100
+prdmp j -60 -1 j -1
+print
+c PHYSICS DEFINITION <mes12>
+phys:e  7j 0.
+phys:p 4j 1
+c
+fc8   Total energy deposition by *F8 tally.
+*f8:e 1
+c
+fc6   Total energy deposition by +F6 tally.
++f6   1
+fm6   81.0530904626
+c
+fc16  Energy deposition by F16:E tally (electrons only).
+f16:e 1
+fm16  81.0530904626
+c
+fc26  Energy deposition by F26:P tally (photons only).
+f26:p 1
+fm26  81.0530904626
+c
+fc36  Energy deposition by F26:P,E tally (photons and electrons).
+f36:p,e 1
+fm36  81.0530904626
+c
+c RECTANGULAR ENERGY DEPOSITION MESH TALLY FOR ELECTRONS.
+c Conversion to MeV: Multiply the single result by 8.0
+tmesh
+rmesh1:e  pedep
+cora1    -1 1
+corb1    -1 1
+corc1    -1 1
+rmesh3
+cora3    -1 1
+corb3    -1 1
+corc3    -1 1
+c CYLINDRICAL ENERGY DEPOSITION MESH TALLY FOR ELECTRONS.
+c Conversion to MeV: Average the 4 results and multiply by 6.28318530718
+cmesh11:e  pedep
+cora11      0.0 1
+corb11      -1 1
+corc11      90. 180. 270. 360.
+cmesh13
+cora13      0.0 1
+corb13      -1 1
+corc13      90. 180. 270. 360.
+c SPHERICAL ENERGY DEPOSITION MESH TALLY FOR ELECTRONS.
+c Conversion to MeV: Average the 8 results and multiply by 4.18879020479
+smesh21:e pedep
+cora21     0.0 1
+corb21     90. 180.
+corc21     90. 180. 270. 360.
+smesh23
+cora23     0.0 1
+corb23     90. 180.
+corc23     90. 180. 270. 360.
+c
+endmd
+c

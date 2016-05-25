@@ -1,0 +1,46 @@
+c MCNP AVATAR PATCH.WWA15 TEST INPUT-PENETRATION/SHIELDING PROBLEM
+c AVATAR WW GENERATOR
+c WWINP FILE WW GAME
+c WW GENERATION WITH 3 ENERGY GROUPS
+c <AVR02>
+1  1 -2.69 -4                  $SOURCE CELL
+2  2 -1.00 -6 5 -7 4           $WATER AROUND SOURCE
+3  3 -11.4 -9 -8 5 (6:7)       $LEAD SHIELD
+4  2 -1.00 -10                 $TALLY CELL
+5  2 -1.00 -1 2 -3 10 (9:8:-5) $WATER BUCKET
+6  0       1:-2:3              $OUTSIDE WORLD
+
+1  cz  25
+2  pz  -5
+3  pz  50
+4  so  1
+5  pz  -1
+6  cz  1.5
+7  pz  1.5
+8  pz  4
+9  cz  4
+10 sz  30 1
+
+mode  p
+dbcn   29j  13j   0
+imp:p 1 1 1 1 1 0
+phys:p 4j 1
+m1    13000.02p 1.0
+m2    1000.02p .667 8000.02p .333
+m3    82000.02p 1.0
+sdef  erg=.662 pos=0 0 0 
+f4:p  4
+nps   400000
+wwp:p 5 3 5 0 -1
+wwg 4 0
+wwge:p .05 .25 1.0
+mesh origin= -25 -25 -5 ref=0 0 -.3 
+     imesh -1.5  1.5  25 
+     iints  10    5   10 
+     jmesh -1.5  1.5  25  
+     jints  10    5   10   
+     kmesh -1 4 29 31 50
+     kints  3 7 15  1  9
+     vec 9 18 1970
+prdmp 2j -1 j 32000 
+print

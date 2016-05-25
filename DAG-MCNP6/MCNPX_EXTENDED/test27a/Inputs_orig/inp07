@@ -1,0 +1,39 @@
+Embedded Sources (JSH): SI S
+1 0 -1 u=1
+2 0  1 u=1
+3 0 -2 fill=1
+4 0  2
+
+1 so .001
+2 rpp -1 1 -1 1 -1 1
+
+mode p
+imp:p 1 1 1 0
+sdef erg d21 cel=d11 tme=d41
+si41 s 52<51 (D31<32<d33) 61
+sp41   .1 .8 .1 
+si51 A -26 -16
+sp51     0   1
+si52     H 0 1 2
+sp52       0 1 0
+si61 A 32  40
+sp61    1   0
+si31     A 0 .99999999999 1 2
+sp31       1 1 0            1
+si32       0 16
+sp32   -41 8 8
+si33 -16  32
+sp33   0   1
+si11 L (1<3)
+sp11 1
+si21 L 100
+sp21     1
+nps 1000000
+f1:p 1
+t1   -30 74i 45
+fq1 t e
+print 10 170 126 130
+prdmp 2J -1 j 64000
+dbcn  20j  0  7j  0  2j  0  0
+
+

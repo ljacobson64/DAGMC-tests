@@ -1,0 +1,21 @@
+test proton tagging with +F6
+1  1    -1.0   -1    imp:h=1
+2  0            1    imp:h=1
+
+1  so 30
+
+mode  h
+m1    1001 1 6012 1
+mx1:h      j  model
+phys:h 6j 1
+sdef  erg=100 par=h
+nps   10000
+print
++f6   1
+e6    1 99i 101
+ft6   tag 3
+fu6   -1 0 1001.00002 1001.0 6012.00002 6012.06012 6012.0 1e10
+lca    8j  1
+prdmp 2j -1
+dbcn  20j  j  5j  1  j  0  2j  0  j  8j  1 2j 1
+tropt mcscat  gaussian

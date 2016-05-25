@@ -1,0 +1,39 @@
+Test of multiple source particles, sdef surface src.
+1 0    -1
+2 0    -2
+3 0    1 2
+
+1 rcc 0 0 0 0 5 0 4
+2 sx 15 5
+
+mode n h
+print -160 -98 -41 -30 -40 -50 -60
+prdmp 2j -1 j -1
+imp:n 1 1 0
+nps 10000
+sdef par=fcel=d2 pos=fcel=d8 cel=d1 erg=fcel=d3 rad=fcel=d4
+     axs=fcel=d6 ext=fcel=d7
+     dir=fcel=d10
+ds8 L  0 0 0  15 0 0
+si1 L 1 2
+sp1   2 1
+sb1   1 2
+ds2 L h n
+ds3 L 2 3
+ds4 L 3.9999 4.9999
+ds6 L  0 1 0   0 0 0
+ds7 S 9 0
+si9 0 5
+sp9 0 1
+ds10 S 11 12
+si11 .1 .2 .5 .6 .8 .9 1.
+sp11  0  1  0  1  0  1  0
+si12 .2 .3 .7 .8 1.
+sp12  0  1  0  1  0
+fq0  c f
+c0 0 9i 1. T
+f21:n 1.1 1.2 1.3  2
+tf21 4
+f11:h 1.1 1.2 1.3  2
+dbcn  26j  1  j  0
+

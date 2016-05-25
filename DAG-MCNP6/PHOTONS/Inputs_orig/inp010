@@ -1,0 +1,42 @@
+Test PBL/UDT stack with ENDF/B VI.8 photon/electron data.
+101 1    -5.08 -101 U=2 IMP:p,e=1
+110 2    -0.895 101 U=2 IMP:p,e=1
+200 0         -30 U=1 Fill=2 LAT=1 IMP:p,e=1
+302 0     5 -7 11 -12 21 -22  FILL=1 IMP:p,e=1
+311 0         1 -5  11 -12 21 -22  IMP:p,e=1
+312 0         7 -4  11 -12 21 -22  IMP:p,e=1
+320 0         -1:4:-11:12:-21:22 IMP:p,e=0 $ outside world
+
+1 px -2
+2 px -0.499664
+3 px  0.499664
+4 px  2
+5 px -2.805e-3
+6 px 0
+7 px 2.805e-3
+11 py -2.805e-3
+12 py 2.805e-3
+21 pz -2.805e-3
+22 pz 2.805e-3
+30 rpp -1.870E-4 1.870e-4    -1.870e-4 1.870e-4   -1.870e-4 1.870e-4
+101 so 0.0001
+
+mode p e
+nps 100
+rand hist 15245
+dbcn 17j 0
+print
+sdef par=p erg=0.662 X=-0.52 Y=d1 z=d2 vec=1 0 0 dir=1
+si1 H -2.75e-3 2.75e-3
+sp1   0 1
+si2 H -2.75e-3 2.75e-3
+sp2   0 1
+C
+C materials
+c
+m1 57000.12p  1 35000.12p  3 58000.12p  0.0072  elib 03e
+m2  6000.12p 18  1000.12p 34  8000.12p  2       elib 03e
+f1:p  5  7
+f11:p 5  7
+E11 1e-3 98i 1
+

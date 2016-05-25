@@ -1,0 +1,22 @@
+testprob88 -- problem to test number of electron substeps bug
+c
+   1     1    -2.71            -1           imp:n,p,e=1
+   2     2    -2.71             1 -2        imp:n,p,e=1
+   3     0                      2           imp:n,p,e=0
+
+   1    so  2.0
+   2    so  2.00001
+
+MODE E
+NPS  1000
+SDEF  SUR=2  NRM=-1  DIR=D1  WGT=1  ERG=D2  PAR=E
+SB1   -21 2
+SI2   0.01 0.1  0.2
+SP2   0  0.9 0.1
+m1   96243.03e  1.0 $ Cm-243
+m2   96243.03e  1.0 ESTEP=20 $ Cm-243
+F4:E   1
+F14:E  2
+prdmp 2j -1 1
+print 85
+dbcn  17j  0

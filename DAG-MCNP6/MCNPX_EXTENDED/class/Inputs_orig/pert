@@ -1,0 +1,18 @@
+adv class - exercise #1 - perturbation/sensitivity
+1    1 -19.3 -1
+2    0 1
+ 
+1    so 15
+ 
+imp:n 1 0
+sdef erg=1.0
+m1   79197 1
+mode n
+nps  50000
+prdmp 2j -1 j -1
+f1:n 1
+pert1:n cell=1 rho=-38.6 rxn=-2
+print
+cut:n 1j .005
+c                         
+ 

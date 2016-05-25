@@ -1,0 +1,17 @@
+test for kinetics parameters
+1   1   -19.1  -1      imp:n=1
+6   1   -19.1   1 -2   imp:n=2.5
+3   0           2      imp:n=0
+
+1   so  5.0
+2   so  8.0
+
+mode n p
+imp:p  0.5  1.0  0
+kcode  1000 1.0 5 35
+ksrc  0 0 0
+kopts  blocksize=5  kinetics=yes  precursor=yes
+m1   92235  90   92238  10
+prdmp  2j  -1  j  2000
+f4:p  1   T
+

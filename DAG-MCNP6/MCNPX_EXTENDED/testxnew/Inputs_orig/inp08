@@ -1,0 +1,50 @@
+cylinders containing critical fluid in reflecting hex lattice
+1 1 -8.4     -1      u=1     imp:n=1
+2 0          -2      u=1     imp:n=1
+3 2 -2.7      1 2  u=1       imp:n=1
+5 0          -3 9 -10 fill=1 imp:n=1
+6 0          -6 9 fill=1(18 0 0) imp:n=1
+7 3 -.001     3  6 -8 9 -10  imp:n=1
+8 0            8:-9:10       imp:n=0
+
+1 rcc 0  0 0  0 12 0  5
+2 rcc 0 12 0  0 8  0  5
+3 rcc 0 -1 0  0 22 0  6
+6 rcc 18 -1 0  0 22 0  6
+8 rcc 0 -1 0  0 22 0  30
+9* pz 0
+10* p 0 0 0   0 12 0   18 0 10.39230
+
+m1    1001 5.7058e-2   8016 3.2929e-2
+     92238 2.0909e-3  92235 1.0889e-4
+m2   13027 1
+m3   7014 .8 8016 .2
+c
+fc2 Surface flux corresponding to ring detector
+f2:n 8.1
+fs2 1.2 1.3 t
+tf2 3j 3
+sd2 1696.46 188.496 2261.95 4146.90
+fq2 s f
+fc5 Point detector equivalent of ring.
+f5:n 29 6 7.5 0
+fq5 f d
+dd5 -1e-5
+fc14 total flux, keff in each element
+f14:n  (1<5) (1<6) t
+fq14 f m
+sd14 1 1 1
+tf14 3 3j 2
+fm14 (1) (-1 1 -6 -7)
+print -161 -162
+prdmp 2j -1
+c
+kcode 500 1 10 40
+c ksrc 3 6 1   18 1 1   18 11 1   14 2 1   22 10 1   16 10 3   20 2 3
+sdef pos=0 0 0 axs=0 1 0 ext=d1 rad=d2 cel=d3
+si1 0 12
+si2 5
+si3 l (1<5) (1<6)
+sp3  1 6
+c             
+

@@ -1,0 +1,50 @@
+Beddingfield HEU disk to test delayed-gamma lines.
+c  Watt fission surface source started outside of HEU.
+c
+c  **********
+c  Cell cards
+c  **********
+    1    1 -19.0    -1  2  -3   imp:n=1   imp:p=1    $HEU
+    2    0          #1 -10 imp:n=1   imp:p=1    $Void
+    3    0          10 -11 imp:n=1   imp:p=1    $Void to Ge
+    4    0          11 -12 imp:n=1   imp:p=1    $Ge
+ 9000    0            12   imp:n=0   imp:p=0
+ 
+c  *************
+c  Surface cards
+c  *************
+    1    cz  2.54      $Radius 1 in.
+    2    pz -2.794e-2  $Thickness 0.022in.
+    3    pz  2.794e-2  $Thickness 0.022in.
+   10    so  2.70000   $Surface source.
+   11    so  3.00000
+   12    so  4.00000
+ 
+m1    92235.60c  0.9315  92238.60c   0.0685 pnlib=.70u $Use new PN
+c  Detector
+m33   32070.65c 20.5  32072.65c  27.4  32073.65c  7.8
+      32074.65c 36.5  32076.65c   7.8      $at fracs
+totnu
+mode p n
+phys:n 3j j
+phys:p 3j 1 1  j  
+act  FISSION=n,p dg=line
+cut:n j j 0.0
+cut:p j j 0 0
+sdef  par=p erg=12.0 cel=1
+nps  25
+print
+prdmp 2J -1
+fcl:p   1 0 0 0 0
+t0    0.001 0.01 0.1 1.0  10.0  1.0e2 1.0e4 1.0e6
+      1.0e8  1.0e10  1.0e15
+e0    1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 20.0
+f1:n  (1 2 3) 11
+f11:p (1 2 3) 11
+f4:n     1 4
+f14:p    1 4
+c dbcn  20j  j  7j  1  2j  0  0  9j  0
+  dbcn  20j  j  7j  0  2j  0  0  9j  0
+
+
+ 

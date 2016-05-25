@@ -1,0 +1,50 @@
+Test positron annihilation with weight windows.
+1    1 -19.66 -1  -2  wwn1:e 1.   wwn1:p=.02 $  imp:e,p=1
+2    1 -19.66 -1   2  wwn1:e 1.   wwn1:p=.01 $  imp:e,p=1
+3    0         1      wwn1:e -1.  wwn1:p=-1. $  imp:p,e=0
+
+1    so  0.04
+2    px  0.001
+
+mode    p e
+c
+sdef    erg 1.  par f
+phys:e  1.  6j  0.  $  Turn off knock-on electrons.
+m1      74000  1
+fc4   Analog: 5.2000E-01   2.82376E+02 0.0012   2.70090E+02 0.0013
+f4:p    1  2
+e4      .1 .3 .5 .52 .7 1.
+fq4     e  f
+tf4     2  j  j  j  j  j  4  j
+fc21  Analog: 5.2000E-01   1.82539E+00 0.0005
+f21:p   1
+e21     .1 .3 .5 .52 .7 1.
+fc31  Analog: 0.00000E+00 0.0000  -7.70814E-03 0.0274  -7.70814E-03 0.0274
+f31:e   1
+ft31    elc 3
+fq31    e u
+print
+prdmp   2j -1
+nps     1000
+dbcn    j j 396 400 13j 0 24j 0
+c     Results from a one-hour (174880 histories) run without weight windows:
+c     Tally 4   cell:           1                    2
+c            energy
+c          1.0000E-01   2.23585E+01 0.0060   2.03918E+01 0.0066
+c          3.0000E-01   1.79959E+01 0.0083   1.67960E+01 0.0088
+c          5.0000E-01   8.44057E+00 0.0120   7.98132E+00 0.0126
+c          5.2000E-01   2.82376E+02 0.0012   2.70090E+02 0.0013
+c          7.0000E-01   9.82739E-01 0.0381   9.45248E-01 0.0400
+c          1.0000E+00   3.69668E-01 0.0632   3.22919E-01 0.0696
+c            total      3.32523E+02 0.0012   3.16528E+02 0.0014
+c     Tally 21   surface 1
+c            energy
+c          1.0000E-01   4.24405E-02 0.0117
+c          3.0000E-01   8.44579E-02 0.0082
+c          5.0000E-01   7.68355E-02 0.0085
+c          5.2000E-01   1.82539E+00 0.0005
+c          7.0000E-01   6.60453E-03 0.0293
+c          1.0000E+00   2.39021E-03 0.0489
+c            total      2.03812E+00 0.0005
+c     Tally 31   surface 1
+c       0.00000E+00 0.0000  -7.70814E-03 0.0274  -7.70814E-03 0.0274

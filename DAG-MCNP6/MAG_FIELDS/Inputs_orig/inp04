@@ -1,0 +1,30 @@
+Proton beam in a constant field
+1 0 -1 -10
+3 0 1 -10 bflcl 1
+4 0 10
+
+1 pz .0001
+10 so 100
+c  segmenting planes
+11 px 0
+12 px 0.055
+13 px 21.56
+14 px 21.615
+15 px 25.53
+16 px 25.585
+17 px 53.173
+18 px 53.228
+19 px 98.857
+20 px 98.912
+
+imp:h 1 1 0
+sdef dir = 1 vec 0 0 1 erg d1 par h
+si1 L 1.001 5 7 10 30 100
+sp1    0  1 1 1  1  1
+bfld1 const field -3  vec 0 1 0 maxstep 1 mxdeflc 100
+mode h
+prdmp 2j -1
+nps 10000
+f1:h 1
+fs1  -11 -12 -13 -14 -15 -16 -17 -18 -19 -20 T
+dbcn  47j  1

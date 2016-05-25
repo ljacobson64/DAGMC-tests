@@ -1,0 +1,30 @@
+test cyclic time bins
+1  1 -19.0    -1  imp:p=1
+2  0           1  imp:p=0
+
+1  so 10
+
+m1   92235 1
+mode p
+phys:p 3j 1 1 j
+act  fission=p
+mphys on
+lca  7j -2
+sdef par=p erg=15 tme=d1<d2
+si1  0 0.000001e8 .001e8
+sp1  0          1      0
+si2  0        1e8
+sp2  0          1
+f1:p 1
+t1   CBEG=0.0 CFRQ=1000.e-8 COFI=0.000005e8 CONI=0.0005e8 CSUB=5 $ .005e8
+ft1   tag 1
+fu1   92235.99999 92000.0
+f11:p 1
+t11   0 9999i 10e8 1e36 $ Add 2 more 9s to this for detailed testing
+ft11  tag 1
+fu11  92235.99999 92000.0
+nps   500000
+print -160 -161 -162
+prdmp 2j -1 j 32000
+dbcn 9j 1e12
+c                         

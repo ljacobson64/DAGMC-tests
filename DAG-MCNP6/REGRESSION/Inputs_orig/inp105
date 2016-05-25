@@ -1,0 +1,61 @@
+PHTVR -- test nonscoring particles in mesh tallies
+    1     1    -2.0 1 -2 -20
+    2     1    -2.0 2 -3 -20
+    3     2    -0.0012 3 -4 -20
+    4     1    -2.0 4 -5 -20
+    5     1    -2.0 5 -6 -20
+    6     2    -0.0012 6 -7 -20
+    7     1    -2.0 7 -8 -20
+    8     1    -2.0 8 -9 -20
+    9     2    -0.0012 9 -10 -20
+   10     1    -2.0 10 -11 -20
+   30     3  -5.3 -30
+  100     0         (-1 :11 :20 )30 -100
+  101     0         100
+
+    1        py 0
+    2        py 10
+    3        py 20
+    4        py 30
+    5        py 40
+    6        py 50
+    7        py 60
+    8        py 70
+    9        py 80
+   10        py 90
+   11        py 100
+   20        cy 30
+   30         s 50 55 0 7
+  100        so 500
+
+mode  p
+c  To maximize the number of annihilation photons, turn off
+c    bremsstrahlung and set photon energy cutoff to 0.5 MeV
+phys:p j 1
+cut:p j 0.5
+m1    92238    1
+m2    8016     1
+m3    14000    1
+imp:p 1 2.4 1.9 2.5 5.1 6.3 4.9 4 2.5 6.3 2r 0
+nps 10000
+sdef pos 0 -.01 0 par=p erg=50
+dxt:p 50 57 0 7 7.01
+dd2 0
+f4:p 30
+f8:p 30
+*f18:p 30
+f14:p 1 2 3 4 5 6 7 8 9 10
+f108:p 1 2 3 4 5 6 7 8 9 10
+e4 0 1e-5 .001 .1 3i .5 .52 .6 3i 1 1.025 1.5 7i 5.5 7 10 4i 50
+e18 0 1e-5 .001 .1 3i .5 .52 .6 3i 1 1.025 1.5 7i 5.5 7 10 4i 50
+e108 0 1e-5 .001 .1 3i .5 .52 .6 3i 1 1.025 1.5 7i 5.5 7 10 4i 50
+e14 1e-5 .001 .1 3i .5 .52 .6 3i 1 1.025 1.5 7i 5.5 7 10 4i 50
+fmesh104:p geom=rzt origin 0 -0.01 0 axs 0 1 0 vec 1 0 0
+         imesh 31 70 iints 3 1
+         jmesh 101 jints 3
+         kmesh 1 kints 3
+c Count tracks in the mesh tally
+fm104 1 -1
+c    For backward compatability, set the first calculation of the
+c  point detector average contribution at nps =  200
+dbcn 66j 200

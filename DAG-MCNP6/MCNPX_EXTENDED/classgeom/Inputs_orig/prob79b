@@ -1,0 +1,23 @@
+trcl.ex2 trcl example for class
+1 0      -1 fill=1  $ can
+2 2 -7.8 -2 u=1
+3 0       2 u=1
+21 like 1 but *trcl=(30 15 0 45 -45 90 135 45 90 90 90 0) fill=2
+22 like 2 but       u=2 mat=3 rho=-1
+23 like 3 but       u=2
+4 0 #1 #21
+
+1 rcc 0 -10 0  0 20 0  5
+2 sph 0 0 0  3
+
+m2 26000.50c 1
+m3 1001 2 8016 1
+sdef 
+imp:n 1 5r 0
+nps 100000
+f4:n 1 21
+fq4 e f
+prdmp 2j -1 j -1
+dbcn  28j 0
+print 128
+

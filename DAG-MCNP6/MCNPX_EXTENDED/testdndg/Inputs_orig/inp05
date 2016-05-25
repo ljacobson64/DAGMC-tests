@@ -1,0 +1,41 @@
+Test delayed-gamma lines.
+c  Simple HEU sphere to test new delayed-gamma line upgrades.
+c  Watt fission surface source started outside of HEU.
+    1    1 -19.0    -1    imp:n=1   imp:p=1    $HEU
+    2    0           1 -2 imp:n=1   imp:p=1    $Void
+ 9000    0  2    imp:n=0  imp:p=0
+
+    1    so  0.01975
+    2    so  0.02000
+ 
+c  **************
+c  Material cards
+c  **************
+c  at percent per Fisher and Engle Phys Rev 1964.
+m1    92235.60c  0.9990  92238.60c   0.0010
+c
+totnu
+mode p n
+phys:n 3j    j
+phys:p 4j 1  j  
+act  FISSION=n,p dn=model dg=line
+cut:n j j 0 0
+sdef  par=n erg=d1 sur=2 nrm=-1
+sp1  -3
+nps  400
+print
+prdmp 2j -1
+fcl:n   1 0 0
+fc1     f1 delayed-neutron tally particles on surface 1
+f1:n    1
+t0    0.001 0.01 0.1 1.0  10.0  1.0e2 1.0e3 1.0e4 1.0e5 1.0e6 1.0e7
+      1.0e8 5.0e8 1.0e9 5.0e9 1.0e10 5.0e10 1.0e11 5.0e11
+      1.0e12 2.0e12 5.0e12 1.0e13 1.e30
+e0    1.0e-6 1.0e-5 1.0e-4 1.0e-3 1.0e-2 1.0e-1 1.0 2.0 5.0 10.0 100
+fq0   t e
+fc11    f1 delayed-gamma tally particles on surface 1
+f11:p    1
+c dbcn  20j  j  7j  1  2j  0  0
+  dbcn  20j  j  7j  0  2j  0  0    $ mctal diffs if dbcn(29)==0
+
+ 

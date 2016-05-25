@@ -1,0 +1,97 @@
+low background coincidence detector tests, proton source.
+c  poly block
+1   1 -0.95 (-1:-5)  10 11 12 13 14 15 16 17 18 19 imp:n=1
+c  junction box
+2   0       -2  1 5 imp:n=1
+c plastic scintillator 
+3   2 -1.51 -3 5 2 1 imp:n=1
+c  outer poly shield
+4   1 -0.95 -4 3 imp:n=1
+c  air outside
+5   0  -7 4 20 21 22 23 24 25 26 imp:n=1
+c  He-3 detector ensemble
+6   6 -1.25e-3 -10 imp:n=1
+7   6 -1.25e-3 -11 imp:n=1
+8   6 -1.25e-3 -12 imp:n=1
+9   6 -1.25e-3 -13 imp:n=1
+10   6 -1.25e-3 -14 imp:n=1
+11   6 -1.25e-3 -15 imp:n=1
+12   6 -1.25e-3 -16 imp:n=1
+13   6 -1.25e-3 -17 imp:n=1
+14   6 -1.25e-3 -18 imp:n=1
+15   6 -1.25e-3 -19 imp:n=1
+c trolley
+16   4 -7.87 (-20:-21:-22:-23:-24:-25:-26) imp:n=1
+c  rest of the world
+100   0 7 imp:n=0
+
+c  surface cards
+c  poly moderator
+1   RPP   -0.1 58 -24 24  0 15
+c  junctionbox
+2   RPP -10  0 -24 24  0 6.1
+c  scintillator
+3   RPP -11.5 59.5 -25.5 25.5 0 16.5
+c  poly shield
+4   RPP -16.5 64.5 -30.5 30.5 0 21.5
+5   RPP -10 0 -24 24 6 15
+7   so 500
+10  RCC 0 -17.1 1.9 50.8 0 0 1.27
+11  RCC 0 -13.3 1.9 50.8 0 0 1.27
+12  RCC 0 -9.5 1.9 50.8 0 0 1.27
+13  RCC 0 -5.7 1.9 50.8 0 0 1.27
+14  RCC 0 -1.9 1.9 50.8 0 0 1.27
+15  RCC 0  1.9 1.9 50.8 0 0 1.27
+16  RCC 0  5.7 1.9 50.8 0 0 1.27
+17  RCC 0  9.5 1.9 50.8 0 0 1.27
+18  RCC 0  13.3 1.9 50.8 0 0 1.27
+19  RCC 0  17.1 1.9 50.8 0 0 1.27
+c trolley
+20  RPP -16.5 64.5 -30.5 30.5 -0.2 0
+21  RPP -36.5 -16.5 -30.5 30.5 10 10.2
+22  RPP 64.5 84.5 -30.5 30.5 10 10.2
+c wheels
+23  RCC -26.5 -30.5 5 0 4 0 10
+24  RCC -26.5  30.5 5 0 -4 0 10
+25  RCC  74.5 -30.5 5 0 4 0 10
+26  RCC  74.5  30.5 5 0 -4 0 10
+
+c  material cards
+m1   6000.24c 0.3333 1001.24c 0.6667
+c    plastic scintillator rough estimate
+m2   6012. 0.5 1001. 0.5
+c  air
+m3    7014.50c 0.78  8016.50c 0.21  18000.35c 0.01
+c  stainless steel
+m4    26000.55c -0.72  24000.50c -0.18  28000.50c -0.1
+c  concrete
+m5    1001.50c   0.1043   
+      8016.50c   0.5844
+      11023.50c  0.014   
+      13027.50c  0.0317
+      14000      0.2111   
+      20000      0.0386
+m6 2003. 1.0
+C  Source Definition Cards
+mode n h
+phys:h 10000
+phys:n 10000 10000 3j 
+SDEF   erg=500 pos 25 0 100 vec 0 0 -1 dir 1 par h
+f4:n  (6 7 8 9 10 11 12 13 14 15)
+fm4   (-1 6 103)
+sd4    1
+f88:n  (6 14 15) (7 5i 13) t
+ft88 cap 2003
+f8:h  3
+sd8   1
+e8    0 1e-6 1e-3 1e-2 1e-1 1 10 100 1000 10000
++F18:h  3
+sd18  1
+f14:h 3
+sd14  1
+print
+nps 2000
+prdmp 2j -1
+dbcn  26j  1  j  0 12j  1 2j 1
+lca    8j  1
+tropt  mcscat  gaussian

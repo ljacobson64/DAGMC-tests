@@ -1,0 +1,31 @@
+MCNP6 test: p + Au by LAQGSM03.03 at 0.800 GeV, nevtype=66
+C To evaluate cosmic-ray activation of tellurium
+  1  1  1.0   -1 2 -3
+  2  0        -4 (1:-2:3)
+  3  0         4
+
+c ---------------------------------------------------------------
+  1  cz  4.0
+  2  pz  -1.0
+  3  pz  1.0
+  4  so  50.0
+
+c ---------------------------------------------------------------
+dbcn 28j 1
+  m1 79197 1.0
+  sdef erg = 800 par = H dir = 1 pos = 0 0 0 vec 0 0 1
+  imp:n 1 1 0
+  imp:h 1 1 0
+  phys:h 810
+  mode   h
+LCA  2 1 5j -1 1j 1    $ use LAQGSM, nevtype = 66                   !!!
+lcb  0 0 0 0 0 0
+lea  2j 0
+c  tropt genxs inxc98  nreact on  nescat off
+  tropt genxs inxc97
+c ---------------------------------------------------------------
+  print 40 110 95
+c  nps 1000
+  nps 1000000
+  prdmp 2j -1
+
