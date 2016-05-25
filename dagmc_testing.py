@@ -79,12 +79,8 @@ class dagmc_test:
         for key, val in self.other.items():
             if key == 'sat':
                 return
-            if key == 'xslib':
-                link_orig = os.path.join('../..', self.dirs['xsdir'], val)
-                link_new = os.path.join(self.dirs['result'], val)
-            else:
-                link_orig = os.path.join('../..', self.dirs['input'], val)
-                link_new = os.path.join(self.dirs['result'], val)
+            link_orig = os.path.join('../..', self.dirs[key], val)
+            link_new = os.path.join(self.dirs['result'], val)
             call_shell('ln -snf ' + link_orig + ' ' + link_new)
 
         # Write FLUKA process file (FluDAG only)

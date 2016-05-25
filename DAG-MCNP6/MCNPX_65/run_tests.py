@@ -62,20 +62,22 @@ for name in names_to_run:
         test.flags.append('fatal')
 
     # Cross section data
+    test.dirs['xsdir'] = '../xsec_data'
+    test.dirs['xslib'] = '../xsec_data'
     if test.name in ['003', '004', '005', '006', '007', '013', '015', '016',
                      '019', '021', '024', '030', '031', '032', '033', '035',
                      '036', '037', '038', '040', '041', '042', '043', '102',
                      '103', '104', '105', '106', '107', '108', '109', '110',
                      '118', '119', '120', '121', '122', '129', '303', '304',
                      '306', '309', '329', '205', '206', '208', '209', '250']:
-        test.dirs['xsdir'] = '../xsec_data'
         test.inputs['xsdir'] = 'testdir1'
         test.other['xslib'] = 'testlib1'
-    if test.name in ['']:
+    if test.name in ['123']:
         test.dirs['xsdir'] = '../xsec_data'
         test.inputs['xsdir'] = 'xsdir27d'
 
     # WWINP input
+    test.dirs['wwinp'] = 'Files'
     if test.name in ['008']:
         test.inputs['wwinp'] = 'wwinp008'
     if test.name in ['010', '301']:
@@ -84,6 +86,7 @@ for name in names_to_run:
         test.inputs['wwinp'] = 'wwinp014'
 
     # GENXS files
+    test.dirs['genxs'] = 'Files'
     if test.name in ['115', '116', '215', '216']:
         test.other['genxs'] = 'inxs' + test.name
 

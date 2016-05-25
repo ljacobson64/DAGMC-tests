@@ -41,6 +41,7 @@ for name in names_to_run:
     test.outputs['mctal'] = 'mctal'
 
     # Tally card files
+    test.dirs['tally_cards'] = 'Files'
     if test.name in ['heu_point']:
         test.other['tally_cards'] = 'tally_u.dat'
 

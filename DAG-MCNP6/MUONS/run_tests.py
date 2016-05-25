@@ -47,6 +47,7 @@ for name in names_to_run:
 
     # Cross section data
     test.dirs['xsdir'] = '../xsec_data'
+    test.dirs['xslib'] = '../xsec_data'
     if test.name in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
                      '11', '12']:
         test.inputs['xsdir'] = 'xsdirph'

@@ -48,6 +48,7 @@ for name in names_to_run:
     test.outputs['mctal'] = 'mctal'
 
     # GENXS files
+    test.dirs['genxs'] = 'Files'
     if test.name in ['bg4.5C_pi_CEM']:
         test.other['genxs'] = 'inxs026'
     if test.name in ['bg4.5GeV_Nb_30CEM']:

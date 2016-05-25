@@ -75,6 +75,7 @@ for name in names_to_run:
         test.flags.append('fatal')
 
     # WWINP input
+    test.dirs['wwinp'] = 'Files'
     if test.name in ['cy02', 'cy04', 'cy05', 'cy12', 'cy13', 'cy14', 'cy18',
                      'cy19', 'cy23', 'cy33', 'cy36', 'cy38', 'cy39',
                      'cy04_noRR', 'cy12_noRR', 'cy13_noRR', 'cy14_noRR',

@@ -41,6 +41,7 @@ for name in names_to_run:
     test.outputs['mctal'] = 'mctal'
 
     # Cross section data
+    test.dirs['xs'] = 'Files'
     if test.name in ['prob1_abs', 'prob2_abs', 'prob3_abs']:
         test.other['xs'] = 'xs1.txt'
     if test.name in ['prob1_sct', 'prob2_sct', 'prob3_sct']:

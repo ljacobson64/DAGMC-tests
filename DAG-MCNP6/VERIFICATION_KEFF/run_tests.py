@@ -47,7 +47,8 @@ for name in names_to_run:
     test.outputs['mctal'] = 'mctal'
 
     # Cross section data
-    test.dirs['xsdir'] = 'Inputs'
+    test.dirs['xsdir'] = 'Files'
+    test.dirs['xslib'] = 'Files'
     test.inputs['xsdir'] = 'keffdir1'
     test.other['xslib'] = 'kefflib1'
 

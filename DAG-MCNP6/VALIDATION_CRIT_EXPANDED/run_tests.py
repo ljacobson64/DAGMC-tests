@@ -95,6 +95,7 @@ for name in names_to_run:
     test.outputs['mctal'] = 'mctal'
 
     # Cross section data
+    test.dirs['xsdir'] = 'Files'
     test.inputs['xsdir'] = 'xsdir_endf71'
 
 dagtest.run_multiple_tests(names_to_run, tests, args)
