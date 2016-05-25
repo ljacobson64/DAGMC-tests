@@ -54,7 +54,7 @@ for name in names_to_run:
         test.inputs['xsdir'] = 'testdir1'
         test.other['xslib'] = 'testlib1'
     if test.name in ['043']:
-        test.dirs['xsdir'] = os.getenv['DATAPATH']
+        test.dirs['xsdir'] = os.getenv('DATAPATH')
         test.inputs['xsdir'] = 'xsdir_mcnp6.1_endfb-7.0'
 
     # GENXS files
