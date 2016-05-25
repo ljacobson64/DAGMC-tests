@@ -4,7 +4,7 @@ import sys
 
 current_dir = \
     os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-base_dir = os.path.dirname(os.path.dirname(current_dir))
+base_dir = os.path.dirname(os.path.dirname(os.path.dirname(current_dir)))
 sys.path.insert(0, base_dir)
 import dagmc_testing as dagtest
 
@@ -38,5 +38,14 @@ for name in names_to_run:
     test.other['sat'] = test.inputs['inp'] + '.sat'
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
+
+    # Cross section data
+    test.dirs['xsdir'] = '../../xsec_data'
+    test.dirs['xslib'] = '../../xsec_data'
+    test.inputs['xsdir'] = 'testdir1'
+    test.other['xslib'] = 'testlib1'
+
+    # MESHTAL output
+    test.outputs['meshtal'] = 'meshtal'
 
 dagtest.run_multiple_tests(names_to_run, tests, args)
