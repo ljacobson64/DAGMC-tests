@@ -69,6 +69,12 @@ for name in names_to_run:
                      '71', '76', '77', '89', '104', '123', '130', '133']:
         test.flags.append('fatal')
 
+    # Cross section data
+    test.dirs['xsdir'] = '../xsec_data'
+    test.dirs['xslib'] = '../xsec_data'
+    test.inputs['xsdir'] = 'testdir1'
+    test.other['xslib'] = 'testlib1'
+
     # WWINP input
     test.dirs['wwinp'] = 'Files'
     if test.name in ['08', '10', '14', '93']:
