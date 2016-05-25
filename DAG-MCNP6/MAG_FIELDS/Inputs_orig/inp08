@@ -112,7 +112,7 @@ c set 1
 118 1  px   1896.4
 119 1  px   2096.4
 c imagelocation 1
-40 1  px   2096.400001
+40 1  px   2096.400001000001
 
 mode h
 phys:h 25000  9j  1.
