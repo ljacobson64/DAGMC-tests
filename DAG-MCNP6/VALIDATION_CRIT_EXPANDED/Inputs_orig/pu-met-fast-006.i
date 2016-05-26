@@ -14,11 +14,7 @@ vol        390.21  58549.54      0.0
 area       258.24   7324.14
 totnu
 c        Plutonium (4.8 at.% Pu-240)
-#ifdef ENDF7
 m1        31069.     8.8692e-5        31071.     5.8858e-5  $ ENDF/B-VII.0
-#else
-m1        31000.     1.4755e-4                              $ ENDF/B-VI
-#endif
           94239.     3.6697e-2        94241.     1.1639e-4
           94240.     1.8700e-3
 c        Normal Uranium Reflector

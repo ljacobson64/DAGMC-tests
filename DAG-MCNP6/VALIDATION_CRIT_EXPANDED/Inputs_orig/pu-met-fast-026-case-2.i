@@ -16,11 +16,7 @@ kcode   10000  1.  100  600
 ksrc    1  0  0
 c      Materials specified with atom densities
 m1   94239.  3.6603e-2     94240.  6.6917e-4
-#ifdef ENDF7
      31069.  1.3250e-3     31071.  8.7934e-4  $ ENDF/B-VII.0
-#else
-     31000.  2.2043e-3                        $ ENDF/B-VI
-#endif
      26054.  8.2045e-6     26056.  1.2755e-4
      26057.  2.9203e-6     26058.  3.8937e-7
       6000.  2.8435e-4

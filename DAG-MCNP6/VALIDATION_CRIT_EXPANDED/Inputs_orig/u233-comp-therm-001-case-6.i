@@ -2,42 +2,18 @@ BAPL SB Crits  Core 5  U-235 Seed, ThO2 Blanket  U233-COMP-THERM-001, case 6
 c    U233-COMP-THERM-001  Case 6
 c     Universe 1:  Seed Pin Cell
 1     6   0.082231    -2    11   -15        u=1   $ Seed Pin
-#ifdef ENDF7
 2     1   0.043036    -2   -11              u=1   $ ENDF/B-VII.0 Bottom End Plug
-#else
-2     1   0.042537    -2   -11              u=1   $ ENDF/B-V Bottom End Plug
-#endif
-#ifdef ENDF7
 3     1   0.043036    -2    15              u=1   $ ENDF/B-VII.0 Top End Plug
-#else
-3     1   0.042537    -2    15              u=1   $ ENDF/B-VI Top End Plug
-#endif
 4     0                2    -3              u=1   $ Void
-#ifdef ENDF7
 5     1   0.043036     3    -4              u=1   $ ENDF/B-VII.0 Cladding
-#else
-5     1   0.042537     3    -4              u=1   $ ENDF/B-VI Cladding
-#endif
 6     2   0.118281     4    -5    12   -13  u=1   $ Polyethylene Ring
 7     3   0.100103     4                #6  u=1   $ Water
 c    Universe 2:  Blanket Pin Cell
 8     8   0.064923    -6    11   -15        u=2   $ Th02 Pin
-#ifdef ENDF7
 9     1   0.043036    -6   -11              u=2   $ ENDF/B-VII.0 Bottom End Plug
-#else
-9     1   0.042537    -6   -11              u=2   $ ENDF/B-VI Bottom End Plug
-#endif
-#ifdef ENDF7
 10    1   0.043036    -6    15              u=2   $ ENDF/B-VII.0 Top End Plug
-#else
-10    1   0.042537    -6    15              u=2   $ ENDF/B-VI Top End Plug
-#endif
 11    0                6    -7              u=2   $ Void
-#ifdef ENDF7
 12    1   0.043036     7    -8              u=2   $ ENDF/B-VII.0 Cladding
-#else
-12    1   0.042537     7    -8              u=2   $ ENDF/B-VI Cladding
-#endif
 13    3   0.100103     8                    u=2   $ Water
 14    3   0.100103    -1                    u=3   $ Water
 15    4   0.088821    14   -17    28   -31    24   -25  $ Control Blade C
@@ -158,13 +134,11 @@ c         Zircaloy-2 Cladding
 m1        40090.  2.1885e-2         40091.  4.7727e-3
           40092.  7.2951e-3         40094.  7.3929e-3
           40096.  1.1910e-3
-#ifdef ENDF7
           50112.  4.8420e-6         50114.  3.2447e-6  $ ENDF/B-VII.0
           50115.  1.6972e-6         50116.  7.2581e-5  $ ENDF/B-VII.0
           50117.  3.8337e-5         50118.  1.2090e-4  $ ENDF/B-VII.0
           50119.  4.2880e-5         50120.  1.6268e-4  $ ENDF/B-VII.0
           50122.  2.3112e-5         50124.  2.8902e-5  $ ENDF/B-VII.0
-#endif
 c         Polyethylene  (0.9183 g/cc)  N-tot=0.11828
 m2         1001.  7.8854e-2
            6000.  3.9427e-2

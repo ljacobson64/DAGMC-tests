@@ -118,12 +118,8 @@ ksrc 8. 0. 00.402 0. 8. 00.402 -8. 0. 00.402 0. -8. 00.402&
 imp:n 1 37r 0
 totnu
 c      Materials specified with atom fractions
-#ifdef ENDF7
 m1   12024.  1.35073e-2     12025.  1.71000e-3   $ ENDF/B-VII.0
      12026.  1.88271e-3                          $ ENDF/B-VII.0
-#else
-m1   12000.  1.71000e-2                          $ ENDF/B-VI
-#endif
      13027.  9.61193e-1
      25055.  2.52173e-3
      29063.  1.32704e-2     29065.  5.91480e-3
