@@ -112,7 +112,7 @@ c set 1
 118   pz   1896.4
 119   pz   2096.4
 c image location 1
-40   pz   2096.400001000001
+40   pz   2096.4005
 
 mode h
 phys:h 25000
