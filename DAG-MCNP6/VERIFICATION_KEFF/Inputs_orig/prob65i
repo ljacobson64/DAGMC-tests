@@ -2,7 +2,7 @@ URRd-H2Oc(1)-2-0-ISLC
 c  CELL CARDS
 1  1  1.0  3  -1       $SEMI-INFINITE SLAB
 2  2  1.0  1  -2       $REFLECTOR
-3  0     (-3 1):(-1 2) $OUTSIDE WORLD
+c 3  0     (-3 1):(-1 2) $OUTSIDE WORLD
 
 c  SURFACE CARDS
  1   px 0.341011     $Fissile boundary
@@ -10,7 +10,7 @@ c  SURFACE CARDS
 *3   px 0.0
 
 c  DATA CARDS
-imp:n   1  1  0
+imp:n   1  1
 kcode   20000  1.0  100  2100
 ksrc    0.1    0.0  0.0
 m1      92250.30m 1.0

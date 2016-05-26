@@ -61,13 +61,13 @@ c    tritium target zone positioned at the center of this 1.9 mfp light water sp
 c    ------
 1    524 -1.0        -4  -9
 2    524 -1.0         4   8  -9
-3    502 -7.9        ((-100 2  -5):(2  5  -6  -12))  #(-101 -111 103) $ exclude target assembly
+3    502 -7.9        ((     2  -5):(2  5  -6  -12))  #(-101 -111 103) $ exclude target assembly
 4    502 -7.9        ((-2  11 -12):(2  6  11  -12))  #(-101 -111 103) $ exclude target assembly
 5    0               ((-2   3  -6):(3  6  -7  -10))  #(-101 -111 103) $ exclude target assembly
 6    0               ((-3  10 -11):(3  6  10  -11))  #(-101 -111 103) $ exclude target assembly
 7    502 -7.9         (-3   4  -7):(4  7  -8  -10)
 8    502 -7.9         (-4   9 -10):(4  8   9  -10)
-9    501 -0.001288    100  -5 -12   #(-101 -111 103) $ exclude target assembly; surf 100 replaces surf 1
+9    501 -0.001288         -5 -12   #(-101 -111 103) $ exclude target assembly; surf 100 replaces surf 1
 10   501 -0.001288    12  -99       #(-101 -111 103) $ exclude target assembly
           #(145 -146 147 -100)  $ exclude  26-deg beamline (modeled separately)
           #(155 -156 157 -100)  $ exclude  30-deg beamline (modeled separately)
