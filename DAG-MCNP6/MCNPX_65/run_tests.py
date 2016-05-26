@@ -55,6 +55,8 @@ for name in names_to_run:
     # CN option
     if test.name in ['025', '026']:
         test.flags.append('CN')
+        del test.inputs['gcad']
+        del test.other['sat']
 
     # FATAL option
     if test.name in ['001', '002', '008', '009', '011', '012', '014', '017',

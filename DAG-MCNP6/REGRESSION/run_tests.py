@@ -57,10 +57,14 @@ for name in names_to_run:
     # "C 2" option
     if test.name in ['61']:
         test.flags.append('C 2')
+        del test.inputs['gcad']
+        del test.other['sat']
 
     # CN option
     if test.name in ['25', '26', '104', '1002', '1009']:
         test.flags.append('CN')
+        del test.inputs['gcad']
+        del test.other['sat']
 
     # FATAL option
     if test.name in ['01', '02', '07', '08', '09', '11', '12', '13', '14', '15',

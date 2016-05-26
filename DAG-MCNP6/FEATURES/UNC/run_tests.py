@@ -43,6 +43,8 @@ for name in names_to_run:
     # C option
     if test.name in ['case2a', 'case2b']:
         test.flags.append('c')
+        del test.inputs['gcad']
+        del test.other['sat']
 
     # Cross section data
     test.dirs['xsdir'] = '../../xsec_data'
