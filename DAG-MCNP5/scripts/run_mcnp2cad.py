@@ -6,8 +6,7 @@ import multiprocessing as mp
 def run_mcnp2cad(inp_file):
     sat_file = os.path.join(os.path.dirname(os.path.dirname(inp_file)),
                             'Geom_sat', os.path.basename(inp_file) + '.sat')
-    run_string = 'mcnp2cad ' + inp_file + ' -o ' + sat_file + \
-                 ' --geomver 1902 --tol=0.0000000001'
+    run_string = 'mcnp2cad ' + inp_file + ' -o ' + sat_file + ' --geomver 1902'
     print run_string
     call(run_string, shell = True)
 
