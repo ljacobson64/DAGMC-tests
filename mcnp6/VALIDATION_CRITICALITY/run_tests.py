@@ -33,7 +33,7 @@ for name in names_to_run:
 
     # Common
     test.dirs['orig'] = current_dir
-    test.dirs['input'] = 'Inputs'
+    test.dirs['input'] = 'Inputs_dagmc'
     test.dirs['sat'] = 'Geom_sat'
     test.dirs['gcad'] = 'Geom_h5m'
     test.dirs['result'] = 'Results/' + test.name
