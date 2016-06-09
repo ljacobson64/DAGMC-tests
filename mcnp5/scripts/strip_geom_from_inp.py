@@ -5,9 +5,9 @@ def strip_geom_from_inp(inp_orig_file):
     lines_in = reader.readlines()
     reader.close()
 
-    # Put the DAG-MCNP input file in the "Inputs" directory
+    # Put the DAG-MCNP input file in the "Inputs_dagmc" directory
     inp_file = os.path.join(os.path.dirname(os.path.dirname(inp_orig_file)),
-                            'Inputs', os.path.basename(inp_orig_file))
+                            'Inputs_dagmc', os.path.basename(inp_orig_file))
 
     num_blank_lines = 0
     prdmp_found = False
@@ -37,32 +37,32 @@ def strip_geom_from_inp(inp_orig_file):
             lines_out.append('c ' + line + '\n')
 
         # Make sure the third entry on the PRDMP card is -2
-        elif line.strip().lower().startswith('prdmp'):
-            prdmp_found = True
-            prdmp_in = line.split()
-            prdmp_out = ['prdmp', 'j', 'j', '-2', '', '']
-            if prdmp_in[1].lower() == '2j':
-                j2 = 1
-                prdmp_out[1] = prdmp_in[1]
-                prdmp_out[2] = ''
-            else:
-                j2 = 0
-                prdmp_out[1] = prdmp_in[1]
-                prdmp_out[2] = prdmp_in[2]
-            if len(prdmp_in) > 4 - j2:
-                prdmp_out[4] = prdmp_in[4 - j2]
-            if len(prdmp_in) > 5 - j2:
-                prdmp_out[5] = prdmp_in[5 - j2]
-            prdmp_out = ' '.join([x for x in prdmp_out if x])
-            lines_out.append(prdmp_out + '\n')
+        #elif line.strip().lower().startswith('prdmp'):
+        #    prdmp_found = True
+        #    prdmp_in = line.split()
+        #    prdmp_out = ['prdmp', 'j', 'j', '-2', '', '']
+        #    if prdmp_in[1].lower() == '2j':
+        #        j2 = 1
+        #        prdmp_out[1] = prdmp_in[1]
+        #        prdmp_out[2] = ''
+        #    else:
+        #        j2 = 0
+        #        prdmp_out[1] = prdmp_in[1]
+        #        prdmp_out[2] = prdmp_in[2]
+        #    if len(prdmp_in) > 4 - j2:
+        #        prdmp_out[4] = prdmp_in[4 - j2]
+        #    if len(prdmp_in) > 5 - j2:
+        #        prdmp_out[5] = prdmp_in[5 - j2]
+        #    prdmp_out = ' '.join([x for x in prdmp_out if x])
+        #    lines_out.append(prdmp_out + '\n')
 
         # Write line as normal
         else:
             lines_out.append(line + '\n')
 
     # Write the PRDMP card if it wasn't already written
-    if not prdmp_found:
-        lines_out.append('prdmp 2j -2\n')
+    #if not prdmp_found:
+    #    lines_out.append('prdmp 2j -2\n')
 
     writer = open(inp_file, 'wb')
 
@@ -78,18 +78,18 @@ def strip_geom_from_inp(inp_orig_file):
 
     writer.close()
 
-# Find all the files in directories called "Inputs_orig"
+# Find all the files in directories called "Inputs_native"
 inp_orig_dirs = []
 inp_orig_files = []
 for root, dirnames, filenames in os.walk('.'):
-    if os.path.basename(root) == 'Inputs_orig':
+    if os.path.basename(root) == 'Inputs_native':
         inp_orig_dirs.append(root)
         for f in filenames:
             inp_orig_files.append(os.path.join(root, f))
 
-# Create the "Inputs" directories where the new input files will be placed
+# Create the "Inputs_dagmc" directories where the new input files will be placed
 for inp_orig_dir in inp_orig_dirs:
-    inp_dir = os.path.join(os.path.dirname(inp_orig_dir), 'Inputs')
+    inp_dir = os.path.join(os.path.dirname(inp_orig_dir), 'Inputs_dagmc')
     if not os.path.exists(inp_dir):
         os.makedirs(inp_dir)
 

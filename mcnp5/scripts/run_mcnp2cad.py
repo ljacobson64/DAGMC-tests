@@ -24,7 +24,7 @@ jobs = args.jobs
 inp_dirs = []
 inp_files = []
 for root, dirnames, filenames in os.walk('.'):
-    if os.path.basename(root) == 'Inputs_orig':
+    if os.path.basename(root) == 'Inputs_mcnp2cad':
         inp_dirs.append(root)
         for f in filenames:
             inp_files.append(os.path.join(root, f))
