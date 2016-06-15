@@ -68,6 +68,9 @@ for name in names_to_run:
                      '078', '079', '100', '153', '155', '156', '171', '172',
                      '173', '174', '175', '176', '177']:
         test.inputs['xsdir'] = 'xsdirph'
+    if test.name in ['051', '052', '053', '054', '055', '056', '057', '058',
+                     '059', '153']:
+        test.other['xslib'] = 'testlib1'
     if test.name in ['001', '002', '003', '004', '009', '139']:
         test.inputs['xsdir'] = 'testdir1'
         test.other['xslib'] = 'testlib1'
