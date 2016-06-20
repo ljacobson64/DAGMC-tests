@@ -82,7 +82,7 @@ def strip_geom_from_inp(inp_orig_file):
 inp_orig_dirs = []
 inp_orig_files = []
 for root, dirnames, filenames in os.walk('.'):
-    if os.path.basename(root) == 'Inputs_native':
+    if os.path.basename(root) == 'Inputs_mcnp2cad':
         inp_orig_dirs.append(root)
         for f in filenames:
             inp_orig_files.append(os.path.join(root, f))
