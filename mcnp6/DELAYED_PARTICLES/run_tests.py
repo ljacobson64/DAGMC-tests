@@ -43,6 +43,6 @@ for name in names_to_run:
     # Tally card files
     test.dirs['tally_cards'] = 'Files'
     if test.name in ['heu_point']:
-        test.other['tally_cards'] = 'tally_u.dat'
+        test.other['tally_cards'] = 'tally_u_dagmc.dat'
 
 dagtest.run_multiple_tests(names_to_run, tests, args)
