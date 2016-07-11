@@ -7,6 +7,7 @@ import multiprocessing as mp
 class dagmc_test:
     def __init__(self, name, args):
         self.name = name
+        self.exe = 'run.sh'
 
         self.dirs = {}
         self.inputs = {}
@@ -78,12 +79,12 @@ class dagmc_test:
         # Other files (DAG-MCNP only)
         for key, val in self.other.items():
             if key == 'sat':
-                return
+                continue
             link_orig = os.path.join('../..', self.dirs[key], val)
             link_new = os.path.join(self.dirs['result'], val)
             call_shell('ln -snf ' + link_orig + ' ' + link_new)
 
-        # Write FLUKA process file (FluDAG only)
+        # FLUKA process file (FluDAG only)
         if self.physics == 'fluka':
             writer = open(os.path.join(self.dirs['result'], 'process'), 'w')
             for i in range(1, self.num_runs + 1):
@@ -91,9 +92,7 @@ class dagmc_test:
             writer.write('\n' + self.name + '\n')
             writer.close()
 
-    # Run the physics code
-    def run_physics(self):
-        # Execution string
+        # Execution script
         exe_strs = ['']*2
         if self.physics == 'mcnp5' or self.physics == 'mcnp6':
             if self.mpi_jobs > 1:
@@ -105,7 +104,7 @@ class dagmc_test:
                 exe_strs[0] += ' ' + key + '=' + val
             for depend in self.depends:
                 exe_strs[0] += ' ' + depend[1] + '=' + depend[1] + '_' + depend[0]
-            exe_strs[1] += 'rm -f fcad'
+            exe_strs[1] += 'rm -f fcad runtpe srctp'
         elif self.physics == 'fluka':
             if self.run_type != 'code':
                 exe_strs[0] += (' $FLUPRO/flutil/rfluka -N0 -M' +
@@ -121,11 +120,17 @@ class dagmc_test:
                 exe_strs[1] += '$FLUPRO/flutil/usxsuw < process'
         exe_strs[0] = exe_strs[0].strip()
         exe_strs[1] = exe_strs[1].strip()
+        with open(os.path.join(self.dirs['result'], self.exe), 'wb') as writer:
+            writer.write('#!/bin/bash\n\n')
+            for line in exe_strs:
+                writer.write(line + '\n')
+        call_shell('chmod +x ' + os.path.join(self.dirs['result'], self.exe))
 
+    # Run the physics code
+    def run_physics(self):
         # Run the code
         os.chdir(self.dirs['result'])
-        call_shell(exe_strs[0], 'screen_out', 'screen_err', False)
-        call_shell(exe_strs[1], 'screen_out', 'screen_err', True)
+        call_shell('bash ' + self.exe, 'screen_out', 'screen_err', False)
         os.chdir(self.dirs['orig'])
 
         # Diff against the template
@@ -197,11 +202,11 @@ def parse_args():
                         help = 'tests to process (default: all)')
     parser.add_argument('-d', '--dagmc_preproc', action = 'store_true',
                         help = 'run dagmc_preproc')
-    parser.add_argument('-s', '--setup_dirs', action = 'store_true',
+    parser.add_argument('-s', '--setup', action = 'store_true',
                         help = 'setup result directories')
-    parser.add_argument('-r', '--run_physics', action = 'store_true',
+    parser.add_argument('-r', '--run', action = 'store_true',
                         help = 'run physics code')
-    parser.add_argument('-c', '--copy_results', action = 'store_true',
+    parser.add_argument('-c', '--copy', action = 'store_true',
                         help = 'copy results to template directory')
     parser.add_argument('-j', '--jobs', type = int, default = 1,
                         help = 'number of jobs')
