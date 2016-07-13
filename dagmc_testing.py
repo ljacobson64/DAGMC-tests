@@ -18,6 +18,14 @@ class dagmc_test:
         self.run_type = None   # native or dagmc
 
         # DAG-MCNP only
+        self.dirs['input'] = 'Inputs_dagmc'
+        self.dirs['input_m2c'] = 'Inputs_mcnp2cad'
+        self.dirs['sat'] = 'Geom_sat'
+        self.dirs['gcad'] = 'Geom_h5m'
+        self.dirs['result'] = os.path.join('Results', self.name)
+        self.dirs['temp'] = os.path.join('Templates', self.name)
+        self.inputs['gcad'] = self.name + '.h5m'
+        self.other['sat'] = self.name + '.sat'
         self.flags = []
         self.meshes = []
         self.depends = []
@@ -33,18 +41,23 @@ class dagmc_test:
     def __str__(self):
         return str(self.__dict__) + '\n'
 
-    # Run dagmc_preproc on an ACIS file
-    def run_dagmc_preproc(self, ftol = '1e-4'):
-        if (('sat' not in self.dirs) or ('sat' not in self.other) or
-            ('gcad' not in self.dirs) or ('gcad' not in self.inputs)):
-            return
+    # Run mcnp2cad on a MCNP input file
+    def run_mcnp2cad(self, mergetol = 1e-4):
+        inp_file = os.path.join(self.dirs['input_m2c'], self.inputs['inp'])
+        sat_file = os.path.join(self.dirs['sat'], self.other['sat'])
 
-        satfile = os.path.join(self.dirs['sat'], self.other['sat'])
-        gcadfile = os.path.join(self.dirs['gcad'], self.inputs['gcad'])
+        call_shell('mkdir -p ' + self.dirs['sat'])
+        call_shell('mcnp2cad ' + inp_file + ' -o ' + sat_file +
+                   ' --geomver=1902' + ' --tol ' + str(mergetol))
+
+    # Run dagmc_preproc on an ACIS file
+    def run_dagmc_preproc(self, ftol = 1e-4):
+        sat_file = os.path.join(self.dirs['sat'], self.other['sat'])
+        gcad_file = os.path.join(self.dirs['gcad'], self.inputs['gcad'])
 
         call_shell('mkdir -p ' + self.dirs['gcad'])
-        call_shell('dagmc_preproc ' + satfile + ' -o ' + gcadfile + ' -f ' +
-                   str(ftol))
+        call_shell('dagmc_preproc ' + sat_file + ' -o ' + gcad_file +
+                   ' -f ' + str(ftol))
 
     # Setup results directory
     def setup_result_dir(self):
@@ -150,20 +163,24 @@ class dagmc_test:
 
     # Perform all steps required for the test
     def run_test(self, args):
+        # Run mcnp2cad on a MCNP input file
+        if args.mcnp2cad:
+            self.run_mcnp2cad()
+
         # Run dagmc_preproc on an ACIS file
         if args.dagmc_preproc:
             self.run_dagmc_preproc()
 
         # Setup results directory
-        if args.setup_dirs:
+        if args.setup:
             self.setup_result_dir()
 
         # Run physics
-        if args.run_physics:
+        if args.run:
             self.run_physics()
 
         # Copy results to template directory
-        if args.copy_results:
+        if args.copy:
             self.copy_results()
 
 # Needed to make pool.apply_async() work
@@ -200,6 +217,8 @@ def parse_args():
                                      'Setup and/or run MCNP tests.')
     parser.add_argument('tests', nargs = '*', default = 'all',
                         help = 'tests to process (default: all)')
+    parser.add_argument('-m', '--mcnp2cad', action = 'store_true',
+                        help = 'run mcnp2cad')
     parser.add_argument('-d', '--dagmc_preproc', action = 'store_true',
                         help = 'run dagmc_preproc')
     parser.add_argument('-s', '--setup', action = 'store_true',
@@ -213,8 +232,8 @@ def parse_args():
     parser.add_argument('--mpi', action = 'store_true',
                         help = 'run DAG-MCNP in MPI mode')
     args = parser.parse_args()
-    if (not args.dagmc_preproc and not args.setup_dirs and not args.run_physics
-        and not args.copy_results):
+    if (not args.mcnp2cad and not args.dagmc_preproc and not args.setup_dirs and
+        not args.run_physics and not args.copy_results):
         parser.print_help()
         sys.exit(1)
     return args
