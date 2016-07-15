@@ -30,13 +30,6 @@ for name in names_to_run:
 
     # Common
     test.dirs['orig'] = current_dir
-    test.dirs['input'] = 'Inputs_dagmc'
-    test.dirs['sat'] = 'Geom_sat'
-    test.dirs['gcad'] = 'Geom_h5m'
-    test.dirs['result'] = 'Results/' + test.name
-    test.dirs['temp'] = 'Templates/' + test.name
-    test.inputs['gcad'] = test.inputs['inp'] + '.h5m'
-    test.other['sat'] = test.inputs['inp'] + '.sat'
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
 
