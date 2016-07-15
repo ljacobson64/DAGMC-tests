@@ -14,9 +14,10 @@ names = ['BE08', 'C29', 'CCR20', 'COAIR', 'COTEF', 'FE09', 'FS1ONN', 'FS3OFN',
          'FS3ONP', 'FS7OFP', 'FS7ONN', 'H2O19', 'KERMIN', 'LI616', 'N31',
          'PB14', 'SKYINP', 'SMAIR', 'SMTEF',
          'duct_therm_neutron_oneleg_conc', 'duct_therm_neutron_oneleg_reinf',
+         'duct_therm_neutron_twoleg_conc', 'duct_therm_neutron_twoleg_reinf',
          'duct_therm_neutron_threeleg_conc',
-         'duct_therm_neutron_threeleg_reinf', 'duct_therm_neutron_twoleg_conc',
-         'duct_therm_neutron_twoleg_reinf', 'fns_config1_neutron_onaxis',
+         'duct_therm_neutron_threeleg_reinf',
+         'fns_config1_neutron_onaxis',
          'fns_config3_neutron_offaxis', 'fns_config3_photon_onaxis',
          'fns_config7_neutron_onaxis', 'fns_config7_photon_offaxis', 'lps_berl',
          'lps_carbon', 'lps_conc', 'lps_iron', 'lps_lead', 'lps_lith',
@@ -45,5 +46,17 @@ for name in names_to_run:
     test.dirs['orig'] = current_dir
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
+
+    # WWINP input
+    test.dirs['wwinp'] = 'Files'
+    if test.name in ['duct_therm_neutron_oneleg_conc',
+                     'duct_therm_neutron_oneleg_reinf']:
+        test.inputs['wwinp'] = 'duct_therm_neutron_oneleg.wwinp'
+    if test.name in ['duct_therm_neutron_twoleg_conc',
+                     'duct_therm_neutron_twoleg_reinf']:
+        test.inputs['wwinp'] = 'duct_therm_neutron_twoleg.wwinp'
+    if test.name in ['duct_therm_neutron_threeleg_conc',
+                     'duct_therm_neutron_threeleg_reinf']:
+        test.inputs['wwinp'] = 'duct_therm_neutron_threeleg.wwinp'
 
 dagtest.run_multiple_tests(names_to_run, tests, args)
