@@ -37,9 +37,27 @@ def get_lines_and_tokens_in_def(lines_all, start_line):
 
     return lines, tokens
 
+def parse_implike_data(imps_str):
+    imps = []
+    for token in imps_str:
+        if token[-1] == 'r':
+            num_repeat = int(token[:-1])
+            for j in range(num_repeat):
+                imps.append(imps[-1])
+        elif token[-1] == 'i':
+            num_interp_lin = int(token[:-1])
+        elif token[-1] == 'ilog':
+            num_interp_log = int(token[:-4])
+        elif token[-1] == 'm':
+            mult = float(token[:-1])
+            imps.append(imps[-1] * mult)
+        else:
+            imps.append(float(token))
+    return imps
+
 def read_data_cards(lines_in):
     num_lines = len(lines_in)
-    imps = []
+    data = {}
 
     # Loop over all the lines in the original input file
     num_blank_lines = 0
@@ -71,27 +89,13 @@ def read_data_cards(lines_in):
         lines, tokens = get_lines_and_tokens_in_def(lines_in, i)
         num_lines_skip = len(lines) - 1
 
-        # Figure out whether the data card is an IMP card and if it is, load
-        # the importance data into memory
-        imps = []
-        if 'imp:' in tokens[0]:
-            for token in tokens[1:]:
-                if token[-1] == 'r':
-                    num_repeat = int(token[:-1])
-                    for j in range(num_repeat):
-                        imps.append(imps[-1])
-                elif token[-1] == 'i':
-                    num_interp_lin = int(token[:-1])
-                elif token[-1] == 'ilog':
-                    num_interp_log = int(token[:-4])
-                elif token[-1] == 'm':
-                    mult = float(token[:-1])
-                    imps.append(imps[-1] * mult)
-                else:
-                    imps.append(float(token))
-            break
+        # Load the data into the dictionary
+        card_type = tokens[0]
+        data[card_type] = []
+        for token in tokens[1:]:
+            data[card_type].append(token)
 
-    return imps
+    return data
 
 def strip_imp0_from_inp(inp_orig_file):
     # Read input from file
@@ -105,7 +109,15 @@ def strip_imp0_from_inp(inp_orig_file):
     num_lines = len(lines_in)
 
     # Read the data cards
-    imps = read_data_cards(lines_in)
+    data = read_data_cards(lines_in)
+
+    # Get importance data out of the data dictionary
+    imps = {}
+    for key in data:
+        if key[:4] == 'imp:':
+            particle_types = key[4:].split(',')
+            for particle_type in particle_types:
+                imps[particle_type] = parse_implike_data(data[key])
 
     # Put the mcnp2cad input file in the "Inputs_mcnp2cad" directory
     inp_file = os.path.join(os.path.dirname(os.path.dirname(inp_orig_file)),
@@ -147,28 +159,30 @@ def strip_imp0_from_inp(inp_orig_file):
             num_lines_skip = len(lines) - 1
 
             # Get the cell's importance
+            comment_this_line = False
             if imps:  # specified in data cards
-                imp_found = True
-                imp = imps[cell_index]
+                for particle_type in imps:
+                    imp = imps[particle_type][cell_index]
+                    if imp == 0:
+                        comment_this_line = True
             else:  # specified with cell card
-                imp = -1
-                imp_found = False
                 for k, token in enumerate(tokens):
-                    if token.lower().startswith('imp:'):
-                        imp_found = True
-                        if '=' in token:
-                            imp = float(token.split('=')[1])
-                        elif tokens[k + 1] == '=':
-                            imp = float(tokens[k + 2])
-                        else:
-                            imp = float(tokens[k + 1])
+                    if not token.lower().startswith('imp:'):
+                        continue
+                    if '=' in token:
+                        imp = float(token.split('=')[1])
+                    elif tokens[k + 1] == '=':
+                        imp = float(tokens[k + 2])
+                    else:
+                        imp = float(tokens[k + 1])
+                    if imp == 0:
+                        comment_this_line = True
 
             # Comment out the card if IMP = 0
-            if imp_found and imp == 0:
-                for line in lines:
+            for line in lines:
+                if comment_this_line:
                     lines_out.append('c ' + line + '\n')
-            else:
-                for line in lines:
+                else:
                     lines_out.append(line + '\n')
 
         # Surface card
@@ -211,4 +225,4 @@ for inp_orig_file in inp_orig_files:
     except:
         num_failure += 1
         print 'FAILURE: ' + inp_orig_file
-print 'Success: ' + str(num_success) + ', Failure:  ' + str(num_failure)
+print 'Successes: ' + str(num_success) + ', Failures: ' + str(num_failure)
