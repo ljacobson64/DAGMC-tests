@@ -21,19 +21,19 @@ def get_tokens_in_def(lines_all, start_line):
         line = lines_all[ii]
         if not line:
             break
-        if (continue_line or line.startswith('     ') or
-            line.split()[0].lower() == 'c'):
+        if continue_line or line.startswith('     ') or line.split()[0] == 'c':
             lines.append(line)
         else:
             break
         tokens = line.split()
-        for token in tokens:
-            if token == '$':
-                break
-            if token == '&':
-                continue_line = True
-                break
-            continue_line = False
+        if not tokens[0] == 'c':
+            for token in tokens:
+                if token == '$':
+                    break
+                if token == '&':
+                    continue_line = True
+                    break
+                continue_line = False
     for line in reversed(lines):
         if line.split()[0] == 'c':
             lines.pop()
@@ -55,7 +55,6 @@ def get_tokens_in_def(lines_all, start_line):
 def parse_floats(tokens, num_entries):
     floats = []
     for token in tokens:
-        token = token.lower()
         if token[-1] == 'j':
             if token[:-1]:
                 num_zero = int(token[:-1])
@@ -100,7 +99,7 @@ def read_block(lines_all, block):
             continue
         elif num_blank_lines < block:  # Haven't reached block of interest yet
             continue
-        elif line.split()[0].lower() == 'c':  # Comment line
+        elif line.split()[0] == 'c':  # Comment line
             continue
 
         # Get tokens for the line and any continuation lines
@@ -118,11 +117,15 @@ def strip_imp0_from_inp(inp_orig_file):
     reader = open(inp_orig_file, 'r')
     lines_in = reader.readlines()
     reader.close()
+    num_lines = len(lines_in)
 
     # Strip trailing whitespace
     for i, line in enumerate(lines_in):
         lines_in[i] = line.rstrip()
-    num_lines = len(lines_in)
+
+    # Convert to lowercase (except title)
+    for i, line in enumerate(lines_in[1:]):
+        lines_in[i + 1] = line.lower()
 
     # Read all the cards
     title_card = lines_in[0]
