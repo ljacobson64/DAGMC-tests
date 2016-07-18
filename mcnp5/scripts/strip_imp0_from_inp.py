@@ -1,6 +1,19 @@
 import os
 
-def get_lines_and_tokens_in_def(lines_all, start_line):
+def write_tokens_mcnp(writer, tokens, max_length = 80):
+    lines = []
+    line = tokens[0]
+    for token in tokens[1:]:
+        if len(line) + len(token) > max_length - 1:
+            lines.append(line)
+            line = '     ' + token
+        else:
+            line += ' ' + token
+    lines.append(line)
+    for line in lines:
+        writer.write(line + '\n')
+
+def get_tokens_in_def(lines_all, start_line):
     num_lines = len(lines_all)
     lines = [lines_all[start_line]]
     continue_line = False
@@ -8,7 +21,8 @@ def get_lines_and_tokens_in_def(lines_all, start_line):
         line = lines_all[ii]
         if not line:
             break
-        if continue_line or line.startswith('     ') or line.split()[0].lower() == 'c':
+        if (continue_line or line.startswith('     ') or
+            line.split()[0].lower() == 'c'):
             lines.append(line)
         else:
             break
@@ -25,6 +39,7 @@ def get_lines_and_tokens_in_def(lines_all, start_line):
             lines.pop()
         else:
             break
+    num_lines_card = len(lines)
 
     tokens = []
     for line in lines:
@@ -35,67 +50,68 @@ def get_lines_and_tokens_in_def(lines_all, start_line):
                 break
             tokens.append(token)
 
-    return lines, tokens
+    return tokens, num_lines_card
 
-def parse_implike_data(imps_str):
-    imps = []
-    for token in imps_str:
-        if token[-1] == 'r':
+def parse_floats(tokens, num_entries):
+    floats = []
+    for token in tokens:
+        token = token.lower()
+        if token[-1] == 'j':
+            if token[:-1]:
+                num_zero = int(token[:-1])
+            else:
+                num_zero = 1
+            for ii in range(num_zero):
+                floats.append(0)
+        elif token[-1] == 'r':
             num_repeat = int(token[:-1])
-            for j in range(num_repeat):
-                imps.append(imps[-1])
+            for ii in range(num_repeat):
+                floats.append(floats[-1])
         elif token[-1] == 'i':
             num_interp_lin = int(token[:-1])
         elif token[-1] == 'ilog':
             num_interp_log = int(token[:-4])
         elif token[-1] == 'm':
             mult = float(token[:-1])
-            imps.append(imps[-1] * mult)
+            floats.append(floats[-1] * mult)
         else:
-            imps.append(float(token))
-    return imps
+            floats.append(float(token))
+    for ii in range(num_entries - len(floats)):
+        floats.append(0.)
+    return floats
 
-def read_data_cards(lines_in):
-    num_lines = len(lines_in)
-    data = {}
+def read_block(lines_all, block):
+    num_lines_total = len(lines_all)
+    block_data = []
 
-    # Loop over all the lines in the original input file
+    # Loop over all the lines in the original input file (skip the title card)
     num_blank_lines = 0
-    num_lines_skip = 0
-    i = -1
-    while i < num_lines - (num_lines_skip + 1):
-        i += 1 + num_lines_skip
-        num_lines_skip = 0
-        line = lines_in[i]
+    num_lines_card = 0
+    i = 1
+    while i < num_lines_total - num_lines_card:
+        i += num_lines_card
+        line = lines_all[i]
+        num_lines_card = 1
 
-        # Blank line
-        if line.strip() == '':
+        if line.strip() == '':  # Blank line
             num_blank_lines += 1
-            # MCNP does not read lines after the third blank line
-            if num_blank_lines >= 3:
+            if num_blank_lines > block:  # The block of interest has ended
                 break
             continue
-
-        # Comment line
-        elif line.split()[0].lower() == 'c':
+        elif num_blank_lines < block:  # Haven't reached block of interest yet
+            continue
+        elif line.split()[0].lower() == 'c':  # Comment line
             continue
 
-        # Not data card
-        if num_blank_lines != 2:
-            continue
-
-        # Data card
-        # Figure out how many lines the data card spans
-        lines, tokens = get_lines_and_tokens_in_def(lines_in, i)
-        num_lines_skip = len(lines) - 1
+        # Get tokens for the line and any continuation lines
+        tokens, num_lines_card = get_tokens_in_def(lines_all, i)
 
         # Load the data into the dictionary
-        card_type = tokens[0]
-        data[card_type] = []
-        for token in tokens[1:]:
-            data[card_type].append(token)
+        block_data.append([])
+        for token in tokens:
+            block_data[-1].append(token)
 
-    return data
+    return block_data
 
 def strip_imp0_from_inp(inp_orig_file):
     # Read input from file
@@ -108,95 +124,91 @@ def strip_imp0_from_inp(inp_orig_file):
         lines_in[i] = line.rstrip()
     num_lines = len(lines_in)
 
-    # Read the data cards
-    data = read_data_cards(lines_in)
+    # Read all the cards
+    title_card = lines_in[0]
+    cell_cards = read_block(lines_in, 0)
+    surf_cards = read_block(lines_in, 1)
+    data_cards = read_block(lines_in, 2)
+    num_cells = len(cell_cards)
+    num_surfs = len(surf_cards)
+    num_datas = len(data_cards)
 
-    # Get importance data out of the data dictionary
-    imps = {}
-    for key in data:
-        if key[:4] == 'imp:':
-            particle_types = key[4:].split(',')
-            for particle_type in particle_types:
-                imps[particle_type] = parse_implike_data(data[key])
+    # Get info from data cards that needs to be appended to cell cards instead
+    cell_data_types = ['imp', 'fcl', 'elpt']
+    cell_data = {}
+    for data_card in data_cards:
+        for cell_data_type in cell_data_types:
+            if not data_card[0].startswith(cell_data_type):
+                continue
+            cell_data[data_card[0]] = parse_floats(data_card[1:], num_cells)
+
+    # Append data from data cards to cell cards as appropriate
+    for i, cell_card in enumerate(cell_cards):
+        for cell_data_type in sorted(cell_data):
+            val = cell_data[cell_data_type][i]
+            if (val > 0 or cell_data_type.startswith('imp:') or
+                cell_data_type.startswith('elpt:')):
+                if val.is_integer():
+                    val_str = str(int(val))
+                else:
+                    val_str = str(val)
+                cell_cards[i].append(cell_data_type + '=' + val_str)
+
+    # Figure out which cell cards to write (don't write a card if all its
+    # importances are zero)
+    write_cell_cards = [False]*num_cells
+    for i, cell_card in enumerate(cell_cards):
+        for j, token in enumerate(cell_card):
+            if not token.startswith('imp:'):
+                continue
+            if '=' in token:
+                imp = float(token.split('=')[1])
+            elif cell_card[j + 1] == '=':
+                imp = float(cell_card[j + 2])
+            else:
+                imp = float(cell_card[j + 1])
+            if imp > 0:
+                write_cell_cards[i] = True
+
+    # Figure out which surface cards to write (don't write a card if it doesn't
+    # appear in a cell definition)
+    write_surf_cards = [True]*num_surfs
+    # This is currently nonfunctional
+
+    # Figure out which data cards to write (don't write a card if its data is
+    # being appended to the cell cards instead)
+    write_data_cards = [True]*num_datas
+    for i, data_card in enumerate(data_cards):
+        for cell_data_type in cell_data_types:
+            if data_card[0].startswith(cell_data_type):
+                write_data_cards[i] = False
 
     # Put the mcnp2cad input file in the "Inputs_mcnp2cad" directory
     inp_file = os.path.join(os.path.dirname(os.path.dirname(inp_orig_file)),
                             'Inputs_mcnp2cad', os.path.basename(inp_orig_file))
 
-    # Loop over all the lines in the original input file
-    lines_out = []
-    num_blank_lines = 0
-    num_lines_skip = 0
-    cell_index = -1
-    i = -1
-    while i < num_lines - 1:
-        i += 1 + num_lines_skip
-        num_lines_skip = 0
-        line = lines_in[i]
-
-        # Title card
-        if i == 0:
-            lines_out.append(line + '\n')
-
-        # Blank line
-        elif line.strip() == '':
-            num_blank_lines += 1
-            # MCNP does not read lines after the third blank line
-            if num_blank_lines >= 3:
-                break
-            lines_out.append('\n')
-
-        # Comment line
-        elif line.split()[0].lower() == 'c':
-            lines_out.append(line + '\n')
-
-        # Cell card
-        elif num_blank_lines == 0:
-            cell_index += 1
-            
-            # Figure out how many lines the cell definition spans
-            lines, tokens = get_lines_and_tokens_in_def(lines_in, i)
-            num_lines_skip = len(lines) - 1
-
-            # Get the cell's importance
-            comment_this_line = False
-            if imps:  # specified in data cards
-                for particle_type in imps:
-                    imp = imps[particle_type][cell_index]
-                    if imp == 0:
-                        comment_this_line = True
-            else:  # specified with cell card
-                for k, token in enumerate(tokens):
-                    if not token.lower().startswith('imp:'):
-                        continue
-                    if '=' in token:
-                        imp = float(token.split('=')[1])
-                    elif tokens[k + 1] == '=':
-                        imp = float(tokens[k + 2])
-                    else:
-                        imp = float(tokens[k + 1])
-                    if imp == 0:
-                        comment_this_line = True
-
-            # Comment out the card if IMP = 0
-            for line in lines:
-                if comment_this_line:
-                    lines_out.append('c ' + line + '\n')
-                else:
-                    lines_out.append(line + '\n')
-
-        # Surface card
-        elif num_blank_lines == 1:
-            lines_out.append(line + '\n')
-
-        # Data card
-        elif num_blank_lines == 2:
-            lines_out.append(line + '\n')
-
-    # Write the mcnp2cad input file
     writer = open(inp_file, 'wb')
-    for line in lines_out:
-        writer.write(line)
+
+    # Add the title card
+    writer.write(title_card + '\n')
+
+    # Loop over all the cell cards
+    for i, card in enumerate(cell_cards):
+        if write_cell_cards[i]:
+            write_tokens_mcnp(writer, card)
+    writer.write('\n')
+
+    # Loop over all the surface cards
+    for i, card in enumerate(surf_cards):
+        if write_surf_cards[i]:
+            write_tokens_mcnp(writer, card)
+    writer.write('\n')
+
+    # Loop over all the data cards
+    for i, card in enumerate(data_cards):
+        if write_data_cards[i]:
+            write_tokens_mcnp(writer, card)
+
     writer.close()
 
 # Find all the files in directories called "Inputs_native"
