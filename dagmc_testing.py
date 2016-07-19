@@ -36,7 +36,7 @@ class dagmc_test:
         self.num_runs = None
 
     def __repr__(self):
-        return ('Name: ' + str(self.name))
+        return ('<dagmc_test ' + str(self.name) + '>')
 
     def __str__(self):
         return str(self.__dict__) + '\n'
@@ -48,7 +48,7 @@ class dagmc_test:
 
         call_shell('mkdir -p ' + self.dirs['sat'])
         call_shell('mcnp2cad ' + inp_file + ' -o ' + sat_file +
-                   ' --geomver=1902' + ' --tol ' + str(mergetol))
+                   ' --geomver=1902' + ' --tol=' + str(mergetol))
 
     # Run dagmc_preproc on an ACIS file
     def run_dagmc_preproc(self, ftol = 1e-4):
@@ -142,7 +142,7 @@ class dagmc_test:
     # Run the physics code
     def run_physics(self):
         # Run the code
-        os.chdir(self.dirs['result'])
+        os.chdir(os.path.join(self.dirs['orig'], self.dirs['result']))
         call_shell('bash ' + self.exe, 'screen_out', 'screen_err', False)
         os.chdir(self.dirs['orig'])
 
@@ -163,23 +163,15 @@ class dagmc_test:
 
     # Perform all steps required for the test
     def run_test(self, args):
-        # Run mcnp2cad on a MCNP input file
+        os.chdir(self.dirs['orig'])
         if args.mcnp2cad:
             self.run_mcnp2cad()
-
-        # Run dagmc_preproc on an ACIS file
         if args.dagmc_preproc:
             self.run_dagmc_preproc()
-
-        # Setup results directory
         if args.setup:
             self.setup_result_dir()
-
-        # Run physics
         if args.run:
             self.run_physics()
-
-        # Copy results to template directory
         if args.copy:
             self.copy_results()
 
@@ -200,8 +192,8 @@ def run_multiple_tests(names, tests, args):
     if jobs_serial > 1:
         pool = mp.Pool(processes = jobs_serial)
 
-    for name in names:
-        test = tests[name]
+    for i, name in enumerate(names):
+        test = tests[i]
         if jobs_serial > 1:
             pool.apply_async(run_test_external, args = (test, args))
         else:
@@ -212,11 +204,15 @@ def run_multiple_tests(names, tests, args):
         pool.join()
 
 # Parse command line arguments
-def parse_args():
+def parse_args(run_multiple_suites = False, only_print_help = False):
     parser = argparse.ArgumentParser(description =
                                      'Setup and/or run MCNP tests.')
-    parser.add_argument('tests', nargs = '*', default = 'all',
-                        help = 'tests to process (default: all)')
+    if run_multiple_suites:  # run_multiple.py
+        parser.add_argument('suites', nargs = '*', default = 'all',
+                            help = 'suites to process (default: all)')
+    else:  # run_tests.py
+        parser.add_argument('tests', nargs = '*', default = 'all',
+                            help = 'tests to process (default: all)')
     parser.add_argument('-m', '--mcnp2cad', action = 'store_true',
                         help = 'run mcnp2cad')
     parser.add_argument('-d', '--dagmc_preproc', action = 'store_true',
@@ -232,10 +228,11 @@ def parse_args():
     parser.add_argument('--mpi', action = 'store_true',
                         help = 'run DAG-MCNP in MPI mode')
     args = parser.parse_args()
-    if (not args.mcnp2cad and not args.dagmc_preproc and not args.setup_dirs and
-        not args.run_physics and not args.copy_results):
+
+    if only_print_help:
         parser.print_help()
         sys.exit(1)
+
     return args
 
 # Call a shell command

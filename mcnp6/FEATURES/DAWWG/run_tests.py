@@ -8,8 +8,6 @@ base_dir = os.path.dirname(os.path.dirname(os.path.dirname(current_dir)))
 sys.path.insert(0, base_dir)
 import dagmc_testing as dagtest
 
-args = dagtest.parse_args()
-
 names = ['abajez', 'abajezb', 'cone', 'conea', 'conelink', 'conelnk', 'cube01',
          'cube02', 'cube03', 'cube04', 'cube05', 'cube06a', 'cube06b', 'cube07',
          'cube08a', 'cube08b', 'cube09a', 'cube09b', 'cyl01', 'cyl02', 'cyl03',
@@ -20,15 +18,8 @@ names = ['abajez', 'abajezb', 'cone', 'conea', 'conelink', 'conelnk', 'cube01',
          'pr_block01', 'pr_block01a', 'pr_block01b', 'zeus2', 'zeus2a',
          'zeus2b', 'zeus2bh', 'zeus2h']
 
-if args.tests == 'all':
-    names_to_run = names
-else:
-    names_to_run = args.tests
-
-tests = {}
-for name in names_to_run:
-    tests[name] = dagtest.dagmc_test(name, args)
-    test = tests[name]
+def setup_test(name, args):
+    test = dagtest.dagmc_test(name, args)
 
     test.physics = 'mcnp6'
 
@@ -111,4 +102,24 @@ for name in names_to_run:
     if test.name in ['pr_block01a', 'pr_block01b']:
         test.outputs['meshtal'] = 'meshtal'
 
-dagtest.run_multiple_tests(names_to_run, tests, args)
+    return test
+
+def setup_tests(names, args):
+    tests = []
+    for name in names:
+        tests.append(setup_test(name, args))
+    return tests
+
+args = dagtest.parse_args()
+
+if __name__ != '__main__':
+    args.tests = 'all'
+if args.tests == 'all':
+    names_to_run = names
+else:
+    names_to_run = args.tests
+
+tests = setup_tests(names_to_run, args)
+
+if __name__ == '__main__':
+    dagtest.run_multiple_tests(names_to_run, tests, args)

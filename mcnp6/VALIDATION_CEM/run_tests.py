@@ -8,8 +8,6 @@ base_dir = os.path.dirname(os.path.dirname(current_dir))
 sys.path.insert(0, base_dir)
 import dagmc_testing as dagtest
 
-args = dagtest.parse_args()
-
 names = ['bg4.5C_pi_CEM', 'bg4.5GeV_Nb_30CEM_0', 'bg4.5GeV_Nb_30CEM',
          'cu800b-cor', 'cu800c-cor', 'cu800i-cor', 'fe1200', 'g300cu', 'inp01a',
          'inp01', 'inpc05', 'inppfe', 'inp_pTi100', 'n1000Bi_CEM', 'n175fe',
@@ -20,15 +18,8 @@ names = ['bg4.5C_pi_CEM', 'bg4.5GeV_Nb_30CEM_0', 'bg4.5GeV_Nb_30CEM',
          'p800Tb_INCLo', 'p800Th_Bert', 'p800Th_CEM', 'p800Th_INCL',
          'pip1500Fe_n']
 
-if args.tests == 'all':
-    names_to_run = names
-else:
-    names_to_run = args.tests
-
-tests = {}
-for name in names_to_run:
-    tests[name] = dagtest.dagmc_test(name, args)
-    test = tests[name]
+def setup_test(name, args):
+    test = dagtest.dagmc_test(name, args)
 
     test.physics = 'mcnp6'
 
@@ -78,4 +69,24 @@ for name in names_to_run:
     if test.name in ['pip1500Fe_n']:
         test.other['genxs'] = 'inxcp1'
 
-dagtest.run_multiple_tests(names_to_run, tests, args)
+    return test
+
+def setup_tests(names, args):
+    tests = []
+    for name in names:
+        tests.append(setup_test(name, args))
+    return tests
+
+args = dagtest.parse_args()
+
+if __name__ != '__main__':
+    args.tests = 'all'
+if args.tests == 'all':
+    names_to_run = names
+else:
+    names_to_run = args.tests
+
+tests = setup_tests(names_to_run, args)
+
+if __name__ == '__main__':
+    dagtest.run_multiple_tests(names_to_run, tests, args)

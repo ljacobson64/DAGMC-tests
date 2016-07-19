@@ -8,8 +8,6 @@ base_dir = os.path.dirname(os.path.dirname(current_dir))
 sys.path.insert(0, base_dir)
 import dagmc_testing as dagtest
 
-args = dagtest.parse_args()
-
 names = ['av01', 'av01_noRR', 'av02', 'av03', 'av03_noRR', 'av04', 'av05',
          'av05_noRR', 'av06', 'av07', 'av08', 'av08_noRR', 'av09', 'av10',
          'av11_noRR', 'av12', 'av12_noRR', 'av13', 'av13_noRR', 'av14',
@@ -42,15 +40,8 @@ names = ['av01', 'av01_noRR', 'av02', 'av03', 'av03_noRR', 'av04', 'av05',
          'x25e_noRR', 'x25w', 'x25w_noRR', 'x31a', 'x31p', 'x31w', 'x81h',
          'x81h_noRR']
 
-if args.tests == 'all':
-    names_to_run = names
-else:
-    names_to_run = args.tests
-
-tests = {}
-for name in names_to_run:
-    tests[name] = dagtest.dagmc_test(name, args)
-    test = tests[name]
+def setup_test(name, args):
+    test = dagtest.dagmc_test(name, args)
 
     test.physics = 'mcnp6'
 
@@ -88,4 +79,24 @@ for name in names_to_run:
     if test.name in ['x25w', 'x25e', 'x25e_noRR', 'x25w_noRR']:
         test.inputs['wwinp'] = 'wwinp25'
 
-dagtest.run_multiple_tests(names_to_run, tests, args)
+    return test
+
+def setup_tests(names, args):
+    tests = []
+    for name in names:
+        tests.append(setup_test(name, args))
+    return tests
+
+args = dagtest.parse_args()
+
+if __name__ != '__main__':
+    args.tests = 'all'
+if args.tests == 'all':
+    names_to_run = names
+else:
+    names_to_run = args.tests
+
+tests = setup_tests(names_to_run, args)
+
+if __name__ == '__main__':
+    dagtest.run_multiple_tests(names_to_run, tests, args)

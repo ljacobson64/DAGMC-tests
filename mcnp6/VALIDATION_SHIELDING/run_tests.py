@@ -8,8 +8,6 @@ base_dir = os.path.dirname(os.path.dirname(current_dir))
 sys.path.insert(0, base_dir)
 import dagmc_testing as dagtest
 
-args = dagtest.parse_args()
-
 names = ['BE08', 'C29', 'CCR20', 'COAIR', 'COTEF', 'FE09', 'FS1ONN', 'FS3OFN',
          'FS3ONP', 'FS7OFP', 'FS7ONN', 'H2O19', 'KERMIN', 'LI616', 'N31',
          'PB14', 'SKYINP', 'SMAIR', 'SMTEF',
@@ -24,15 +22,8 @@ names = ['BE08', 'C29', 'CCR20', 'COAIR', 'COTEF', 'FE09', 'FS1ONN', 'FS3OFN',
          'lps_nitro', 'lps_pu239', 'lps_u235', 'lps_u238', 'lps_water',
          'photon_kerma', 'photon_skyshine']
 
-if args.tests == 'all':
-    names_to_run = names
-else:
-    names_to_run = args.tests
-
-tests = {}
-for name in names_to_run:
-    tests[name] = dagtest.dagmc_test(name, args)
-    test = tests[name]
+def setup_test(name, args):
+    test = dagtest.dagmc_test(name, args)
 
     test.physics = 'mcnp6'
 
@@ -59,4 +50,24 @@ for name in names_to_run:
                      'duct_therm_neutron_threeleg_reinf']:
         test.inputs['wwinp'] = 'duct_therm_neutron_threeleg.wwinp'
 
-dagtest.run_multiple_tests(names_to_run, tests, args)
+    return test
+
+def setup_tests(names, args):
+    tests = []
+    for name in names:
+        tests.append(setup_test(name, args))
+    return tests
+
+args = dagtest.parse_args()
+
+if __name__ != '__main__':
+    args.tests = 'all'
+if args.tests == 'all':
+    names_to_run = names
+else:
+    names_to_run = args.tests
+
+tests = setup_tests(names_to_run, args)
+
+if __name__ == '__main__':
+    dagtest.run_multiple_tests(names_to_run, tests, args)

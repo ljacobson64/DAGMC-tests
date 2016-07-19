@@ -8,8 +8,6 @@ base_dir = os.path.dirname(os.path.dirname(current_dir))
 sys.path.insert(0, base_dir)
 import dagmc_testing as dagtest
 
-args = dagtest.parse_args()
-
 names = ['001',               '004',        '006',               '009', '010',
          '011', '012', '013', '014', '015', '016', '017', '018', '019', '020',
          '021', '022', '023', '024', '025', '026', '027', '028', '029', '030',
@@ -19,15 +17,8 @@ names = ['001',               '004',        '006',               '009', '010',
                 '062', '063', '064', '065', '066', '067', '068', '069', '070',
          '071', '072', '073', '074', '075', '076']
 
-if args.tests == 'all':
-    names_to_run = names
-else:
-    names_to_run = args.tests
-
-tests = {}
-for name in names_to_run:
-    tests[name] = dagtest.dagmc_test(name, args)
-    test = tests[name]
+def setup_test(name, args):
+    test = dagtest.dagmc_test(name, args)
 
     test.physics = 'mcnp6'
 
@@ -43,4 +34,24 @@ for name in names_to_run:
     test.dirs['xsdir'] = '../xsec_data'
     test.inputs['xsdir'] = 'xsdirph'
 
-dagtest.run_multiple_tests(names_to_run, tests, args)
+    return test
+
+def setup_tests(names, args):
+    tests = []
+    for name in names:
+        tests.append(setup_test(name, args))
+    return tests
+
+args = dagtest.parse_args()
+
+if __name__ != '__main__':
+    args.tests = 'all'
+if args.tests == 'all':
+    names_to_run = names
+else:
+    names_to_run = args.tests
+
+tests = setup_tests(names_to_run, args)
+
+if __name__ == '__main__':
+    dagtest.run_multiple_tests(names_to_run, tests, args)

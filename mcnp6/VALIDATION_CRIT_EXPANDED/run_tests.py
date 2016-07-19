@@ -8,8 +8,6 @@ base_dir = os.path.dirname(os.path.dirname(current_dir))
 sys.path.insert(0, base_dir)
 import dagmc_testing as dagtest
 
-args = dagtest.parse_args()
-
 names = ['heu-comp-inter-003-case-6', 'heu-met-fast-001',
          'heu-met-fast-003-case-10', 'heu-met-fast-003-case-11',
          'heu-met-fast-003-case-12', 'heu-met-fast-003-case-1',
@@ -67,15 +65,8 @@ names = ['heu-comp-inter-003-case-6', 'heu-met-fast-001',
          'u233-sol-therm-001-case-3', 'u233-sol-therm-001-case-4',
          'u233-sol-therm-001-case-5', 'u233-sol-therm-008']
 
-if args.tests == 'all':
-    names_to_run = names
-else:
-    names_to_run = args.tests
-
-tests = {}
-for name in names_to_run:
-    tests[name] = dagtest.dagmc_test(name, args)
-    test = tests[name]
+def setup_test(name, args):
+    test = dagtest.dagmc_test(name, args)
 
     test.physics = 'mcnp6'
 
@@ -91,4 +82,24 @@ for name in names_to_run:
     test.dirs['xsdir'] = 'Files'
     test.inputs['xsdir'] = 'xsdir_endf71'
 
-dagtest.run_multiple_tests(names_to_run, tests, args)
+    return test
+
+def setup_tests(names, args):
+    tests = []
+    for name in names:
+        tests.append(setup_test(name, args))
+    return tests
+
+args = dagtest.parse_args()
+
+if __name__ != '__main__':
+    args.tests = 'all'
+if args.tests == 'all':
+    names_to_run = names
+else:
+    names_to_run = args.tests
+
+tests = setup_tests(names_to_run, args)
+
+if __name__ == '__main__':
+    dagtest.run_multiple_tests(names_to_run, tests, args)
