@@ -15,46 +15,27 @@ names = ['conformal_cyl1', 'conformal_cyl2', 'energy_groups', 'gradient_flux',
          'reflecting_boundaries', 'squares', 'stu_cyl', 'stu_cyl2',
          'tally_multipliers', 'uniform_flux', 'uniform_vol_source']
 
-if args.tests == 'all':
-    names_to_run = names
-else:
-    names_to_run = args.tests
-
-tests = {}
-for name in names_to_run:
-    tests[name] = dagtest.dagmc_test(name, args)
-    test = tests[name]
+def setup_test(name, args):
+    test = dagtest.dagmc_test(name, args)
 
     test.physics = 'mcnp5'
 
-    # Directories
-    test.dirs['orig'] = current_dir
-    test.dirs['input'] = 'Inputs/' +  test.name
-    test.dirs['log'] = 'Logs'
-    test.dirs['result'] = 'Results/' + test.name
-    test.dirs['temp'] = 'Templates/' + test.name
-
-    # Common input
+    # Input file name format
     test.inputs['inp'] = test.name + '.inp'
 
-    # Logs
-    test.logs['gcad'] = 'geom_' + test.name + '.h5m.log'
-
-    # Common output
+    # Common
+    test.dirs['orig'] = current_dir
     test.outputs['outp'] = 'outp'
     test.outputs['mctal'] = 'mctal'
-    test.outputs['meshtal'] = 'meshtal'
 
-    # Special input
-    if name in ['conformal_cyl1', 'conformal_cyl2', 'metroid', 'squares',
-                'stu_cyl', 'stu_cyl2']:
-        test.dirs['gcad'] = test.dirs['input']
-        test.inputs['gcad'] = 'geom_' + test.name + '.h5m'
-    if name in ['squares', 'stu_cyl', 'stu_cyl2']:
-        test.dirs['sat'] = test.dirs['input']
-        test.other['sat'] = 'geom_' + test.name + '.sat'
+    # No GCAD input
+    if name in ['energy_groups', 'gradient_flux', 'material_discontinuity',
+                'mode_np', 'reflecting_boundaries', 'tally_multipliers',
+                'uniform_flux', 'uniform_vol_source']:
+        del test.inputs['gcad']
 
-    # Meshes
+    # Tetmeshes
+    test.dirs['meshes'] = 'Files'
     if name in ['conformal_cyl1']:
         test.meshes.append('left_cylinder.h5m')
     if name in ['conformal_cyl2']:
@@ -96,7 +77,10 @@ for name in names_to_run:
     if name in ['uniform_vol_source']:
         test.meshes.append('tet_mesh.h5m')
 
-    # Special output
+    # MESHTAL output
+    test.outputs['meshtal'] = 'meshtal'
+
+    # VTK output
     if name in ['mode_np', 'stu_cyl2']:
         test.outputs['meshtal4'] = 'test_meshtal4.vtk'
     if name in ['energy_groups', 'material_discontinuity', 'metroid',
@@ -125,4 +109,24 @@ for name in names_to_run:
     if name in ['stu_cyl', 'stu_cyl2']:
         test.outputs['meshtal64'] = 'test_meshtal64.vtk'
 
-dagtest.run_multiple_tests(names_to_run, tests, args)
+    return test
+
+def setup_tests(names, args):
+    tests = []
+    for name in names:
+        tests.append(setup_test(name, args))
+    return tests
+
+args = dagtest.parse_args()
+
+if __name__ != '__main__':
+    args.tests = 'all'
+if args.tests == 'all':
+    names_to_run = names
+else:
+    names_to_run = args.tests
+
+tests = setup_tests(names_to_run, args)
+
+if __name__ == '__main__':
+    dagtest.run_multiple_tests(names_to_run, tests, args)

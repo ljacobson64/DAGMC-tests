@@ -10,41 +10,40 @@ import dagmc_testing as dagtest
 
 args = dagtest.parse_args()
 
-names = range(1, 16);
-for i, name in enumerate(names):
-    names[i] = str(name).zfill(2)
+names =['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+        '11', '12', '13', '14', '15']
 
+def setup_test(name, args):
+    test = dagtest.dagmc_test(name, args)
+
+    test.physics = 'mcnp5'
+
+    # Input file name format
+    test.inputs['inp'] = 'inp' + test.name
+
+    # Common
+    test.dirs['orig'] = current_dir
+    test.outputs['outp'] = 'outp'
+    test.outputs['mctal'] = 'mctal'
+
+    return test
+
+def setup_tests(names, args):
+    tests = []
+    for name in names:
+        tests.append(setup_test(name, args))
+    return tests
+
+args = dagtest.parse_args()
+
+if __name__ != '__main__':
+    args.tests = 'all'
 if args.tests == 'all':
     names_to_run = names
 else:
     names_to_run = args.tests
 
-tests = {}
-for name in names_to_run:
-    tests[name] = dagtest.dagmc_test(name, args)
-    test = tests[name]
+tests = setup_tests(names_to_run, args)
 
-    test.physics = 'mcnp5'
-
-    # Directories
-    test.dirs['orig'] = current_dir
-    test.dirs['input'] = 'Inputs'
-    test.dirs['sat'] = 'Geom_sat'
-    test.dirs['gcad'] = 'Geom_h5m'
-    test.dirs['log'] = 'Logs'
-    test.dirs['result'] = 'Results/' + test.name
-    test.dirs['temp'] = 'Templates/' + test.name
-
-    # Common input
-    test.inputs['inp'] = 'inp' + test.name
-    test.inputs['gcad'] = 'geom_' + test.name + '.h5m'
-    test.other['sat'] = 'geom_' + test.name + '.sat'
-
-    # Logs
-    test.logs['gcad'] = 'geom_' + test.name + '.h5m.log'
-
-    # Common output
-    test.outputs['outp'] = 'outp'
-    test.outputs['mctal'] = 'mctal'
-
-dagtest.run_multiple_tests(names_to_run, tests, args)
+if __name__ == '__main__':
+    dagtest.run_multiple_tests(names_to_run, tests, args)

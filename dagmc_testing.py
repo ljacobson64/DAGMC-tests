@@ -75,7 +75,7 @@ class dagmc_test:
 
         # Meshes (DAG-MCNP only)
         for mesh in self.meshes:
-            link_orig = os.path.join('../..', self.dirs['input'], mesh)
+            link_orig = os.path.join('../..', self.dirs['meshes'], mesh)
             link_new = os.path.join(self.dirs['result'], mesh)
             call_shell('ln -snf ' + link_orig + ' ' + link_new)
 
