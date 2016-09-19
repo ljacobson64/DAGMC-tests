@@ -107,6 +107,7 @@ class dagmc_test:
 
         # Commands to run physics code
         exe_strs = ['']*2
+
         if self.physics == 'mcnp5' or self.physics == 'mcnp6':
             if self.mpi_jobs > 1:
                 exe_strs[0] += ' mpiexec -np ' + str(self.mpi_jobs)
@@ -133,6 +134,7 @@ class dagmc_test:
                 exe_strs[1] += '$FLUPRO/flutil/usxsuw < process'
         exe_strs[0] = exe_strs[0].strip()
         exe_strs[1] = exe_strs[1].strip()
+        exe_strs[0] = '(' + exe_strs[0] + ' | tee screen_out) 3>&1 1>&2 2>&3 | tee screen_err'
 
         # Commands to diff against the template
         for key, val in self.outputs.items():
@@ -183,8 +185,7 @@ def run_test_external(test, args):
 # Run all the tests
 def run_multiple_tests(names, tests, args):
     if args.mpi:
-        for name in names:
-            test = tests[name]
+        for test in tests:
             test.mpi_jobs = args.jobs
         jobs_serial = 1
     else:
@@ -193,8 +194,7 @@ def run_multiple_tests(names, tests, args):
     if jobs_serial > 1:
         pool = mp.Pool(processes = jobs_serial)
 
-    for i, name in enumerate(names):
-        test = tests[i]
+    for test in tests:
         if jobs_serial > 1:
             pool.apply_async(run_test_external, args = (test, args))
         else:

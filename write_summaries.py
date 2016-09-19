@@ -123,11 +123,13 @@ def write_summary(code, suites):
         # Get the computer time for each test
         ctms = {}
         for test in tests:
-            test_dir = os.path.join(results_dir, test)
+            screen_out = os.path.join(results_dir, test, 'screen_out')
+            print screen_out
             ctms[test] = '-'
-            for line in open(os.path.join(test_dir, 'screen_out'), 'r'):
-                if 'ctm =' in line:
-                    ctms[test] = line.split()[2]
+            if os.path.isfile(screen_out):
+                for line in open(screen_out, 'r'):
+                    if 'ctm =' in line:
+                        ctms[test] = line.split()[2]
 
         with open(summary_html, 'ab') as writer:
             write_html_data(writer, suite, ftypes, tests, ndiffs, ctms)
@@ -142,7 +144,7 @@ def main():
     datetime_1 = time.strftime('%Y/%m/%d  %H:%M:%S')
     datetime_2 = datetime_1.replace('/', '-').replace(':', '-').replace(' ', '_')
 
-    codes = ['DAG-MCNP5', 'FluDAG']
+    codes = ['mcnp5', 'mcnp6', 'fluka']
     for code in codes:
         suites = []
         for name in os.listdir(code):
