@@ -50,13 +50,15 @@ def write_text_head(writer, code):
     writer.write('%s\n\n' % datetime_1)
 
 def write_text_data(writer, suite, ftypes, tests, ndiffs, ctms):
-    writer.write('%s\n' % suite)
-    writer.write('%-24s%12s' % ('Name', 'ctm'))
+    writer.write('='*80 + '\n')
+    writer.write(' '*(40 - (len(suite) + 1)/2) + '%s\n' % suite)
+    writer.write('='*80 + '\n')
+    writer.write('%-36s%12s' % ('Name', 'ctm'))
     for ftype in ftypes:
         writer.write('%12s' % ftype)
     writer.write('\n')
     for test in tests:
-        writer.write('%-24s' % test)
+        writer.write('%-36s' % test)
         writer.write('%12s' % ctms[test])
         for ftype in ftypes:
             if ftype in ndiffs[test]:
