@@ -105,7 +105,7 @@ class dagmc_test:
             writer.write('\n' + self.name + '\n')
             writer.close()
 
-        # Execution script
+        # Commands to run physics code
         exe_strs = ['']*2
         if self.physics == 'mcnp5' or self.physics == 'mcnp6':
             if self.mpi_jobs > 1:
@@ -133,6 +133,15 @@ class dagmc_test:
                 exe_strs[1] += '$FLUPRO/flutil/usxsuw < process'
         exe_strs[0] = exe_strs[0].strip()
         exe_strs[1] = exe_strs[1].strip()
+
+        # Commands to diff against the template
+        for key, val in self.outputs.items():
+            result = val
+            template = os.path.join('../..', self.dirs['temp'], val)
+            diff = 'diff_' + key
+            exe_strs.append('diff ' + result + ' ' + template + ' &> ' + diff)
+
+        # Write execution script
         with open(os.path.join(self.dirs['result'], self.exe), 'wb') as writer:
             writer.write('#!/bin/bash\n\n')
             for line in exe_strs:
@@ -141,17 +150,9 @@ class dagmc_test:
 
     # Run the physics code
     def run_physics(self):
-        # Run the code
         os.chdir(os.path.join(self.dirs['orig'], self.dirs['result']))
         call_shell('bash ' + self.exe, 'screen_out', 'screen_err', False)
         os.chdir(self.dirs['orig'])
-
-        # Diff against the template
-        for key, val in self.outputs.items():
-            result = os.path.join(self.dirs['result'], val)
-            template = os.path.join(self.dirs['temp'], val)
-            diff = os.path.join(self.dirs['result'], 'diff_' + key)
-            call_shell('diff ' + result + ' ' + template, diff)
 
     # Copy results to template directory
     def copy_results(self):
