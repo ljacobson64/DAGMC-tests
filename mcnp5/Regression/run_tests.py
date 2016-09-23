@@ -48,8 +48,8 @@ def setup_test(name, args):
     # Cross section data
     test.dirs['xsdir'] = '../xsec_data'
     test.dirs['xslib'] = '../xsec_data'
-    test.inputs['xsdir'] = 'keffdir1'
-    test.other['xslib'] = 'kefflib1'
+    test.inputs['xsdir'] = 'testdir1'
+    test.other['xslib'] = 'testlib1'
 
     # LCAD input
     test.dirs['lcad'] = 'Files'
